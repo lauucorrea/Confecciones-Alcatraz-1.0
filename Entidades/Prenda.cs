@@ -1,5 +1,5 @@
 ﻿using System.Text;
-
+using Validaciones_Testings;
 namespace Entidades
 {
     public enum CategoriaPrenda
@@ -69,7 +69,13 @@ namespace Entidades
                     return string.Empty;
                 }
             }
-            set => _detallePrenda = value;
+            set
+            {
+                if (Validaciones.ValidarString(value))
+                {
+                    _detallePrenda = value;
+                }
+            }
         }
 
         public string InformacionAdicional
@@ -86,7 +92,15 @@ namespace Entidades
                     return string.Empty;
                 }
             }
-            set => _informacionAdicional = value;
+            set
+            {
+                if (Validaciones.ValidarString(value))
+                {
+                    _informacionAdicional = value;
+
+                }
+
+            }
         }
     }
 }

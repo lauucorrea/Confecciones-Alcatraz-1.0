@@ -49,5 +49,31 @@ namespace Procesos
                 throw new Exception("No se pudo crear la prenda");
             }
         }
+        public static bool AgregarPrenda_Lista(Prenda unaPrenda)
+        {
+            try
+            {
+                if (unaPrenda is not null)
+                {
+                    if (!GestionDatos.PrendasCreadas.Contains(unaPrenda))
+                    {
+                        GestionDatos.PrendasCreadas.Add(unaPrenda);
+                        return true;
+                    }
+                    else
+                    {
+                        throw new Exception("La prenda que queres agregar, ya existe en el sistema");
+                    }
+                }
+                else
+                {
+                    throw new NullReferenceException();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrio un error. Detalle: " + ex.Message);
+            }
+        }
     }
 }

@@ -1,8 +1,13 @@
 ﻿namespace Entidades
 {
-    static class GestionDatos
+    public static class GestionDatos
     {
         private static List<Prenda>? _prendasCreadas;
+
+        static GestionDatos()
+        {
+            PrendasCreadas = new();
+        }
 
         public static List<Prenda> PrendasCreadas
         {
@@ -21,5 +26,7 @@
             }
             set => _prendasCreadas = value;
         }
+
+       
     }
 }

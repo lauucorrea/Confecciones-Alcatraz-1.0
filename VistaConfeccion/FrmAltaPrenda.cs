@@ -21,7 +21,12 @@ namespace VistaConfeccion
 
                     if (prendaCreada is not null)
                     {
-                        MessageBox.Show(prendaCreada.ToString());
+                        if (Administracion.AgregarPrenda_Lista(prendaCreada))
+                        {
+                            MessageBox.Show(prendaCreada.ToString());
+
+                        }
+
                     }
 
                 }
