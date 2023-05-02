@@ -67,7 +67,7 @@ namespace Procesos
                 }
                 else
                 {
-                    throw new NullReferenceException();
+                    throw new NullReferenceException("No se pudo instanciar la prenda");
                 }
             }
             catch (Exception ex)

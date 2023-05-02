@@ -1,10 +1,11 @@
-using VistaConfeccion;
 namespace VistaConfeccion
 {
     public partial class FrmConfecciones : Form
     {
+        string fechaSeleccionada;
         public FrmConfecciones()
         {
+            //fechaSeleccionada = fecha;
             InitializeComponent();
         }
 
@@ -12,19 +13,35 @@ namespace VistaConfeccion
         {
         }
 
+        private void McConfecciones_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            fechaSeleccionada = McConfecciones.SelectionRange.Start.ToString();
+            MessageBox.Show(fechaSeleccionada);
+        }
+
         private void BtnAgregarConfeccion_Click(object sender, EventArgs e)
         {
             FrmAltaPrenda frmlAltaPrenda = new FrmAltaPrenda();
             if (frmlAltaPrenda is not null)
             {
-                frmlAltaPrenda.ShowDialog();
+                if (frmlAltaPrenda.ShowDialog() != DialogResult.OK)
+                {
+                    frmlAltaPrenda.Close();
+
+                }
             }
         }
 
-        private void McConfecciones_DateSelected(object sender, DateRangeEventArgs e)
+        private void BtnAgregarPrenda_Click(object sender, EventArgs e)
         {
-            string fechaSeleccionada = McConfecciones.SelectionRange.Start.ToString();
-            MessageBox.Show(fechaSeleccionada);
+            FrmAltaConfeccion frmAltaConfeccion = new FrmAltaConfeccion();
+            if (frmAltaConfeccion is not null)
+            {
+                if (frmAltaConfeccion.ShowDialog() != DialogResult.OK)
+                {
+                    frmAltaConfeccion.Close();
+                }
+            }
         }
     }
 }

@@ -38,7 +38,7 @@ namespace VistaConfeccion
             }
             catch (Exception ex)
             {
-                throw new Exception("No se pudo crear una prenda :" + ex.Message);
+               LblErrores.Text = "No se pudo crear una prenda :" + ex.Message;
             }
 
         }
@@ -47,6 +47,11 @@ namespace VistaConfeccion
         {
             string[] categorias = Enum.GetNames(typeof(CategoriaPrenda));
             CmbCategoria.DataSource = categorias;
+        }
+
+        private void BtnCancelar_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
         }
     }
 }
