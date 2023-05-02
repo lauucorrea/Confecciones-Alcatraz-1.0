@@ -32,7 +32,7 @@
             this.BtnAgregarPrenda = new System.Windows.Forms.Button();
             this.BtnModificarConfeccion = new System.Windows.Forms.Button();
             this.BtnCambiarDesplazarConfeccion = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAgregarConfeccion = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // McConfecciones
@@ -52,9 +52,9 @@
             this.BtnAgregarPrenda.Name = "BtnAgregarPrenda";
             this.BtnAgregarPrenda.Size = new System.Drawing.Size(167, 54);
             this.BtnAgregarPrenda.TabIndex = 1;
-            this.BtnAgregarPrenda.Text = "Agregar Prenda";
+            this.BtnAgregarPrenda.Text = "Agregar Confeccion";
             this.BtnAgregarPrenda.UseVisualStyleBackColor = false;
-            this.BtnAgregarPrenda.Click += new System.EventHandler(this.BtnAgregarConfeccion_Click);
+            this.BtnAgregarPrenda.Click += new System.EventHandler(this.BtnAgregarPrenda_Click);
             // 
             // BtnModificarConfeccion
             // 
@@ -82,18 +82,19 @@
             this.BtnCambiarDesplazarConfeccion.Text = "Cambiar/Desplazar confeccion";
             this.BtnCambiarDesplazarConfeccion.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // btnAgregarConfeccion
             // 
-            this.button1.BackColor = System.Drawing.Color.SlateGray;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(46, 266);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(167, 54);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Agregar confeccion";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnAgregarConfeccion.BackColor = System.Drawing.Color.SlateGray;
+            this.btnAgregarConfeccion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAgregarConfeccion.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAgregarConfeccion.ForeColor = System.Drawing.Color.White;
+            this.btnAgregarConfeccion.Location = new System.Drawing.Point(46, 266);
+            this.btnAgregarConfeccion.Name = "btnAgregarConfeccion";
+            this.btnAgregarConfeccion.Size = new System.Drawing.Size(167, 54);
+            this.btnAgregarConfeccion.TabIndex = 4;
+            this.btnAgregarConfeccion.Text = "Agregar prenda";
+            this.btnAgregarConfeccion.UseVisualStyleBackColor = false;
+            this.btnAgregarConfeccion.Click += new System.EventHandler(this.BtnAgregarConfeccion_Click);
             // 
             // FrmConfecciones
             // 
@@ -101,13 +102,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Azure;
             this.ClientSize = new System.Drawing.Size(800, 643);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAgregarConfeccion);
             this.Controls.Add(this.BtnCambiarDesplazarConfeccion);
             this.Controls.Add(this.BtnModificarConfeccion);
             this.Controls.Add(this.BtnAgregarPrenda);
             this.Controls.Add(this.McConfecciones);
             this.ForeColor = System.Drawing.Color.DarkBlue;
             this.Name = "FrmConfecciones";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Confecciones Alcatraz";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -120,6 +122,6 @@
         private Button BtnAgregarPrenda;
         private Button BtnModificarConfeccion;
         private Button BtnCambiarDesplazarConfeccion;
-        private Button button1;
+        private Button btnAgregarConfeccion;
     }
 }

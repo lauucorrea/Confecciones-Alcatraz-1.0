@@ -68,6 +68,7 @@
             this.BtnCancelar.TabIndex = 1;
             this.BtnCancelar.Text = "Cancelar";
             this.BtnCancelar.UseVisualStyleBackColor = false;
+            this.BtnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
             // 
             // CmbCategoria
             // 
@@ -162,6 +163,7 @@
             this.Controls.Add(this.BtnAgregar);
             this.ForeColor = System.Drawing.Color.DarkBlue;
             this.Name = "FrmAltaPrenda";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmAltaPrenda";
             this.Load += new System.EventHandler(this.FrmAltaPrenda_Load);
             ((System.ComponentModel.ISupportInitialize)(this.NumPrendasHora)).EndInit();
