@@ -2,8 +2,10 @@ namespace VistaConfeccion
 {
     public partial class FrmConfecciones : Form
     {
+        string fechaSeleccionada;
         public FrmConfecciones()
         {
+            //fechaSeleccionada = fecha;
             InitializeComponent();
         }
 
@@ -13,7 +15,7 @@ namespace VistaConfeccion
 
         private void McConfecciones_DateSelected(object sender, DateRangeEventArgs e)
         {
-            string fechaSeleccionada = McConfecciones.SelectionRange.Start.ToString();
+            fechaSeleccionada = McConfecciones.SelectionRange.Start.ToString();
             MessageBox.Show(fechaSeleccionada);
         }
 

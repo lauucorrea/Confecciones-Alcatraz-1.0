@@ -63,7 +63,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="BtnAgregarConfeccion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 454</value>
+    <value>319, 612</value>
   </data>
   <data name="BtnAgregarConfeccion.Size" type="System.Drawing.Size, System.Drawing">
     <value>160, 39</value>
@@ -85,7 +85,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;BtnAgregarConfeccion.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>11</value>
   </data>
   <data name="BtnCancelar.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -94,7 +94,7 @@
     <value>Segoe UI, 9.75pt, style=Bold</value>
   </data>
   <data name="BtnCancelar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 454</value>
+    <value>122, 612</value>
   </data>
   <data name="BtnCancelar.Size" type="System.Drawing.Size, System.Drawing">
     <value>160, 39</value>
@@ -115,6 +115,252 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;BtnCancelar.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="DtgPrendasConfeccion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>60, 22</value>
+  </data>
+  <data name="DtgPrendasConfeccion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>510, 176</value>
+  </data>
+  <data name="DtgPrendasConfeccion.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;DtgPrendasConfeccion.Name" xml:space="preserve">
+    <value>DtgPrendasConfeccion</value>
+  </data>
+  <data name="&gt;&gt;DtgPrendasConfeccion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DtgPrendasConfeccion.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;DtgPrendasConfeccion.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="LblCategoria.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblCategoria.Location" type="System.Drawing.Point, System.Drawing">
+    <value>138, 220</value>
+  </data>
+  <data name="LblCategoria.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 17</value>
+  </data>
+  <data name="LblCategoria.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="LblCategoria.Text" xml:space="preserve">
+    <value>Selecciona una categoria</value>
+  </data>
+  <data name="&gt;&gt;LblCategoria.Name" xml:space="preserve">
+    <value>LblCategoria</value>
+  </data>
+  <data name="&gt;&gt;LblCategoria.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblCategoria.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblCategoria.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="CmbCategoria.Location" type="System.Drawing.Point, System.Drawing">
+    <value>332, 217</value>
+  </data>
+  <data name="CmbCategoria.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 25</value>
+  </data>
+  <data name="CmbCategoria.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;CmbCategoria.Name" xml:space="preserve">
+    <value>CmbCategoria</value>
+  </data>
+  <data name="&gt;&gt;CmbCategoria.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CmbCategoria.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;CmbCategoria.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="ChkPrendaBasica.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ChkPrendaBasica.Location" type="System.Drawing.Point, System.Drawing">
+    <value>138, 258</value>
+  </data>
+  <data name="ChkPrendaBasica.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 21</value>
+  </data>
+  <data name="ChkPrendaBasica.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="ChkPrendaBasica.Text" xml:space="preserve">
+    <value>Prenda basica (sin especificacion)</value>
+  </data>
+  <data name="&gt;&gt;ChkPrendaBasica.Name" xml:space="preserve">
+    <value>ChkPrendaBasica</value>
+  </data>
+  <data name="&gt;&gt;ChkPrendaBasica.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ChkPrendaBasica.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ChkPrendaBasica.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="CmbTalle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 297</value>
+  </data>
+  <data name="CmbTalle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 25</value>
+  </data>
+  <data name="CmbTalle.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;CmbTalle.Name" xml:space="preserve">
+    <value>CmbTalle</value>
+  </data>
+  <data name="&gt;&gt;CmbTalle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CmbTalle.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;CmbTalle.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="LblTalle.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblTalle.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblTalle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>147, 300</value>
+  </data>
+  <data name="LblTalle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 17</value>
+  </data>
+  <data name="LblTalle.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="LblTalle.Text" xml:space="preserve">
+    <value>Talle</value>
+  </data>
+  <data name="&gt;&gt;LblTalle.Name" xml:space="preserve">
+    <value>LblTalle</value>
+  </data>
+  <data name="&gt;&gt;LblTalle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblTalle.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblTalle.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="LblUnidades.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblUnidades.Location" type="System.Drawing.Point, System.Drawing">
+    <value>324, 300</value>
+  </data>
+  <data name="LblUnidades.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 17</value>
+  </data>
+  <data name="LblUnidades.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="LblUnidades.Text" xml:space="preserve">
+    <value>Unidades</value>
+  </data>
+  <data name="&gt;&gt;LblUnidades.Name" xml:space="preserve">
+    <value>LblUnidades</value>
+  </data>
+  <data name="&gt;&gt;LblUnidades.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblUnidades.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblUnidades.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="NumUnidades.Location" type="System.Drawing.Point, System.Drawing">
+    <value>394, 298</value>
+  </data>
+  <data name="NumUnidades.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 25</value>
+  </data>
+  <data name="NumUnidades.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;NumUnidades.Name" xml:space="preserve">
+    <value>NumUnidades</value>
+  </data>
+  <data name="&gt;&gt;NumUnidades.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NumUnidades.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;NumUnidades.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="McFechaEntrega.FirstDayOfWeek" type="System.Windows.Forms.Day, System.Windows.Forms">
+    <value>Monday</value>
+  </data>
+  <data name="McFechaEntrega.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 382</value>
+  </data>
+  <data name="McFechaEntrega.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;McFechaEntrega.Name" xml:space="preserve">
+    <value>McFechaEntrega</value>
+  </data>
+  <data name="&gt;&gt;McFechaEntrega.Type" xml:space="preserve">
+    <value>VistaConfeccion.MiCalendario, VistaConfeccion, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;McFechaEntrega.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;McFechaEntrega.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>121, 343</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 17</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Seleccione la fecha de entrega</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -124,7 +370,7 @@
     <value>8, 17</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>470, 531</value>
+    <value>607, 673</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI Semibold, 9.75pt, style=Bold</value>

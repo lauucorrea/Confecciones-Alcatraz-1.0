@@ -11,7 +11,8 @@
     }
     public class Confeccion
     {
-        private DateTime _fechaEstimada;
+        private DateTime _fechaFinal;
+        private DateTime _fechaInicio;
         private CondicionEntrega _condicion;
         private TallePrenda _talle;
         private List<Prenda> _prendasEnConfeccion;
@@ -21,9 +22,10 @@
         {
             IdentificadorDeConfeccion = 0;
         }
-        public Confeccion(DateTime fechaEstimada, TallePrenda talle, CondicionEntrega condicion, List<Prenda> prendasEnConfeccion)
+        public Confeccion(DateTime fechaFinal,DateTime fechaInicio, TallePrenda talle, CondicionEntrega condicion, List<Prenda> prendasEnConfeccion)
         {
-            FechaEstimada = fechaEstimada;
+            FechaFinal = fechaFinal;
+            FechaInicio = fechaInicio;
             Condicion = condicion;
             PrendasEnConfeccion = prendasEnConfeccion;
             IdentificadorDeConfeccion++;
@@ -48,10 +50,15 @@
             set => _prendasEnConfeccion = value;
         }
 
-        public DateTime FechaEstimada
+        public DateTime FechaFinal
         {
-            get => _fechaEstimada;
-            set => _fechaEstimada = value;
+            get => _fechaFinal;
+            set => _fechaFinal = value;
+        }
+        public DateTime FechaInicio
+        {
+            get => _fechaInicio;
+            set => _fechaInicio = value;
         }
 
         public static int IdentificadorDeConfeccion

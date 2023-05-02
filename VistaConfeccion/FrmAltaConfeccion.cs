@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Entidades;
 namespace VistaConfeccion
 {
     public partial class FrmAltaConfeccion : Form
@@ -25,6 +25,11 @@ namespace VistaConfeccion
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void FrmAltaConfeccion_Load(object sender, EventArgs e)
+        {
+            DtgPrendasConfeccion.DataSource = GestionDatos.PrendasCreadas;
         }
     }
 }
