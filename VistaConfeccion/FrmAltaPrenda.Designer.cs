@@ -38,6 +38,7 @@
             this.LblDistintivo = new System.Windows.Forms.Label();
             this.LblPrendasHora = new System.Windows.Forms.Label();
             this.LblDescripcion = new System.Windows.Forms.Label();
+            this.LblErrores = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.NumPrendasHora)).BeginInit();
             this.SuspendLayout();
             // 
@@ -134,12 +135,21 @@
             this.LblDescripcion.TabIndex = 9;
             this.LblDescripcion.Text = "Descripcion de la prenda";
             // 
+            // LblErrores
+            // 
+            this.LblErrores.AutoSize = true;
+            this.LblErrores.Location = new System.Drawing.Point(21, 429);
+            this.LblErrores.Name = "LblErrores";
+            this.LblErrores.Size = new System.Drawing.Size(0, 15);
+            this.LblErrores.TabIndex = 10;
+            // 
             // FrmAltaPrenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Azure;
             this.ClientSize = new System.Drawing.Size(470, 531);
+            this.Controls.Add(this.LblErrores);
             this.Controls.Add(this.LblDescripcion);
             this.Controls.Add(this.LblPrendasHora);
             this.Controls.Add(this.LblDistintivo);
@@ -172,5 +182,6 @@
         private Label LblDistintivo;
         private Label LblPrendasHora;
         private Label LblDescripcion;
+        private Label LblErrores;
     }
 }
