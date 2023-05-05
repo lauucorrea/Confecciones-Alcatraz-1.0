@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entidades;
+﻿using Entidades;
 namespace Procesos
 {
     public static class Administracion
@@ -73,6 +68,87 @@ namespace Procesos
             catch (Exception ex)
             {
                 throw new Exception("Ocurrio un error. Detalle: " + ex.Message);
+            }
+        }
+
+        public static bool AgregarPrendaConfeccion_Diccionario(Confeccion unaConfeccion)
+        {
+            try
+            {
+                if (unaConfeccion is not null)
+                {
+                    if (EncontrarConfeccion(unaConfeccion) is not null)
+                    {
+                        foreach (KeyValuePair<DateTime, List<Confeccion>> par in GestionDatos.ConfeccionesPorFecha)
+                        {
+                            List<Confeccion> confecciones = par.Value;
+                            foreach (Confeccion confeccion in confecciones)
+                            {
+                                if (confeccion is not null)
+                                {
+                                    //En vez de usar un array vamos a tener que usar una lista. para no tener que usar un resize
+                                    confecciones.Add(unaConfeccion);
+                                    GestionDatos.ConfeccionesPorFecha[unaConfeccion.FechaFinal] = confecciones;
+                                }
+                                else
+                                {
+                                    throw new NullReferenceException("Se encontro una confeccion invalida.");
+                                }
+                            }
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        throw new Exception("La prenda que queres agregar, ya existe en el sistema");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentNullException("Los datos ingresados no son validos");
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new ArgumentException("Ocurrio un error. Detalle: " + ex.Message);
+            }
+            catch (NullReferenceException ex)
+            {
+                throw new NullReferenceException("Ocurrio un error. Detalle: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrio un error. Detalle: " + ex.Message);
+            }
+        }
+        public static Confeccion EncontrarConfeccion(Confeccion confeccionBuscada)
+        {
+            try
+            {
+                if (confeccionBuscada is not null)
+                {
+
+                    foreach (KeyValuePair<DateTime, List<Confeccion>> par in GestionDatos.ConfeccionesPorFecha)
+                    {
+                        List<Confeccion> confecciones = par.Value;
+                        foreach (Confeccion confeccion in confecciones)
+                        {
+                            if (confeccion == confeccionBuscada)
+                            {
+                                return confeccion;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    throw new NullReferenceException("No se encontro la confeccion especificada");
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new(ex.Message);
             }
         }
     }
