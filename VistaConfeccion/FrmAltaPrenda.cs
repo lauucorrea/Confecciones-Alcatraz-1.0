@@ -24,6 +24,7 @@ namespace VistaConfeccion
                         if (Administracion.AgregarPrenda_Lista(prendaCreada))
                         {
                             MessageBox.Show(prendaCreada.ToString());
+                            VaciarDatos();
 
                         }
 
@@ -51,7 +52,14 @@ namespace VistaConfeccion
 
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
+            VaciarDatos();
             DialogResult = DialogResult.Cancel;
+        }
+        private void VaciarDatos()
+        {
+            TxtDistintivo.Text = string.Empty;
+            RchDescripcion.Clear();
+            NumPrendasHora.Value = 1;
         }
     }
 }

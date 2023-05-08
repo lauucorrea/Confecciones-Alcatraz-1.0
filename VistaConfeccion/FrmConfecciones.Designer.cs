@@ -111,7 +111,7 @@
             this.Name = "FrmConfecciones";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Confecciones Alcatraz";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.FrmConfecciones_Load);
             this.ResumeLayout(false);
 
         }

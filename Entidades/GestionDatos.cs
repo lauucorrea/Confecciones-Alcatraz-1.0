@@ -6,7 +6,7 @@
         //se limpia cuando se apreta el boton de agregar confeccion
         private static List<Prenda>? _prendasParaConfeccion;
         private static Dictionary<DateTime, List<Confeccion>>? _confeccionesPorFecha;
-
+        
         static GestionDatos()
         {
             PrendasCreadas = new();

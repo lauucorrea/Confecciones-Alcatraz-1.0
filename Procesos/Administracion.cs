@@ -151,5 +151,48 @@ namespace Procesos
                 throw new(ex.Message);
             }
         }
+
+        public static int CalcularTiempoConfeccion(List<Prenda> PrendasConfeccion, int cantidadPrendasRequeridas, int horasJornada)
+        {
+            try
+            {
+
+                int cantidadDiasProduccion;
+                int totalHorasProduccion;
+
+                if (PrendasConfeccion is not null && PrendasConfeccion.Count > 0)
+                {
+                    int totalPrendasHora = 0;
+
+                    foreach (Prenda p in PrendasConfeccion)
+                    {
+                        if (p is not null)
+                        {
+                            totalPrendasHora += p.CantidadPrendasHora;
+                        }
+
+                    }
+                    if (totalPrendasHora != 0)
+                    {
+                        totalHorasProduccion = cantidadPrendasRequeridas / totalPrendasHora;
+
+                        cantidadDiasProduccion = totalHorasProduccion / horasJornada;
+                    }
+                    else
+                    {
+                        cantidadDiasProduccion = -1;
+                    }
+                }
+                else
+                {
+                    throw new NullReferenceException("La lista de prendas no esta cargada");
+                }
+                return cantidadDiasProduccion;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

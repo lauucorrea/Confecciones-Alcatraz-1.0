@@ -81,6 +81,11 @@
             // NumPrendasHora
             // 
             this.NumPrendasHora.Location = new System.Drawing.Point(211, 106);
+            this.NumPrendasHora.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             this.NumPrendasHora.Name = "NumPrendasHora";
             this.NumPrendasHora.Size = new System.Drawing.Size(87, 23);
             this.NumPrendasHora.TabIndex = 3;

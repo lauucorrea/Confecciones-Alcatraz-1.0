@@ -88,7 +88,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;BtnAgregarConfeccion.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="BtnCancelar.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -121,7 +121,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;BtnCancelar.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="DtgPrendasSistema.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 15</value>
@@ -142,7 +142,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;DtgPrendasSistema.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="CmbTalle.Location" type="System.Drawing.Point, System.Drawing">
     <value>586, 24</value>
@@ -163,7 +163,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;CmbTalle.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="LblTalle.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -196,7 +196,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;LblTalle.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="LblUnidades.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -226,7 +226,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;LblUnidades.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="NumUnidades.Location" type="System.Drawing.Point, System.Drawing">
     <value>586, 69</value>
@@ -250,7 +250,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;NumUnidades.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="McFechaEntrega.FirstDayOfWeek" type="System.Windows.Forms.Day, System.Windows.Forms">
     <value>Monday</value>
@@ -277,7 +277,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;McFechaEntrega.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -310,7 +310,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="BtnAgregarPrenda.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -337,7 +337,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;BtnAgregarPrenda.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="DtgPrendasConfeccion.Location" type="System.Drawing.Point, System.Drawing">
     <value>700, 15</value>
@@ -358,7 +358,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;DtgPrendasConfeccion.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="DtgFechasPrevistas.Location" type="System.Drawing.Point, System.Drawing">
     <value>609, 261</value>
@@ -379,6 +379,30 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;DtgFechasPrevistas.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="LblErrores.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblErrores.Location" type="System.Drawing.Point, System.Drawing">
+    <value>775, 637</value>
+  </data>
+  <data name="LblErrores.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 17</value>
+  </data>
+  <data name="LblErrores.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;LblErrores.Name" xml:space="preserve">
+    <value>LblErrores</value>
+  </data>
+  <data name="&gt;&gt;LblErrores.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblErrores.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblErrores.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

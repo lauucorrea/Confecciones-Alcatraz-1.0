@@ -41,6 +41,7 @@
             this.BtnAgregarPrenda = new System.Windows.Forms.Button();
             this.DtgPrendasConfeccion = new System.Windows.Forms.DataGridView();
             this.DtgFechasPrevistas = new System.Windows.Forms.DataGridView();
+            this.LblErrores = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasSistema)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumUnidades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasConfeccion)).BeginInit();
@@ -54,7 +55,7 @@
             this.BtnAgregarConfeccion.ForeColor = System.Drawing.Color.White;
             this.BtnAgregarConfeccion.Name = "BtnAgregarConfeccion";
             this.BtnAgregarConfeccion.UseVisualStyleBackColor = false;
-            this.BtnAgregarConfeccion.Click += new System.EventHandler(this.button1_Click);
+            this.BtnAgregarConfeccion.Click += new System.EventHandler(this.BtnAgregarConfeccion_Click);
             // 
             // BtnCancelar
             // 
@@ -114,7 +115,10 @@
             // 
             this.McFechaEntrega.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.McFechaEntrega, "McFechaEntrega");
+            this.McFechaEntrega.MaxSelectionCount = 20;
             this.McFechaEntrega.Name = "McFechaEntrega";
+            this.McFechaEntrega.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.McFechaEntrega_DateChanged);
+            this.McFechaEntrega.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.McFechaEntrega_DateSelected);
             // 
             // label1
             // 
@@ -145,11 +149,17 @@
             this.DtgFechasPrevistas.Name = "DtgFechasPrevistas";
             this.DtgFechasPrevistas.RowTemplate.Height = 25;
             // 
+            // LblErrores
+            // 
+            resources.ApplyResources(this.LblErrores, "LblErrores");
+            this.LblErrores.Name = "LblErrores";
+            // 
             // FrmAltaConfeccion
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Azure;
+            this.Controls.Add(this.LblErrores);
             this.Controls.Add(this.DtgFechasPrevistas);
             this.Controls.Add(this.DtgPrendasConfeccion);
             this.Controls.Add(this.BtnAgregarPrenda);
@@ -188,5 +198,6 @@
         private Button BtnAgregarPrenda;
         private DataGridView DtgPrendasConfeccion;
         private DataGridView DtgFechasPrevistas;
+        private Label LblErrores;
     }
 }
