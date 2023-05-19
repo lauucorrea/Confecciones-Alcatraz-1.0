@@ -46,6 +46,7 @@ namespace VistaConfeccion
             CmbTalle.DataSource = talles;
             DtgPrendasSistema.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DtgPrendasConfeccion.AutoGenerateColumns = true;
+            GestionDatos.PrendasSistema.Clear();
             GestionDatos.PrendasSistema.Add(new(CategoriaPrenda.Pantalon, 200));
             GestionDatos.PrendasSistema.Add(new(CategoriaPrenda.Remera, 500, "azul oscuro", "listo para la fecha"));
             CargarDatagridPrendasSistema();

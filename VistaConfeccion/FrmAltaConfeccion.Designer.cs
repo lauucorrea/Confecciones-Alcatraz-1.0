@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAltaConfeccion));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BtnAgregarConfeccion = new System.Windows.Forms.Button();
             this.BtnCancelar = new System.Windows.Forms.Button();
             this.DtgPrendasSistema = new System.Windows.Forms.DataGridView();
@@ -45,6 +45,7 @@
             this.LblErrores = new System.Windows.Forms.Label();
             this.lblSistema = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasSistema)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumUnidades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasConfeccion)).BeginInit();
@@ -53,9 +54,9 @@
             // 
             // BtnAgregarConfeccion
             // 
-            this.BtnAgregarConfeccion.BackColor = System.Drawing.Color.SlateGray;
+            this.BtnAgregarConfeccion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             resources.ApplyResources(this.BtnAgregarConfeccion, "BtnAgregarConfeccion");
-            this.BtnAgregarConfeccion.ForeColor = System.Drawing.Color.White;
+            this.BtnAgregarConfeccion.ForeColor = System.Drawing.SystemColors.WindowText;
             this.BtnAgregarConfeccion.Name = "BtnAgregarConfeccion";
             this.BtnAgregarConfeccion.UseVisualStyleBackColor = false;
             this.BtnAgregarConfeccion.Click += new System.EventHandler(this.BtnAgregarConfeccion_Click);
@@ -83,14 +84,14 @@
             this.DtgPrendasSistema.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(102)))), ((int)(((byte)(194)))));
             resources.ApplyResources(this.DtgPrendasSistema, "DtgPrendasSistema");
             this.DtgPrendasSistema.Name = "DtgPrendasSistema";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DtgPrendasSistema.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DtgPrendasSistema.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DtgPrendasSistema.RowHeadersVisible = false;
             this.DtgPrendasSistema.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.DtgPrendasSistema.RowTemplate.Height = 25;
@@ -136,10 +137,15 @@
             // 
             // McFechaEntrega
             // 
-            this.McFechaEntrega.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.McFechaEntrega.BackColor = System.Drawing.Color.LightSteelBlue;
             resources.ApplyResources(this.McFechaEntrega, "McFechaEntrega");
+            this.McFechaEntrega.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.McFechaEntrega.ForeColor = System.Drawing.SystemColors.ControlText;
             this.McFechaEntrega.MaxSelectionCount = 20;
             this.McFechaEntrega.Name = "McFechaEntrega";
+            this.McFechaEntrega.ShowToday = false;
+            this.McFechaEntrega.TitleBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(117)))), ((int)(((byte)(163)))));
+            this.McFechaEntrega.TitleForeColor = System.Drawing.Color.AliceBlue;
             this.McFechaEntrega.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.McFechaEntrega_DateChanged);
             this.McFechaEntrega.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.McFechaEntrega_DateSelected);
             // 
@@ -150,9 +156,10 @@
             // 
             // BtnAgregarPrenda
             // 
-            this.BtnAgregarPrenda.BackColor = System.Drawing.Color.AliceBlue;
-            this.BtnAgregarPrenda.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.BtnAgregarPrenda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.BtnAgregarPrenda.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.BtnAgregarPrenda, "BtnAgregarPrenda");
+            this.BtnAgregarPrenda.ForeColor = System.Drawing.SystemColors.Desktop;
             this.BtnAgregarPrenda.Name = "BtnAgregarPrenda";
             this.BtnAgregarPrenda.UseVisualStyleBackColor = false;
             this.BtnAgregarPrenda.Click += new System.EventHandler(this.BtnAgregarPrenda_Click);
@@ -197,11 +204,17 @@
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
             // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
             // FrmAltaConfeccion
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Azure;
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblSistema);
             this.Controls.Add(this.LblErrores);
@@ -218,9 +231,8 @@
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnAgregarConfeccion);
             this.ForeColor = System.Drawing.Color.DarkBlue;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FrmAltaConfeccion";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmAltaConfeccion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasSistema)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumUnidades)).EndInit();
@@ -248,5 +260,6 @@
         private Label LblErrores;
         private Label lblSistema;
         private Label label2;
+        private Label label3;
     }
 }
