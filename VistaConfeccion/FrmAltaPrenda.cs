@@ -48,6 +48,7 @@ namespace VistaConfeccion
         {
             string[] categorias = Enum.GetNames(typeof(CategoriaPrenda));
             CmbCategoria.DataSource = categorias;
+            
         }
 
         private void BtnCancelar_Click(object sender, EventArgs e)

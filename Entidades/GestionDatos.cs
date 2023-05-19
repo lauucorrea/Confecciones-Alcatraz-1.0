@@ -2,26 +2,27 @@
 {
     public static class GestionDatos
     {
-        private static List<Prenda>? _prendasCreadas;
+        private static List<Prenda>? _prendasSistema;
         //se limpia cuando se apreta el boton de agregar confeccion
-        private static List<Prenda>? _prendasParaConfeccion;
+        private static Dictionary<Prenda, TallePrenda>? _prendasParaConfeccion;
         private static Dictionary<DateTime, List<Confeccion>>? _confeccionesPorFecha;
         
         static GestionDatos()
         {
-            PrendasCreadas = new();
+            PrendasSistema = new();
             ConfeccionesPorFecha = new();
             _prendasParaConfeccion = new();
+            
         }
 
-        public static List<Prenda> PrendasCreadas
+        public static List<Prenda> PrendasSistema
         {
             get
             {
-                if (_prendasCreadas is not null)
+                if (_prendasSistema is not null)
                 {
 
-                    return _prendasCreadas;
+                    return _prendasSistema;
                 }
                 else
                 {
@@ -29,7 +30,7 @@
                 }
 
             }
-            set => _prendasCreadas = value;
+            set => _prendasSistema = value;
         }
         public static Dictionary<DateTime, List<Confeccion>> ConfeccionesPorFecha
         {
@@ -49,7 +50,7 @@
             set => _confeccionesPorFecha = value;
         }
 
-        public static List<Prenda> PrendasParaConfeccion
+        public static Dictionary<Prenda, TallePrenda> PrendasParaConfeccion
         {
             get
             {

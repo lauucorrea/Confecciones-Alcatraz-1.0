@@ -13,24 +13,31 @@ namespace Entidades
     public class Prenda
     {
         private CategoriaPrenda _categoria;
-        private int _cantidadPrendasHora;
+        private int _prendasPorHora;
         private string? _detallePrenda;
         private string? _informacionAdicional;
 
+        static Prenda()
+        {
 
+        }
         public Prenda(CategoriaPrenda categoria, int cantidadPrendasHora)
         {
             Categoria = categoria;
-            CantidadPrendasHora = cantidadPrendasHora;
+            PrendasHora = cantidadPrendasHora;
         }
 
         public Prenda(CategoriaPrenda categoria, int cantidadPrendasHora, string detallePrenda) : this(categoria, cantidadPrendasHora)
         {
-            DetallePrenda = detallePrenda;
+            Detalles = detallePrenda;
         }
-        public Prenda(CategoriaPrenda categoria, int cantidadPrendasHora, string detallePrenda, string informacionAdicional) : this(categoria, cantidadPrendasHora, detallePrenda)
+        public Prenda(CategoriaPrenda categoria, int cantidadPrendasHora, string? detallePrenda, string informacionAdicional) : this(categoria, cantidadPrendasHora, detallePrenda)
         {
-            InformacionAdicional = informacionAdicional;
+            Adicional = informacionAdicional;
+            if (string.IsNullOrEmpty(detallePrenda))
+            {
+                Detalles = string.Empty;
+            }
         }
 
         public CategoriaPrenda Categoria
@@ -39,23 +46,45 @@ namespace Entidades
             set => _categoria = value;
         }
 
-        public int CantidadPrendasHora
+        public int PrendasHora
         {
-            get => _cantidadPrendasHora;
-            set => _cantidadPrendasHora = value;
+            get => _prendasPorHora;
+            set => _prendasPorHora = value;
         }
         public override string ToString()
         {
             StringBuilder sb = new();
 
             sb.AppendLine(Categoria.ToString());
-            sb.AppendLine(CantidadPrendasHora.ToString());
-            sb.AppendLine(DetallePrenda.ToString());
-            sb.AppendLine(InformacionAdicional.ToString());
+            sb.AppendLine(PrendasHora.ToString());
+            sb.AppendLine(Detalles.ToString());
+            sb.AppendLine(Adicional.ToString());
 
             return sb.ToString();
         }
-        public string DetallePrenda
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 23 + (!string.IsNullOrEmpty(Categoria.ToString()) ? Categoria.GetHashCode() : 0);
+                hash = hash * 23 + (!string.IsNullOrEmpty(Detalles) ? Detalles.GetHashCode() : 0);
+                return hash;
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Prenda other = (Prenda)obj;
+            return string.Equals(Categoria, other.Categoria) && string.Equals(Detalles, other.Detalles);
+        }
+
+        public string Detalles
         {
             get
             {
@@ -78,7 +107,7 @@ namespace Entidades
             }
         }
 
-        public string InformacionAdicional
+        public string Adicional
         {
             get
             {

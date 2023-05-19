@@ -50,9 +50,9 @@ namespace Procesos
             {
                 if (unaPrenda is not null)
                 {
-                    if (!GestionDatos.PrendasCreadas.Contains(unaPrenda))
+                    if (!GestionDatos.PrendasSistema.Contains(unaPrenda))
                     {
-                        GestionDatos.PrendasCreadas.Add(unaPrenda);
+                        GestionDatos.PrendasSistema.Add(unaPrenda);
                         return true;
                     }
                     else
@@ -77,7 +77,7 @@ namespace Procesos
             {
                 if (unaConfeccion is not null)
                 {
-                    if (EncontrarConfeccion(unaConfeccion) is not null)
+                    if (EncontrarConfeccion(unaConfeccion))
                     {
                         foreach (KeyValuePair<DateTime, List<Confeccion>> par in GestionDatos.ConfeccionesPorFecha)
                         {
@@ -86,7 +86,6 @@ namespace Procesos
                             {
                                 if (confeccion is not null)
                                 {
-                                    //En vez de usar un array vamos a tener que usar una lista. para no tener que usar un resize
                                     confecciones.Add(unaConfeccion);
                                     GestionDatos.ConfeccionesPorFecha[unaConfeccion.FechaFinal] = confecciones;
                                 }
@@ -121,7 +120,7 @@ namespace Procesos
                 throw new Exception("Ocurrio un error. Detalle: " + ex.Message);
             }
         }
-        public static Confeccion EncontrarConfeccion(Confeccion confeccionBuscada)
+        public static bool EncontrarConfeccion(Confeccion confeccionBuscada)
         {
             try
             {
@@ -131,12 +130,9 @@ namespace Procesos
                     foreach (KeyValuePair<DateTime, List<Confeccion>> par in GestionDatos.ConfeccionesPorFecha)
                     {
                         List<Confeccion> confecciones = par.Value;
-                        foreach (Confeccion confeccion in confecciones)
+                        if (confecciones.Contains(confeccionBuscada))
                         {
-                            if (confeccion == confeccionBuscada)
-                            {
-                                return confeccion;
-                            }
+                            return true;
                         }
                     }
                 }
@@ -144,7 +140,7 @@ namespace Procesos
                 {
                     throw new NullReferenceException("No se encontro la confeccion especificada");
                 }
-                return null;
+                return false;
             }
             catch (Exception ex)
             {
@@ -152,7 +148,7 @@ namespace Procesos
             }
         }
 
-        public static int CalcularTiempoConfeccion(List<Prenda> PrendasConfeccion, int cantidadPrendasRequeridas, int horasJornada)
+        public static int CalcularTiempoConfeccion(Dictionary<Prenda, TallePrenda> PrendasConfeccion, int cantidadPrendasRequeridas, int horasJornada)
         {
             try
             {
@@ -164,12 +160,15 @@ namespace Procesos
                 {
                     int totalPrendasHora = 0;
 
-                    foreach (Prenda p in PrendasConfeccion)
+                    foreach (KeyValuePair<Prenda, TallePrenda> par in PrendasConfeccion)
                     {
-                        if (p is not null)
+                        Prenda prenda = par.Key;
+
+                        if(prenda is not null)
                         {
-                            totalPrendasHora += p.CantidadPrendasHora;
+                            totalPrendasHora += prenda.PrendasHora;
                         }
+
 
                     }
                     if (totalPrendasHora != 0)

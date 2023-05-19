@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAltaConfeccion));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BtnAgregarConfeccion = new System.Windows.Forms.Button();
             this.BtnCancelar = new System.Windows.Forms.Button();
             this.DtgPrendasSistema = new System.Windows.Forms.DataGridView();
@@ -42,6 +43,8 @@
             this.DtgPrendasConfeccion = new System.Windows.Forms.DataGridView();
             this.DtgFechasPrevistas = new System.Windows.Forms.DataGridView();
             this.LblErrores = new System.Windows.Forms.Label();
+            this.lblSistema = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasSistema)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumUnidades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasConfeccion)).BeginInit();
@@ -68,10 +71,30 @@
             // 
             // DtgPrendasSistema
             // 
+            this.DtgPrendasSistema.AllowUserToAddRows = false;
+            this.DtgPrendasSistema.AllowUserToDeleteRows = false;
+            this.DtgPrendasSistema.AllowUserToResizeColumns = false;
+            this.DtgPrendasSistema.AllowUserToResizeRows = false;
+            this.DtgPrendasSistema.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DtgPrendasSistema.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(117)))), ((int)(((byte)(163)))));
+            this.DtgPrendasSistema.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DtgPrendasSistema.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DtgPrendasSistema.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DtgPrendasSistema.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(102)))), ((int)(((byte)(194)))));
             resources.ApplyResources(this.DtgPrendasSistema, "DtgPrendasSistema");
             this.DtgPrendasSistema.Name = "DtgPrendasSistema";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DtgPrendasSistema.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.DtgPrendasSistema.RowHeadersVisible = false;
+            this.DtgPrendasSistema.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.DtgPrendasSistema.RowTemplate.Height = 25;
+            this.DtgPrendasSistema.ShowEditingIcon = false;
             this.DtgPrendasSistema.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DtgPrendasSistema_CellClick);
             // 
             // CmbTalle
@@ -136,14 +159,24 @@
             // 
             // DtgPrendasConfeccion
             // 
+            this.DtgPrendasConfeccion.AllowUserToAddRows = false;
+            this.DtgPrendasConfeccion.AllowUserToDeleteRows = false;
+            this.DtgPrendasConfeccion.AllowUserToResizeColumns = false;
+            this.DtgPrendasConfeccion.AllowUserToResizeRows = false;
             this.DtgPrendasConfeccion.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DtgPrendasConfeccion.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(117)))), ((int)(((byte)(163)))));
+            this.DtgPrendasConfeccion.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DtgPrendasConfeccion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DtgPrendasConfeccion.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(102)))), ((int)(((byte)(194)))));
             resources.ApplyResources(this.DtgPrendasConfeccion, "DtgPrendasConfeccion");
             this.DtgPrendasConfeccion.Name = "DtgPrendasConfeccion";
+            this.DtgPrendasConfeccion.RowHeadersVisible = false;
             this.DtgPrendasConfeccion.RowTemplate.Height = 25;
+            this.DtgPrendasConfeccion.ShowEditingIcon = false;
             // 
             // DtgFechasPrevistas
             // 
+            this.DtgFechasPrevistas.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DtgFechasPrevistas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             resources.ApplyResources(this.DtgFechasPrevistas, "DtgFechasPrevistas");
             this.DtgFechasPrevistas.Name = "DtgFechasPrevistas";
@@ -154,11 +187,23 @@
             resources.ApplyResources(this.LblErrores, "LblErrores");
             this.LblErrores.Name = "LblErrores";
             // 
+            // lblSistema
+            // 
+            resources.ApplyResources(this.lblSistema, "lblSistema");
+            this.lblSistema.Name = "lblSistema";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
             // FrmAltaConfeccion
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Azure;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblSistema);
             this.Controls.Add(this.LblErrores);
             this.Controls.Add(this.DtgFechasPrevistas);
             this.Controls.Add(this.DtgPrendasConfeccion);
@@ -173,7 +218,9 @@
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnAgregarConfeccion);
             this.ForeColor = System.Drawing.Color.DarkBlue;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "FrmAltaConfeccion";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmAltaConfeccion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasSistema)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumUnidades)).EndInit();
@@ -199,5 +246,7 @@
         private DataGridView DtgPrendasConfeccion;
         private DataGridView DtgFechasPrevistas;
         private Label LblErrores;
+        private Label lblSistema;
+        private Label label2;
     }
 }

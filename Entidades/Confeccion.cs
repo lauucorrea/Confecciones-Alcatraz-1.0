@@ -11,6 +11,15 @@ namespace Entidades
         XL,
         XXL
     }
+    public enum CondicionEntrega
+    {
+        Programado,
+        Procesando,
+        Terminado,
+        Entregado,
+        Suspendido
+    }
+
     public class Confeccion
     {
         private DateTime _fechaFinal;
@@ -18,41 +27,42 @@ namespace Entidades
         private CondicionEntrega _condicion;
         private TallePrenda _talle;
         private List<Prenda>? _prendasEnConfeccion;
-        private static int _identificadorDeConfeccion;
-
+        private int _identificadorDeConfeccion;
+        private static int _contadorConfecciones;
         static Confeccion()
         {
-            IdentificadorDeConfeccion = 0;
+            _contadorConfecciones = 0;
         }
         public Confeccion(TallePrenda talle, CondicionEntrega condicion)
         {
-            IdentificadorDeConfeccion++;
             Talle = talle;
             Condicion = condicion;
         }
-        public Confeccion(TallePrenda talle, CondicionEntrega condicion, DateTime fechaFinal, DateTime fechaInicio):this(talle,condicion)
+        public Confeccion(TallePrenda talle, CondicionEntrega condicion, DateTime fechaFinal, DateTime fechaInicio) : this(talle, condicion)
         {
             FechaFinal = fechaFinal;
             FechaInicio = fechaInicio;
         }
-        public Confeccion(TallePrenda talle, CondicionEntrega condicion, DateTime fechaFinal, DateTime fechaInicio, List<Prenda> prendasEnConfeccion):this(talle,condicion, fechaFinal, fechaInicio)
+        public Confeccion(TallePrenda talle, CondicionEntrega condicion, DateTime fechaFinal, DateTime fechaInicio, List<Prenda> prendasEnConfeccion) : this(talle, condicion, fechaFinal, fechaInicio)
         {
-                try
+            try
+            {
+                if (prendasEnConfeccion is not null && prendasEnConfeccion.Count > 0)
                 {
-                    if (prendasEnConfeccion is not null && prendasEnConfeccion.Count > 0)
-                    {
-                        PrendasEnConfeccion = prendasEnConfeccion;
-                    }
-                    else
-                    {
-                        throw new NullReferenceException("Debe agregar al menos una prenda para crear la confeccion");
-                    }
+                    PrendasEnConfeccion = prendasEnConfeccion;
+                    _contadorConfecciones++;
+                    IdentificadorDeConfeccion = _contadorConfecciones;
                 }
-                catch (NullReferenceException ex)
+                else
                 {
-                    throw new Exception("Ocurrio un error: " + ex.Message);
+                    throw new NullReferenceException("Debe agregar al menos una prenda para crear la confeccion");
                 }
             }
+            catch (NullReferenceException ex)
+            {
+                throw new Exception("Ocurrio un error: " + ex.Message);
+            }
+        }
         public override string ToString()
         {
             StringBuilder sb = new();
@@ -62,13 +72,7 @@ namespace Entidades
 
             return sb.ToString();
         }
-        public enum CondicionEntrega
-        {
-            Procesando,
-            Entregado,
-            Suspendido
-        }
-
+        
         public CondicionEntrega Condicion
         {
             get => _condicion;
@@ -78,7 +82,7 @@ namespace Entidades
         {
             get
             {
-                if(_prendasEnConfeccion is not null)
+                if (_prendasEnConfeccion is not null)
                 {
                     return _prendasEnConfeccion;
                 }
@@ -101,7 +105,7 @@ namespace Entidades
             set => _fechaInicio = value;
         }
 
-        public static int IdentificadorDeConfeccion
+        public int IdentificadorDeConfeccion
         {
             get => _identificadorDeConfeccion;
             set => _identificadorDeConfeccion = value;
