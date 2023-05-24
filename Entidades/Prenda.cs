@@ -10,16 +10,18 @@ namespace Entidades
     }
 
 
-    public class Prenda
+    public class Prenda : IComparable
     {
         private CategoriaPrenda _categoria;
         private int _prendasPorHora;
         private string? _detallePrenda;
         private string? _informacionAdicional;
 
+        private int idPrenda;
+        private static int contadorPrendas;
         static Prenda()
         {
-
+            contadorPrendas = 0;
         }
         public Prenda(CategoriaPrenda categoria, int cantidadPrendasHora)
         {
@@ -34,6 +36,8 @@ namespace Entidades
         public Prenda(CategoriaPrenda categoria, int cantidadPrendasHora, string? detallePrenda, string informacionAdicional) : this(categoria, cantidadPrendasHora, detallePrenda)
         {
             Adicional = informacionAdicional;
+            contadorPrendas++;
+            idPrenda = contadorPrendas;
             if (string.IsNullOrEmpty(detallePrenda))
             {
                 Detalles = string.Empty;
@@ -75,13 +79,56 @@ namespace Entidades
 
         public override bool Equals(object? obj)
         {
-            if (obj == null || GetType() != obj.GetType())
+            try
             {
-                return false;
+                bool ret = false;
+
+                if (obj is null || GetType() != obj.GetType())
+                {
+                    ret = false;
+                }
+                else
+                {
+
+                    Prenda other = (Prenda)obj;
+
+                    if(CompareTo(other) == 0)
+                    {
+                        ret = true;
+                    }
+                }
+                return ret;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public int CompareTo(object? obj)
+        {
+            if (obj is null)
+            {
+                return 1; // El objeto other es nulo, por lo que el objeto actual es mayor
+            }
+
+            if (GetType() != obj.GetType())
+            {
+                throw new ArgumentException("El objeto no es del mismo tipo.", nameof(obj));
             }
 
             Prenda other = (Prenda)obj;
-            return string.Equals(Categoria, other.Categoria) && string.Equals(Detalles, other.Detalles);
+
+            // Comparar las propiedades relevantes del objeto
+            int comparacion = idPrenda.CompareTo(other.idPrenda);
+
+            // Si las propiedades son iguales, se podría realizar una comparación adicional
+            if (comparacion == 0)
+            {
+                comparacion = Categoria.CompareTo(other.Categoria);
+            }
+
+            return comparacion;
         }
 
         public string Detalles
@@ -131,5 +178,6 @@ namespace Entidades
 
             }
         }
+
     }
 }

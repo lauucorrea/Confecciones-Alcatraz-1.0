@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-
+﻿using System.Runtime.InteropServices;
 namespace VistaConfeccion
 {
     public class MiCalendario : MonthCalendar
@@ -11,7 +8,9 @@ namespace VistaConfeccion
         protected override void OnHandleCreated(EventArgs e)
         {
             SetWindowTheme(Handle, string.Empty, string.Empty);
+
             base.OnHandleCreated(e);
         }
+
     }
 }

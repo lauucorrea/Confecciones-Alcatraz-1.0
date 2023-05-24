@@ -77,7 +77,7 @@ namespace Procesos
             {
                 if (unaConfeccion is not null)
                 {
-                    if (EncontrarConfeccion(unaConfeccion))
+                    if (ControlConfecciones.EncontrarConfeccion(unaConfeccion))
                     {
                         foreach (KeyValuePair<DateTime, List<Confeccion>> par in GestionDatos.ConfeccionesPorFecha)
                         {
@@ -120,78 +120,37 @@ namespace Procesos
                 throw new Exception("Ocurrio un error. Detalle: " + ex.Message);
             }
         }
-        public static bool EncontrarConfeccion(Confeccion confeccionBuscada)
-        {
-            try
-            {
-                if (confeccionBuscada is not null)
-                {
 
-                    foreach (KeyValuePair<DateTime, List<Confeccion>> par in GestionDatos.ConfeccionesPorFecha)
+        public static bool TieneEntrega(DateTime fecha, out Confeccion? _confeccionEntrega)
+        {
+            List<Confeccion> Confecciones = new();
+            if (Confecciones is not null)
+            {
+                if (GestionDatos.ConfeccionesPorFecha.ContainsKey(fecha) && GestionDatos.ConfeccionesPorFecha.TryGetValue(fecha, out Confecciones))
+                {
+                    foreach(Confeccion confeccion in Confecciones)
                     {
-                        List<Confeccion> confecciones = par.Value;
-                        if (confecciones.Contains(confeccionBuscada))
+                        if(confeccion.FechaFinal == fecha)
                         {
+                            _confeccionEntrega = confeccion;
                             return true;
                         }
                     }
                 }
                 else
                 {
-                    throw new NullReferenceException("No se encontro la confeccion especificada");
+                    throw new Exception("Hubo un problema buscando la fecha en el sistema");
                 }
+                _confeccionEntrega = null;
                 return false;
             }
-            catch (Exception ex)
+            else
             {
-                throw new(ex.Message);
+                throw new NullReferenceException();
             }
         }
 
-        public static int CalcularTiempoConfeccion(Dictionary<Prenda, TallePrenda> PrendasConfeccion, int cantidadPrendasRequeridas, int horasJornada)
-        {
-            try
-            {
-
-                int cantidadDiasProduccion;
-                int totalHorasProduccion;
-
-                if (PrendasConfeccion is not null && PrendasConfeccion.Count > 0)
-                {
-                    int totalPrendasHora = 0;
-
-                    foreach (KeyValuePair<Prenda, TallePrenda> par in PrendasConfeccion)
-                    {
-                        Prenda prenda = par.Key;
-
-                        if(prenda is not null)
-                        {
-                            totalPrendasHora += prenda.PrendasHora;
-                        }
 
 
-                    }
-                    if (totalPrendasHora != 0)
-                    {
-                        totalHorasProduccion = cantidadPrendasRequeridas / totalPrendasHora;
-
-                        cantidadDiasProduccion = totalHorasProduccion / horasJornada;
-                    }
-                    else
-                    {
-                        cantidadDiasProduccion = -1;
-                    }
-                }
-                else
-                {
-                    throw new NullReferenceException("La lista de prendas no esta cargada");
-                }
-                return cantidadDiasProduccion;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
     }
 }

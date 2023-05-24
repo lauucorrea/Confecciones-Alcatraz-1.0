@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using Procesos;
+
 namespace VistaConfeccion
 {
     public partial class FrmAltaConfeccion : Form
@@ -19,11 +20,15 @@ namespace VistaConfeccion
             if (PreConfeccion != null && GestionDatos.PrendasParaConfeccion is not null)
             {
                 fechaInicio = McFechaEntrega.SelectionStart;
-                cantidadDiasConfeccion = Administracion.CalcularTiempoConfeccion(GestionDatos.PrendasParaConfeccion, Convert.ToInt32(NumUnidades.Value), 8);
+                cantidadDiasConfeccion = EstimacionConfecciones.CalcularTiempoConfeccion(GestionDatos.PrendasParaConfeccion, Convert.ToInt32(NumUnidades.Value), 8);
                 if (cantidadDiasConfeccion != -1)
                 {
-
                     fechaFinal = fechaInicio.AddDays(cantidadDiasConfeccion);
+                    GestionDatos.ConfeccionesConEntregas = ControlConfecciones.ObtenerEntregasEnDias(fechaInicio,cantidadDiasConfeccion);
+                    if(GestionDatos.ConfeccionesConEntregas is not null)
+                    {
+                        DtgFechasPrevistas.DataSource = GestionDatos.ConfeccionesConEntregas;
+                    }
                     McFechaEntrega.SelectionEnd = fechaFinal;
                     MessageBox.Show(cantidadDiasConfeccion.ToString());
                 }
@@ -42,15 +47,27 @@ namespace VistaConfeccion
 
         private void FrmAltaConfeccion_Load(object sender, EventArgs e)
         {
+
             string[] talles = Enum.GetNames(typeof(TallePrenda));
             CmbTalle.DataSource = talles;
             DtgPrendasSistema.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DtgPrendasConfeccion.AutoGenerateColumns = true;
+
+            //TEMPORALMENTE HARDCODE
             GestionDatos.PrendasSistema.Clear();
             GestionDatos.PrendasSistema.Add(new(CategoriaPrenda.Pantalon, 200));
             GestionDatos.PrendasSistema.Add(new(CategoriaPrenda.Remera, 500, "azul oscuro", "listo para la fecha"));
-            CargarDatagridPrendasSistema();
 
+
+            Confeccion con = new(TallePrenda.XXL, CondicionEntrega.Procesando, new DateTime(2023, 5, 25), new DateTime(2023, 5, 10));
+            List<Confeccion> lConfe = new();
+            DateTime dt = new (2023, 5, 25);
+            lConfe.Add(con);
+            GestionDatos.ConfeccionesPorFecha.Clear();
+            GestionDatos.ConfeccionesPorFecha.Add(dt, lConfe);
+
+
+            CargarDatagridPrendasSistema();
 
 
         }
@@ -62,9 +79,9 @@ namespace VistaConfeccion
 
                 if (DtgPrendasSistema.SelectedRows.Count != 0)
                 {
-                    Prenda prendaSeleccionada = ObtenerPrendaSeleccionada();
+                    Prenda? prendaSeleccionada = ObtenerPrendaSeleccionada();
 
-                    if (!GestionDatos.PrendasParaConfeccion.ContainsKey(prendaSeleccionada))
+                    if (prendaSeleccionada is not null && !GestionDatos.PrendasParaConfeccion.ContainsKey(prendaSeleccionada))
                     {
                         //Guardo el talle selecionado en la preconfeccion
                         TallePrenda[] talles = (TallePrenda[])Enum.GetValues(typeof(TallePrenda));
@@ -140,38 +157,43 @@ namespace VistaConfeccion
                 fechaFinal = fechaInicio.AddDays(cantidadDiasConfeccion);
                 McFechaEntrega.SelectionRange.End = fechaFinal;
             }
-            else
-            {
-                throw new NullReferenceException("Primero debe cargar prendas a la confeccion");
-            }
         }
 
-        private Prenda ObtenerPrendaSeleccionada()
+        private Prenda? ObtenerPrendaSeleccionada()
         {
             Prenda? prendaSeleccionada = null;
             if (DtgPrendasSistema.SelectedRows.Count > 0)
             {
                 // Obtener la fila seleccionada
                 DataGridViewRow filaSeleccionada = DtgPrendasSistema.SelectedRows[0];
+                string? categoriaPrenda = filaSeleccionada.Cells["ColumnaCategoria"].Value.ToString();
 
-                // Obtener los valores de las celdas
-                CategoriaPrenda categoria = (CategoriaPrenda)Enum.Parse(typeof(CategoriaPrenda), filaSeleccionada.Cells["ColumnaCategoria"].Value.ToString());
-                int prendasHora = Convert.ToInt32(filaSeleccionada.Cells["ColumnaPrendasHora"].Value);
-                string? detalle = filaSeleccionada.Cells["ColumnaDetalle"].Value.ToString();
-                string? adicionales = filaSeleccionada.Cells["ColumnaAdicionales"].Value.ToString();
+                if (filaSeleccionada is not null && !string.IsNullOrEmpty(categoriaPrenda))
+                {
 
-                // Crear una instancia de la prenda seleccionada
-                if (string.IsNullOrEmpty(detalle) && string.IsNullOrEmpty(adicionales))
-                {
-                    prendaSeleccionada = new Prenda(categoria, prendasHora);
+                    // Obtener los valores de las celdas
+                    CategoriaPrenda categoria = (CategoriaPrenda)Enum.Parse(typeof(CategoriaPrenda), categoriaPrenda);
+                    int prendasHora = Convert.ToInt32(filaSeleccionada.Cells["ColumnaPrendasHora"].Value);
+                    string? detalle = filaSeleccionada.Cells["ColumnaDetalle"].Value.ToString();
+                    string? adicionales = filaSeleccionada.Cells["ColumnaAdicionales"].Value.ToString();
+
+                    // Crear una instancia de la prenda seleccionada
+                    if (string.IsNullOrEmpty(detalle) && string.IsNullOrEmpty(adicionales))
+                    {
+                        prendaSeleccionada = new Prenda(categoria, prendasHora);
+                    }
+                    else if (string.IsNullOrEmpty(adicionales) && !string.IsNullOrEmpty(detalle))
+                    {
+                        prendaSeleccionada = new Prenda(categoria, prendasHora, detalle);
+                    }
+                    else if (!string.IsNullOrEmpty(adicionales))
+                    {
+                        prendaSeleccionada = new Prenda(categoria, prendasHora, detalle, adicionales);
+                    }
                 }
-                else if (string.IsNullOrEmpty(adicionales) && !string.IsNullOrEmpty(detalle))
+                else
                 {
-                    prendaSeleccionada = new Prenda(categoria, prendasHora, detalle);
-                }
-                else if(!string.IsNullOrEmpty(adicionales))
-                {
-                    prendaSeleccionada = new Prenda(categoria, prendasHora, detalle, adicionales);
+                    throw new NullReferenceException("La prenda seleccionada no tiene categoria asignada");
                 }
 
             }
@@ -247,5 +269,7 @@ namespace VistaConfeccion
                 NumUnidades.Value = 1;
             }
         }
+
+
     }
 }
