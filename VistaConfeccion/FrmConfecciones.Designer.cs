@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmConfecciones));
             this.McConfecciones = new VistaConfeccion.MiCalendario();
             this.BtnAgregarPrenda = new System.Windows.Forms.Button();
             this.BtnModificarConfeccion = new System.Windows.Forms.Button();
@@ -108,6 +109,8 @@
             this.Controls.Add(this.BtnAgregarPrenda);
             this.Controls.Add(this.McConfecciones);
             this.ForeColor = System.Drawing.Color.DarkBlue;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmConfecciones";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Confecciones Alcatraz";

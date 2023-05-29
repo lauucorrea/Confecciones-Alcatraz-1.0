@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAltaConfeccion));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BtnAgregarConfeccion = new System.Windows.Forms.Button();
             this.BtnCancelar = new System.Windows.Forms.Button();
             this.DtgPrendasSistema = new System.Windows.Forms.DataGridView();
@@ -84,14 +84,14 @@
             this.DtgPrendasSistema.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(102)))), ((int)(((byte)(194)))));
             resources.ApplyResources(this.DtgPrendasSistema, "DtgPrendasSistema");
             this.DtgPrendasSistema.Name = "DtgPrendasSistema";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DtgPrendasSistema.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DtgPrendasSistema.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DtgPrendasSistema.RowHeadersVisible = false;
             this.DtgPrendasSistema.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.DtgPrendasSistema.RowTemplate.Height = 25;
@@ -119,7 +119,7 @@
             // 
             resources.ApplyResources(this.NumUnidades, "NumUnidades");
             this.NumUnidades.Maximum = new decimal(new int[] {
-            50000,
+            9999999,
             0,
             0,
             0});
@@ -175,6 +175,7 @@
             this.DtgPrendasConfeccion.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(117)))), ((int)(((byte)(163)))));
             this.DtgPrendasConfeccion.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DtgPrendasConfeccion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DtgPrendasConfeccion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DtgPrendasConfeccion.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(102)))), ((int)(((byte)(194)))));
             resources.ApplyResources(this.DtgPrendasConfeccion, "DtgPrendasConfeccion");
             this.DtgPrendasConfeccion.Name = "DtgPrendasConfeccion";
@@ -184,12 +185,14 @@
             // 
             // DtgFechasPrevistas
             // 
+            this.DtgFechasPrevistas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DtgFechasPrevistas.BackgroundColor = System.Drawing.Color.LightSteelBlue;
             this.DtgFechasPrevistas.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DtgFechasPrevistas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DtgFechasPrevistas.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(117)))), ((int)(((byte)(163)))));
             resources.ApplyResources(this.DtgFechasPrevistas, "DtgFechasPrevistas");
             this.DtgFechasPrevistas.Name = "DtgFechasPrevistas";
+            this.DtgFechasPrevistas.RowHeadersVisible = false;
             this.DtgFechasPrevistas.RowTemplate.Height = 25;
             // 
             // LblErrores
@@ -234,7 +237,7 @@
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnAgregarConfeccion);
             this.ForeColor = System.Drawing.Color.DarkBlue;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FrmAltaConfeccion";
             this.Load += new System.EventHandler(this.FrmAltaConfeccion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasSistema)).EndInit();

@@ -24,10 +24,10 @@ namespace VistaConfeccion
                 if (cantidadDiasConfeccion != -1)
                 {
                     fechaFinal = fechaInicio.AddDays(cantidadDiasConfeccion);
-                    GestionDatos.ConfeccionesConEntregas = ControlConfecciones.ObtenerEntregasEnDias(fechaInicio,cantidadDiasConfeccion);
-                    if(GestionDatos.ConfeccionesConEntregas is not null)
+                    GestionDatos.ConfeccionesConEntregas = ControlConfecciones.ObtenerEntregasEnDias(fechaInicio, cantidadDiasConfeccion);
+                    if (GestionDatos.ConfeccionesConEntregas is not null)
                     {
-                        DtgFechasPrevistas.DataSource = GestionDatos.ConfeccionesConEntregas;
+                        CargarDatagridConfeccionesConEntrega(cantidadDiasConfeccion);
                     }
                     McFechaEntrega.SelectionEnd = fechaFinal;
                     MessageBox.Show(cantidadDiasConfeccion.ToString());
@@ -54,14 +54,22 @@ namespace VistaConfeccion
             DtgPrendasConfeccion.AutoGenerateColumns = true;
 
             //TEMPORALMENTE HARDCODE
-            GestionDatos.PrendasSistema.Clear();
-            GestionDatos.PrendasSistema.Add(new(CategoriaPrenda.Pantalon, 200));
-            GestionDatos.PrendasSistema.Add(new(CategoriaPrenda.Remera, 500, "azul oscuro", "listo para la fecha"));
+            //GestionDatos.PrendasSistema.Clear();
+            Prenda prenda1 = new(CategoriaPrenda.Pantalon, 200);
+            Prenda prenda2 = new(CategoriaPrenda.Remera, 500, "azul oscuro", "listo para la fecha");
+            if (!GestionDatos.PrendasSistema.Contains(prenda1) && !GestionDatos.PrendasSistema.Contains(prenda2))
+            {
+                GestionDatos.PrendasSistema.Add(prenda1);
+                GestionDatos.PrendasSistema.Add(prenda2);
+
+            }
 
 
             Confeccion con = new(TallePrenda.XXL, CondicionEntrega.Procesando, new DateTime(2023, 5, 25), new DateTime(2023, 5, 10));
             List<Confeccion> lConfe = new();
-            DateTime dt = new (2023, 5, 25);
+            DateTime dt = new(2023, 5, 25);
+            con.PrendasEnConfeccion.Add(prenda1);
+            
             lConfe.Add(con);
             GestionDatos.ConfeccionesPorFecha.Clear();
             GestionDatos.ConfeccionesPorFecha.Add(dt, lConfe);
@@ -216,7 +224,7 @@ namespace VistaConfeccion
             foreach (Prenda prenda in GestionDatos.PrendasSistema)
             {
                 // Crear una nueva fila y asignar los valores de las celdas
-                DataGridViewRow fila = new DataGridViewRow();
+                DataGridViewRow fila = new();
                 fila.CreateCells(DtgPrendasSistema);
                 fila.Cells[0].Value = prenda.Categoria; // Suponiendo que Prenda tiene una propiedad "Nombre"
                 fila.Cells[1].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
@@ -256,6 +264,40 @@ namespace VistaConfeccion
 
                 // Agregar la fila al DataGridView
                 DtgPrendasConfeccion.Rows.Add(fila);
+            }
+        }
+        private void CargarDatagridConfeccionesConEntrega(int cantidadDiasProduccion)
+        {
+            // Suponiendo que tienes un DataGridView llamado dataGridViewConfecciones
+            DtgFechasPrevistas.DataSource = null; // Limpia el origen de datos
+            // Limpiar las columnas existentes en el DataGridView
+            DtgFechasPrevistas.Columns.Clear();
+
+            // Agregar las columnas necesarias al DataGridView
+            DtgFechasPrevistas.Columns.Add("ColumnaId", "ID");
+            DtgFechasPrevistas.Columns.Add("ColumnaPrendas", "Prendas");
+            DtgFechasPrevistas.Columns.Add("ColumnaEntrega", "Fecha Entrega");
+            DtgFechasPrevistas.Columns.Add("ColumnaInicio", "Fecha Inicio");
+            DtgFechasPrevistas.Columns.Add("ColumnaTiempo", "Tiempo Estimado");
+
+            if (GestionDatos.ConfeccionesConEntregas is not null)
+            {
+
+                // Recorrer el diccionario y agregar filas al DataGridView
+                foreach (Confeccion confeccion in GestionDatos.ConfeccionesConEntregas)
+                {
+                    // Crear una nueva fila y asignar los valores de las celdas
+                    DataGridViewRow fila = new DataGridViewRow();
+                    fila.CreateCells(DtgFechasPrevistas);
+                    fila.Cells[0].Value = confeccion.IdentificadorDeConfeccion;
+                    fila.Cells[1].Value = confeccion.PrendasEnConfeccion.Count;
+                    fila.Cells[2].Value = confeccion.FechaFinal.ToShortDateString();
+                    fila.Cells[3].Value = confeccion.FechaInicio.ToShortDateString();
+                    fila.Cells[4].Value = cantidadDiasConfeccion; 
+
+                    // Agregar la fila al DataGridView
+                    DtgFechasPrevistas.Rows.Add(fila);
+                }
             }
         }
         private void VaciarInformacion()

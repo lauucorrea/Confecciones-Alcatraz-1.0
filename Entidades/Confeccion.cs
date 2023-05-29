@@ -32,14 +32,17 @@ namespace Entidades
         static Confeccion()
         {
             _contadorConfecciones = 0;
+            
         }
         public Confeccion(TallePrenda talle, CondicionEntrega condicion)
         {
+            PrendasEnConfeccion = new();
             Talle = talle;
             Condicion = condicion;
         }
         public Confeccion(TallePrenda talle, CondicionEntrega condicion, DateTime fechaFinal, DateTime fechaInicio) : this(talle, condicion)
         {
+            PrendasEnConfeccion = new();
             FechaFinal = fechaFinal;
             FechaInicio = fechaInicio;
         }
