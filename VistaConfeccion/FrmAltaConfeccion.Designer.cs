@@ -29,224 +29,219 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAltaConfeccion));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.BtnAgregarConfeccion = new System.Windows.Forms.Button();
-            this.BtnCancelar = new System.Windows.Forms.Button();
-            this.DtgPrendasSistema = new System.Windows.Forms.DataGridView();
-            this.CmbTalle = new System.Windows.Forms.ComboBox();
-            this.LblTalle = new System.Windows.Forms.Label();
-            this.LblUnidades = new System.Windows.Forms.Label();
-            this.NumUnidades = new System.Windows.Forms.NumericUpDown();
-            this.McFechaEntrega = new VistaConfeccion.MiCalendario();
-            this.label1 = new System.Windows.Forms.Label();
-            this.BtnAgregarPrenda = new System.Windows.Forms.Button();
-            this.DtgPrendasConfeccion = new System.Windows.Forms.DataGridView();
-            this.DtgFechasPrevistas = new System.Windows.Forms.DataGridView();
-            this.LblErrores = new System.Windows.Forms.Label();
-            this.lblSistema = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasSistema)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumUnidades)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasConfeccion)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DtgFechasPrevistas)).BeginInit();
-            this.SuspendLayout();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            BtnAgregarConfeccion = new Button();
+            BtnCancelar = new Button();
+            DtgPrendasSistema = new DataGridView();
+            CmbTalle = new ComboBox();
+            LblTalle = new Label();
+            LblUnidades = new Label();
+            NumUnidades = new NumericUpDown();
+            McFechaEntrega = new MiCalendario();
+            label1 = new Label();
+            BtnAgregarPrenda = new Button();
+            DtgPrendasConfeccion = new DataGridView();
+            DtgFechasPrevistas = new DataGridView();
+            LblErrores = new Label();
+            lblSistema = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            lblDiasEntrega = new Label();
+            ((System.ComponentModel.ISupportInitialize)DtgPrendasSistema).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)NumUnidades).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DtgPrendasConfeccion).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DtgFechasPrevistas).BeginInit();
+            SuspendLayout();
             // 
             // BtnAgregarConfeccion
             // 
-            this.BtnAgregarConfeccion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            resources.ApplyResources(this.BtnAgregarConfeccion, "BtnAgregarConfeccion");
-            this.BtnAgregarConfeccion.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.BtnAgregarConfeccion.Name = "BtnAgregarConfeccion";
-            this.BtnAgregarConfeccion.UseVisualStyleBackColor = false;
-            this.BtnAgregarConfeccion.Click += new System.EventHandler(this.BtnAgregarConfeccion_Click);
+            BtnAgregarConfeccion.BackColor = Color.FromArgb(192, 255, 192);
+            resources.ApplyResources(BtnAgregarConfeccion, "BtnAgregarConfeccion");
+            BtnAgregarConfeccion.ForeColor = SystemColors.WindowText;
+            BtnAgregarConfeccion.Name = "BtnAgregarConfeccion";
+            BtnAgregarConfeccion.UseVisualStyleBackColor = false;
+            BtnAgregarConfeccion.Click += BtnAgregarConfeccion_Click;
             // 
             // BtnCancelar
             // 
-            this.BtnCancelar.BackColor = System.Drawing.Color.Red;
-            resources.ApplyResources(this.BtnCancelar, "BtnCancelar");
-            this.BtnCancelar.ForeColor = System.Drawing.Color.White;
-            this.BtnCancelar.Name = "BtnCancelar";
-            this.BtnCancelar.UseVisualStyleBackColor = false;
-            this.BtnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
+            BtnCancelar.BackColor = Color.Red;
+            resources.ApplyResources(BtnCancelar, "BtnCancelar");
+            BtnCancelar.ForeColor = Color.White;
+            BtnCancelar.Name = "BtnCancelar";
+            BtnCancelar.UseVisualStyleBackColor = false;
+            BtnCancelar.Click += BtnCancelar_Click;
             // 
             // DtgPrendasSistema
             // 
-            this.DtgPrendasSistema.AllowUserToAddRows = false;
-            this.DtgPrendasSistema.AllowUserToDeleteRows = false;
-            this.DtgPrendasSistema.AllowUserToResizeColumns = false;
-            this.DtgPrendasSistema.AllowUserToResizeRows = false;
-            this.DtgPrendasSistema.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DtgPrendasSistema.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(117)))), ((int)(((byte)(163)))));
-            this.DtgPrendasSistema.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DtgPrendasSistema.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DtgPrendasSistema.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DtgPrendasSistema.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(102)))), ((int)(((byte)(194)))));
-            resources.ApplyResources(this.DtgPrendasSistema, "DtgPrendasSistema");
-            this.DtgPrendasSistema.Name = "DtgPrendasSistema";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DtgPrendasSistema.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.DtgPrendasSistema.RowHeadersVisible = false;
-            this.DtgPrendasSistema.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.DtgPrendasSistema.RowTemplate.Height = 25;
-            this.DtgPrendasSistema.ShowEditingIcon = false;
-            this.DtgPrendasSistema.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DtgPrendasSistema_CellClick);
+            DtgPrendasSistema.AllowUserToAddRows = false;
+            DtgPrendasSistema.AllowUserToDeleteRows = false;
+            DtgPrendasSistema.AllowUserToResizeColumns = false;
+            DtgPrendasSistema.AllowUserToResizeRows = false;
+            DtgPrendasSistema.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DtgPrendasSistema.BackgroundColor = Color.FromArgb(76, 117, 163);
+            DtgPrendasSistema.BorderStyle = BorderStyle.None;
+            DtgPrendasSistema.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DtgPrendasSistema.Cursor = Cursors.Hand;
+            DtgPrendasSistema.GridColor = Color.FromArgb(10, 102, 194);
+            resources.ApplyResources(DtgPrendasSistema, "DtgPrendasSistema");
+            DtgPrendasSistema.Name = "DtgPrendasSistema";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            DtgPrendasSistema.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            DtgPrendasSistema.RowHeadersVisible = false;
+            DtgPrendasSistema.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            DtgPrendasSistema.RowTemplate.Height = 25;
+            DtgPrendasSistema.ShowEditingIcon = false;
+            DtgPrendasSistema.CellClick += DtgPrendasSistema_CellClick;
             // 
             // CmbTalle
             // 
-            this.CmbTalle.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.CmbTalle.FormattingEnabled = true;
-            resources.ApplyResources(this.CmbTalle, "CmbTalle");
-            this.CmbTalle.Name = "CmbTalle";
+            CmbTalle.BackColor = SystemColors.MenuBar;
+            CmbTalle.FormattingEnabled = true;
+            resources.ApplyResources(CmbTalle, "CmbTalle");
+            CmbTalle.Name = "CmbTalle";
             // 
             // LblTalle
             // 
-            resources.ApplyResources(this.LblTalle, "LblTalle");
-            this.LblTalle.Name = "LblTalle";
+            resources.ApplyResources(LblTalle, "LblTalle");
+            LblTalle.Name = "LblTalle";
             // 
             // LblUnidades
             // 
-            resources.ApplyResources(this.LblUnidades, "LblUnidades");
-            this.LblUnidades.Name = "LblUnidades";
+            resources.ApplyResources(LblUnidades, "LblUnidades");
+            LblUnidades.Name = "LblUnidades";
             // 
             // NumUnidades
             // 
-            resources.ApplyResources(this.NumUnidades, "NumUnidades");
-            this.NumUnidades.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.NumUnidades.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.NumUnidades.Name = "NumUnidades";
-            this.NumUnidades.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            resources.ApplyResources(NumUnidades, "NumUnidades");
+            NumUnidades.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
+            NumUnidades.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            NumUnidades.Name = "NumUnidades";
+            NumUnidades.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // McFechaEntrega
             // 
-            this.McFechaEntrega.BackColor = System.Drawing.Color.LightSteelBlue;
-            resources.ApplyResources(this.McFechaEntrega, "McFechaEntrega");
-            this.McFechaEntrega.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.McFechaEntrega.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.McFechaEntrega.MaxSelectionCount = 20;
-            this.McFechaEntrega.Name = "McFechaEntrega";
-            this.McFechaEntrega.ShowToday = false;
-            this.McFechaEntrega.TitleBackColor = System.Drawing.Color.AliceBlue;
-            this.McFechaEntrega.TitleForeColor = System.Drawing.Color.Black;
-            this.McFechaEntrega.TrailingForeColor = System.Drawing.Color.DarkGoldenrod;
-            this.McFechaEntrega.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.McFechaEntrega_DateChanged);
-            this.McFechaEntrega.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.McFechaEntrega_DateSelected);
+            McFechaEntrega.BackColor = Color.LightSteelBlue;
+            resources.ApplyResources(McFechaEntrega, "McFechaEntrega");
+            McFechaEntrega.Cursor = Cursors.Hand;
+            McFechaEntrega.ForeColor = SystemColors.ControlText;
+            McFechaEntrega.MaxSelectionCount = 800;
+            McFechaEntrega.Name = "McFechaEntrega";
+            McFechaEntrega.ShowToday = false;
+            McFechaEntrega.TitleBackColor = Color.AliceBlue;
+            McFechaEntrega.TitleForeColor = Color.Black;
+            McFechaEntrega.TrailingForeColor = Color.DarkGoldenrod;
+            McFechaEntrega.DateChanged += McFechaEntrega_DateChanged;
+            McFechaEntrega.DateSelected += McFechaEntrega_DateSelected;
             // 
             // label1
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(label1, "label1");
+            label1.Name = "label1";
             // 
             // BtnAgregarPrenda
             // 
-            this.BtnAgregarPrenda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.BtnAgregarPrenda.Cursor = System.Windows.Forms.Cursors.Hand;
-            resources.ApplyResources(this.BtnAgregarPrenda, "BtnAgregarPrenda");
-            this.BtnAgregarPrenda.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.BtnAgregarPrenda.Name = "BtnAgregarPrenda";
-            this.BtnAgregarPrenda.UseVisualStyleBackColor = false;
-            this.BtnAgregarPrenda.Click += new System.EventHandler(this.BtnAgregarPrenda_Click);
+            BtnAgregarPrenda.BackColor = Color.FromArgb(192, 255, 192);
+            BtnAgregarPrenda.Cursor = Cursors.Hand;
+            resources.ApplyResources(BtnAgregarPrenda, "BtnAgregarPrenda");
+            BtnAgregarPrenda.ForeColor = SystemColors.Desktop;
+            BtnAgregarPrenda.Name = "BtnAgregarPrenda";
+            BtnAgregarPrenda.UseVisualStyleBackColor = false;
+            BtnAgregarPrenda.Click += BtnAgregarPrenda_Click;
             // 
             // DtgPrendasConfeccion
             // 
-            this.DtgPrendasConfeccion.AllowUserToAddRows = false;
-            this.DtgPrendasConfeccion.AllowUserToDeleteRows = false;
-            this.DtgPrendasConfeccion.AllowUserToResizeColumns = false;
-            this.DtgPrendasConfeccion.AllowUserToResizeRows = false;
-            this.DtgPrendasConfeccion.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DtgPrendasConfeccion.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(117)))), ((int)(((byte)(163)))));
-            this.DtgPrendasConfeccion.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DtgPrendasConfeccion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DtgPrendasConfeccion.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DtgPrendasConfeccion.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(102)))), ((int)(((byte)(194)))));
-            resources.ApplyResources(this.DtgPrendasConfeccion, "DtgPrendasConfeccion");
-            this.DtgPrendasConfeccion.Name = "DtgPrendasConfeccion";
-            this.DtgPrendasConfeccion.RowHeadersVisible = false;
-            this.DtgPrendasConfeccion.RowTemplate.Height = 25;
-            this.DtgPrendasConfeccion.ShowEditingIcon = false;
+            DtgPrendasConfeccion.AllowUserToAddRows = false;
+            DtgPrendasConfeccion.AllowUserToDeleteRows = false;
+            DtgPrendasConfeccion.AllowUserToResizeColumns = false;
+            DtgPrendasConfeccion.AllowUserToResizeRows = false;
+            DtgPrendasConfeccion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DtgPrendasConfeccion.BackgroundColor = Color.FromArgb(76, 117, 163);
+            DtgPrendasConfeccion.BorderStyle = BorderStyle.None;
+            DtgPrendasConfeccion.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DtgPrendasConfeccion.Cursor = Cursors.Hand;
+            DtgPrendasConfeccion.GridColor = Color.FromArgb(10, 102, 194);
+            resources.ApplyResources(DtgPrendasConfeccion, "DtgPrendasConfeccion");
+            DtgPrendasConfeccion.Name = "DtgPrendasConfeccion";
+            DtgPrendasConfeccion.RowHeadersVisible = false;
+            DtgPrendasConfeccion.RowTemplate.Height = 25;
+            DtgPrendasConfeccion.ShowEditingIcon = false;
             // 
             // DtgFechasPrevistas
             // 
-            this.DtgFechasPrevistas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DtgFechasPrevistas.BackgroundColor = System.Drawing.Color.LightSteelBlue;
-            this.DtgFechasPrevistas.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DtgFechasPrevistas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DtgFechasPrevistas.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(117)))), ((int)(((byte)(163)))));
-            resources.ApplyResources(this.DtgFechasPrevistas, "DtgFechasPrevistas");
-            this.DtgFechasPrevistas.Name = "DtgFechasPrevistas";
-            this.DtgFechasPrevistas.RowHeadersVisible = false;
-            this.DtgFechasPrevistas.RowTemplate.Height = 25;
+            DtgFechasPrevistas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DtgFechasPrevistas.BackgroundColor = Color.LightSteelBlue;
+            DtgFechasPrevistas.BorderStyle = BorderStyle.None;
+            DtgFechasPrevistas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DtgFechasPrevistas.GridColor = Color.FromArgb(76, 117, 163);
+            resources.ApplyResources(DtgFechasPrevistas, "DtgFechasPrevistas");
+            DtgFechasPrevistas.Name = "DtgFechasPrevistas";
+            DtgFechasPrevistas.RowHeadersVisible = false;
+            DtgFechasPrevistas.RowTemplate.Height = 25;
             // 
             // LblErrores
             // 
-            resources.ApplyResources(this.LblErrores, "LblErrores");
-            this.LblErrores.Name = "LblErrores";
+            resources.ApplyResources(LblErrores, "LblErrores");
+            LblErrores.Name = "LblErrores";
             // 
             // lblSistema
             // 
-            resources.ApplyResources(this.lblSistema, "lblSistema");
-            this.lblSistema.Name = "lblSistema";
+            resources.ApplyResources(lblSistema, "lblSistema");
+            lblSistema.Name = "lblSistema";
             // 
             // label2
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(label2, "label2");
+            label2.Name = "label2";
             // 
             // label3
             // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
+            resources.ApplyResources(label3, "label3");
+            label3.Name = "label3";
+            // 
+            // lblDiasEntrega
+            // 
+            resources.ApplyResources(lblDiasEntrega, "lblDiasEntrega");
+            lblDiasEntrega.ForeColor = Color.MediumSeaGreen;
+            lblDiasEntrega.Name = "lblDiasEntrega";
             // 
             // FrmAltaConfeccion
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Azure;
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.lblSistema);
-            this.Controls.Add(this.LblErrores);
-            this.Controls.Add(this.DtgFechasPrevistas);
-            this.Controls.Add(this.DtgPrendasConfeccion);
-            this.Controls.Add(this.BtnAgregarPrenda);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.McFechaEntrega);
-            this.Controls.Add(this.NumUnidades);
-            this.Controls.Add(this.LblUnidades);
-            this.Controls.Add(this.LblTalle);
-            this.Controls.Add(this.CmbTalle);
-            this.Controls.Add(this.DtgPrendasSistema);
-            this.Controls.Add(this.BtnCancelar);
-            this.Controls.Add(this.BtnAgregarConfeccion);
-            this.ForeColor = System.Drawing.Color.DarkBlue;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "FrmAltaConfeccion";
-            this.Load += new System.EventHandler(this.FrmAltaConfeccion_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasSistema)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumUnidades)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DtgPrendasConfeccion)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DtgFechasPrevistas)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Azure;
+            Controls.Add(lblDiasEntrega);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(lblSistema);
+            Controls.Add(LblErrores);
+            Controls.Add(DtgFechasPrevistas);
+            Controls.Add(DtgPrendasConfeccion);
+            Controls.Add(BtnAgregarPrenda);
+            Controls.Add(label1);
+            Controls.Add(McFechaEntrega);
+            Controls.Add(NumUnidades);
+            Controls.Add(LblUnidades);
+            Controls.Add(LblTalle);
+            Controls.Add(CmbTalle);
+            Controls.Add(DtgPrendasSistema);
+            Controls.Add(BtnCancelar);
+            Controls.Add(BtnAgregarConfeccion);
+            ForeColor = Color.DarkBlue;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Name = "FrmAltaConfeccion";
+            Load += FrmAltaConfeccion_Load;
+            ((System.ComponentModel.ISupportInitialize)DtgPrendasSistema).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NumUnidades).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DtgPrendasConfeccion).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DtgFechasPrevistas).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -267,5 +262,6 @@
         private Label lblSistema;
         private Label label2;
         private Label label3;
+        private Label lblDiasEntrega;
     }
 }

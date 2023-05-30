@@ -29,19 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmConfecciones));
-            this.McConfecciones = new VistaConfeccion.MiCalendario();
             this.BtnAgregarPrenda = new System.Windows.Forms.Button();
             this.BtnModificarConfeccion = new System.Windows.Forms.Button();
             this.BtnCambiarDesplazarConfeccion = new System.Windows.Forms.Button();
             this.btnAgregarConfeccion = new System.Windows.Forms.Button();
+            this.McConfecciones = new VistaConfeccion.MiCalendario();
             this.SuspendLayout();
-            // 
-            // McConfecciones
-            // 
-            this.McConfecciones.Location = new System.Drawing.Point(18, 53);
-            this.McConfecciones.Name = "McConfecciones";
-            this.McConfecciones.TabIndex = 0;
-            this.McConfecciones.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.McConfecciones_DateSelected);
             // 
             // BtnAgregarPrenda
             // 
@@ -49,7 +42,7 @@
             this.BtnAgregarPrenda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnAgregarPrenda.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BtnAgregarPrenda.ForeColor = System.Drawing.Color.White;
-            this.BtnAgregarPrenda.Location = new System.Drawing.Point(46, 359);
+            this.BtnAgregarPrenda.Location = new System.Drawing.Point(244, 383);
             this.BtnAgregarPrenda.Name = "BtnAgregarPrenda";
             this.BtnAgregarPrenda.Size = new System.Drawing.Size(167, 54);
             this.BtnAgregarPrenda.TabIndex = 1;
@@ -63,7 +56,7 @@
             this.BtnModificarConfeccion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnModificarConfeccion.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BtnModificarConfeccion.ForeColor = System.Drawing.Color.White;
-            this.BtnModificarConfeccion.Location = new System.Drawing.Point(46, 450);
+            this.BtnModificarConfeccion.Location = new System.Drawing.Point(49, 462);
             this.BtnModificarConfeccion.Name = "BtnModificarConfeccion";
             this.BtnModificarConfeccion.Size = new System.Drawing.Size(167, 54);
             this.BtnModificarConfeccion.TabIndex = 2;
@@ -76,7 +69,7 @@
             this.BtnCambiarDesplazarConfeccion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCambiarDesplazarConfeccion.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BtnCambiarDesplazarConfeccion.ForeColor = System.Drawing.Color.White;
-            this.BtnCambiarDesplazarConfeccion.Location = new System.Drawing.Point(46, 542);
+            this.BtnCambiarDesplazarConfeccion.Location = new System.Drawing.Point(244, 462);
             this.BtnCambiarDesplazarConfeccion.Name = "BtnCambiarDesplazarConfeccion";
             this.BtnCambiarDesplazarConfeccion.Size = new System.Drawing.Size(167, 54);
             this.BtnCambiarDesplazarConfeccion.TabIndex = 3;
@@ -89,7 +82,7 @@
             this.btnAgregarConfeccion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAgregarConfeccion.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnAgregarConfeccion.ForeColor = System.Drawing.Color.White;
-            this.btnAgregarConfeccion.Location = new System.Drawing.Point(46, 266);
+            this.btnAgregarConfeccion.Location = new System.Drawing.Point(49, 383);
             this.btnAgregarConfeccion.Name = "btnAgregarConfeccion";
             this.btnAgregarConfeccion.Size = new System.Drawing.Size(167, 54);
             this.btnAgregarConfeccion.TabIndex = 4;
@@ -97,17 +90,35 @@
             this.btnAgregarConfeccion.UseVisualStyleBackColor = false;
             this.btnAgregarConfeccion.Click += new System.EventHandler(this.BtnAgregarConfeccion_Click);
             // 
+            // McConfecciones
+            // 
+            this.McConfecciones.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.McConfecciones.CalendarDimensions = new System.Drawing.Size(2, 2);
+            this.McConfecciones.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.McConfecciones.FirstDayOfWeek = System.Windows.Forms.Day.Monday;
+            this.McConfecciones.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.McConfecciones.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.McConfecciones.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.McConfecciones.Location = new System.Drawing.Point(18, 18);
+            this.McConfecciones.MaxSelectionCount = 20;
+            this.McConfecciones.Name = "McConfecciones";
+            this.McConfecciones.ShowToday = false;
+            this.McConfecciones.TabIndex = 12;
+            this.McConfecciones.TitleBackColor = System.Drawing.Color.AliceBlue;
+            this.McConfecciones.TitleForeColor = System.Drawing.Color.Black;
+            this.McConfecciones.TrailingForeColor = System.Drawing.Color.DarkGoldenrod;
+            // 
             // FrmConfecciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Azure;
-            this.ClientSize = new System.Drawing.Size(800, 643);
+            this.ClientSize = new System.Drawing.Size(1042, 578);
+            this.Controls.Add(this.McConfecciones);
             this.Controls.Add(this.btnAgregarConfeccion);
             this.Controls.Add(this.BtnCambiarDesplazarConfeccion);
             this.Controls.Add(this.BtnModificarConfeccion);
             this.Controls.Add(this.BtnAgregarPrenda);
-            this.Controls.Add(this.McConfecciones);
             this.ForeColor = System.Drawing.Color.DarkBlue;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -120,11 +131,10 @@
         }
 
         #endregion
-
-        private MiCalendario McConfecciones;
         private Button BtnAgregarPrenda;
         private Button BtnModificarConfeccion;
         private Button BtnCambiarDesplazarConfeccion;
         private Button btnAgregarConfeccion;
+        private MiCalendario McConfecciones;
     }
 }

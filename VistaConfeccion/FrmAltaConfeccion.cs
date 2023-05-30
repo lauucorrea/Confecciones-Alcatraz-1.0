@@ -28,9 +28,9 @@ namespace VistaConfeccion
                     if (GestionDatos.ConfeccionesConEntregas is not null)
                     {
                         CargarDatagridConfeccionesConEntrega(cantidadDiasConfeccion);
+                        lblDiasEntrega.Text = cantidadDiasConfeccion.ToString() + " dias estimados para entrega";
                     }
                     McFechaEntrega.SelectionEnd = fechaFinal;
-                    MessageBox.Show(cantidadDiasConfeccion.ToString());
                 }
                 else
                 {
@@ -52,7 +52,7 @@ namespace VistaConfeccion
             CmbTalle.DataSource = talles;
             DtgPrendasSistema.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DtgPrendasConfeccion.AutoGenerateColumns = true;
-
+            lblDiasEntrega.Text = string.Empty;
             //TEMPORALMENTE HARDCODE
             //GestionDatos.PrendasSistema.Clear();
             Prenda prenda1 = new(CategoriaPrenda.Pantalon, 200);
@@ -69,7 +69,7 @@ namespace VistaConfeccion
             List<Confeccion> lConfe = new();
             DateTime dt = new(2023, 5, 25);
             con.PrendasEnConfeccion.Add(prenda1);
-            
+
             lConfe.Add(con);
             GestionDatos.ConfeccionesPorFecha.Clear();
             GestionDatos.ConfeccionesPorFecha.Add(dt, lConfe);
@@ -293,7 +293,7 @@ namespace VistaConfeccion
                     fila.Cells[1].Value = confeccion.PrendasEnConfeccion.Count;
                     fila.Cells[2].Value = confeccion.FechaFinal.ToShortDateString();
                     fila.Cells[3].Value = confeccion.FechaInicio.ToShortDateString();
-                    fila.Cells[4].Value = cantidadDiasConfeccion; 
+                    fila.Cells[4].Value = cantidadDiasConfeccion;
 
                     // Agregar la fila al DataGridView
                     DtgFechasPrevistas.Rows.Add(fila);
