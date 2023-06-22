@@ -49,7 +49,7 @@ namespace Procesos
                 JsonSerializerOptions opciones = new();
                 opciones.WriteIndented = true;
                 rutaArchivo = Path.Combine(RutaConfeccionesJSON);
-                string jsonString = System.Text.Json.JsonSerializer.Serialize(GestionDatos.ConfeccionesPorFecha, opciones);
+                string jsonString = System.Text.Json.JsonSerializer.Serialize(GestionDatos.CortesPorFecha, opciones);
 
                 File.WriteAllText(rutaArchivo, jsonString);
 
@@ -64,29 +64,28 @@ namespace Procesos
         {
             rutaArchivo = Path.Combine(RutaConfeccionesCSV);
             // Crear un StreamWriter para escribir en el archivo CSV
-            using (StreamWriter writer = new StreamWriter(rutaArchivo))
+            using (StreamWriter writer = new(rutaArchivo))
             {
                 // Escribir las cabeceras de las columnas
                 writer.WriteLine("Fecha Inicio,FechaFinal,Estado Confeccion,Talle,Identificador");
 
                 // Escribir los datos de cada confección en el archivo CSV
-                foreach (KeyValuePair<DateTime, List<Confeccion>> par in GestionDatos.ConfeccionesPorFecha)
+                foreach (KeyValuePair<DateTime, List<Corte>> par in GestionDatos.CortesPorFecha)
                 {
                     DateTime fecha = par.Key;
-                    List<Confeccion> confecciones = par.Value;
+                    List<Corte> confecciones = par.Value;
 
-                    foreach (Confeccion confeccion in confecciones)
+                    foreach (Corte confeccion in confecciones)
                     {
                         if (confeccion is not null)
                         {
                             DateTime fechaInicio = confeccion.FechaInicio;
                             DateTime fechaFinal = confeccion.FechaFinal;
-                            CondicionEntrega condicion = confeccion.Condicion;
-                            TallePrenda talle = confeccion.Talle;
+                            EtapaCorte condicion = confeccion.Etapa;
                             int idConfeccion = confeccion.IdentificadorDeConfeccion;
 
                             // Escribir los datos en una línea separada por comas
-                            writer.WriteLine($"{fechaInicio}, {fechaFinal}, {condicion}, {talle}, {idConfeccion}");
+                            writer.WriteLine($"{fechaInicio}, {fechaFinal}, {condicion}, {idConfeccion}");
                         }
                     }
                 }
@@ -98,11 +97,11 @@ namespace Procesos
             rutaArchivo = Path.Combine(rutaBase, RutaConfeccionesJSON);
             string jsonString = File.ReadAllText(rutaArchivo);
 
-            SortedDictionary<DateTime, List<Confeccion>>? dict = JsonConvert.DeserializeObject<SortedDictionary<DateTime, List<Confeccion>>>(jsonString);
+            SortedDictionary<DateTime, List<Corte>>? dict = JsonConvert.DeserializeObject<SortedDictionary<DateTime, List<Corte>>>(jsonString);
 
             if (dict is not null)
             {
-                GestionDatos.ConfeccionesPorFecha = dict;
+                GestionDatos.CortesPorFecha = dict;
             }
             else
             {

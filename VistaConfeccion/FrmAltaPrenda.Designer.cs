@@ -33,7 +33,7 @@
             BtnAgregar = new Button();
             BtnCancelar = new Button();
             CmbCategoria = new ComboBox();
-            NumPrendasHora = new NumericUpDown();
+            NumHoras = new NumericUpDown();
             TxtDistintivo = new TextBox();
             RchDescripcion = new RichTextBox();
             LblCategoriaPrenda = new Label();
@@ -42,8 +42,13 @@
             LblDescripcion = new Label();
             LblErrores = new Label();
             DtgPrendasSistema = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)NumPrendasHora).BeginInit();
+            label1 = new Label();
+            NumUnidaes = new NumericUpDown();
+            label2 = new Label();
+            label3 = new Label();
+            ((System.ComponentModel.ISupportInitialize)NumHoras).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DtgPrendasSistema).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)NumUnidaes).BeginInit();
             SuspendLayout();
             // 
             // BtnAgregar
@@ -52,13 +57,13 @@
             BtnAgregar.FlatStyle = FlatStyle.Popup;
             BtnAgregar.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             BtnAgregar.ForeColor = SystemColors.WindowText;
-            BtnAgregar.Location = new Point(813, 451);
+            BtnAgregar.Location = new Point(963, 522);
             BtnAgregar.Name = "BtnAgregar";
             BtnAgregar.Size = new Size(160, 39);
             BtnAgregar.TabIndex = 0;
             BtnAgregar.Text = "Agregar prenda";
             BtnAgregar.UseVisualStyleBackColor = false;
-            BtnAgregar.Click += btnAgregar_Click;
+            BtnAgregar.Click += BtnAgregar_Click;
             // 
             // BtnCancelar
             // 
@@ -66,7 +71,7 @@
             BtnCancelar.FlatStyle = FlatStyle.Popup;
             BtnCancelar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             BtnCancelar.ForeColor = Color.White;
-            BtnCancelar.Location = new Point(616, 451);
+            BtnCancelar.Location = new Point(766, 522);
             BtnCancelar.Name = "BtnCancelar";
             BtnCancelar.Size = new Size(160, 39);
             BtnCancelar.TabIndex = 1;
@@ -77,29 +82,29 @@
             // CmbCategoria
             // 
             CmbCategoria.FormattingEnabled = true;
-            CmbCategoria.Location = new Point(766, 39);
+            CmbCategoria.Location = new Point(903, 140);
             CmbCategoria.Name = "CmbCategoria";
             CmbCategoria.Size = new Size(166, 23);
             CmbCategoria.TabIndex = 2;
             // 
-            // NumPrendasHora
+            // NumHoras
             // 
-            NumPrendasHora.Location = new Point(767, 103);
-            NumPrendasHora.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
-            NumPrendasHora.Name = "NumPrendasHora";
-            NumPrendasHora.Size = new Size(87, 23);
-            NumPrendasHora.TabIndex = 3;
+            NumHoras.Location = new Point(948, 239);
+            NumHoras.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            NumHoras.Name = "NumHoras";
+            NumHoras.Size = new Size(87, 23);
+            NumHoras.TabIndex = 3;
             // 
             // TxtDistintivo
             // 
-            TxtDistintivo.Location = new Point(767, 173);
+            TxtDistintivo.Location = new Point(903, 184);
             TxtDistintivo.Name = "TxtDistintivo";
             TxtDistintivo.Size = new Size(165, 23);
             TxtDistintivo.TabIndex = 4;
             // 
             // RchDescripcion
             // 
-            RchDescripcion.Location = new Point(632, 264);
+            RchDescripcion.Location = new Point(769, 320);
             RchDescripcion.Name = "RchDescripcion";
             RchDescripcion.Size = new Size(354, 159);
             RchDescripcion.TabIndex = 5;
@@ -108,7 +113,7 @@
             // LblCategoriaPrenda
             // 
             LblCategoriaPrenda.AutoSize = true;
-            LblCategoriaPrenda.Location = new Point(632, 47);
+            LblCategoriaPrenda.Location = new Point(769, 143);
             LblCategoriaPrenda.Name = "LblCategoriaPrenda";
             LblCategoriaPrenda.Size = new Size(98, 15);
             LblCategoriaPrenda.TabIndex = 6;
@@ -117,7 +122,7 @@
             // LblDistintivo
             // 
             LblDistintivo.AutoSize = true;
-            LblDistintivo.Location = new Point(632, 181);
+            LblDistintivo.Location = new Point(769, 187);
             LblDistintivo.Name = "LblDistintivo";
             LblDistintivo.Size = new Size(57, 15);
             LblDistintivo.TabIndex = 7;
@@ -126,16 +131,16 @@
             // LblPrendasHora
             // 
             LblPrendasHora.AutoSize = true;
-            LblPrendasHora.Location = new Point(632, 111);
+            LblPrendasHora.Location = new Point(869, 242);
             LblPrendasHora.Name = "LblPrendasHora";
-            LblPrendasHora.Size = new Size(86, 15);
+            LblPrendasHora.Size = new Size(71, 15);
             LblPrendasHora.TabIndex = 8;
-            LblPrendasHora.Text = "Prendas / Hora";
+            LblPrendasHora.Text = "unidades en";
             // 
             // LblDescripcion
             // 
             LblDescripcion.AutoSize = true;
-            LblDescripcion.Location = new Point(632, 237);
+            LblDescripcion.Location = new Point(769, 293);
             LblDescripcion.Name = "LblDescripcion";
             LblDescripcion.Size = new Size(137, 15);
             LblDescripcion.TabIndex = 9;
@@ -144,7 +149,7 @@
             // LblErrores
             // 
             LblErrores.AutoSize = true;
-            LblErrores.Location = new Point(577, 426);
+            LblErrores.Location = new Point(616, 505);
             LblErrores.Name = "LblErrores";
             LblErrores.Size = new Size(0, 15);
             LblErrores.TabIndex = 10;
@@ -161,7 +166,7 @@
             DtgPrendasSistema.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DtgPrendasSistema.Cursor = Cursors.Hand;
             DtgPrendasSistema.GridColor = Color.FromArgb(10, 102, 194);
-            DtgPrendasSistema.Location = new Point(9, 39);
+            DtgPrendasSistema.Location = new Point(9, 45);
             DtgPrendasSistema.Name = "DtgPrendasSistema";
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
@@ -175,15 +180,56 @@
             DtgPrendasSistema.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DtgPrendasSistema.RowTemplate.Height = 25;
             DtgPrendasSistema.ShowEditingIcon = false;
-            DtgPrendasSistema.Size = new Size(562, 384);
+            DtgPrendasSistema.Size = new Size(705, 556);
             DtgPrendasSistema.TabIndex = 11;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Location = new Point(9, 19);
+            label1.Name = "label1";
+            label1.Size = new Size(240, 23);
+            label1.TabIndex = 12;
+            label1.Text = "Listado de prendas en sistema";
+            // 
+            // NumUnidaes
+            // 
+            NumUnidaes.Location = new Point(773, 238);
+            NumUnidaes.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            NumUnidaes.Name = "NumUnidaes";
+            NumUnidaes.Size = new Size(87, 23);
+            NumUnidaes.TabIndex = 14;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(1049, 242);
+            label2.Name = "label2";
+            label2.Size = new Size(39, 15);
+            label2.TabIndex = 15;
+            label2.Text = "horas.";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Location = new Point(841, 67);
+            label3.Name = "label3";
+            label3.Size = new Size(215, 23);
+            label3.TabIndex = 16;
+            label3.Text = "Ingreso datos de la prenda";
             // 
             // FrmAltaPrenda
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Azure;
-            ClientSize = new Size(1014, 529);
+            ClientSize = new Size(1159, 613);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(NumUnidaes);
+            Controls.Add(label1);
             Controls.Add(DtgPrendasSistema);
             Controls.Add(LblErrores);
             Controls.Add(LblDescripcion);
@@ -192,7 +238,7 @@
             Controls.Add(LblCategoriaPrenda);
             Controls.Add(RchDescripcion);
             Controls.Add(TxtDistintivo);
-            Controls.Add(NumPrendasHora);
+            Controls.Add(NumHoras);
             Controls.Add(CmbCategoria);
             Controls.Add(BtnCancelar);
             Controls.Add(BtnAgregar);
@@ -203,8 +249,9 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FrmAltaPrenda";
             Load += FrmAltaPrenda_Load;
-            ((System.ComponentModel.ISupportInitialize)NumPrendasHora).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NumHoras).EndInit();
             ((System.ComponentModel.ISupportInitialize)DtgPrendasSistema).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NumUnidaes).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -214,7 +261,7 @@
         private Button BtnAgregar;
         private Button BtnCancelar;
         private ComboBox CmbCategoria;
-        private NumericUpDown NumPrendasHora;
+        private NumericUpDown NumHoras;
         private TextBox TxtDistintivo;
         private RichTextBox RchDescripcion;
         private Label LblCategoriaPrenda;
@@ -223,5 +270,9 @@
         private Label LblDescripcion;
         private Label LblErrores;
         private DataGridView DtgPrendasSistema;
+        private Label label1;
+        private NumericUpDown NumUnidaes;
+        private Label label2;
+        private Label label3;
     }
 }

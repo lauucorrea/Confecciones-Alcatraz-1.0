@@ -1,18 +1,78 @@
-﻿namespace Entidades
+﻿
+namespace Entidades
 {
     public static class GestionDatos
     {
         private static List<Prenda>? _prendasSistema;
+        private static List<Persona>? _personasSistema;
         //se limpia cuando se apreta el boton de agregar confeccion
-        private static SortedDictionary<Prenda, TallePrenda>? _prendasParaConfeccion;
-        private static SortedDictionary<DateTime, List<Confeccion>>? _confeccionesPorFecha;
-        private static List<Confeccion>? _confeccionesConEntregas;
+        private static SortedDictionary<TallePrenda,List<Corte>>? _prendasParaCortes;
+        private static SortedDictionary<DateTime, List<Corte>>? _cortesPorFecha;
+        private static List<Corte>? _cortesConEntregas;
         static GestionDatos()
         {
             PrendasSistema = new();
-            ConfeccionesPorFecha = new();
-            PrendasParaConfeccion = new();
+            CortesPorFecha = new();
+            PrendasParaCortes = new();
+            PersonasSistema = new();
+            CortesConEntregas = new();
+            HardcodeListas();
 
+        }
+
+
+        public static void HardcodeListas()
+        {
+            Prenda prenda1 = new(CategoriaPrenda.Remera, 300, 8);
+            prenda1.TallePrenda = TallePrenda.M;
+            Prenda prenda2 = new(CategoriaPrenda.Pantalon, 500, 15);
+            prenda2.TallePrenda = TallePrenda.M;
+            Prenda prenda3 = new(CategoriaPrenda.Campera, 350, 12);
+            prenda3.TallePrenda = TallePrenda.L;
+            Prenda prenda4 = new(CategoriaPrenda.Chomba, 300, 9);
+            prenda4.TallePrenda = TallePrenda.XL;
+
+            Persona roberto = new("Roberto", "Correa", 50666452,"Rober","asd123");
+            roberto.RolPersona = Rol.Propietario;
+
+            PersonasSistema.Add(roberto);
+
+
+
+            PrendasSistema.Add(prenda1);
+            PrendasSistema.Add(prenda2);
+            PrendasSistema.Add(prenda3);
+            PrendasSistema.Add(prenda4);
+
+            //creo un corte ficticio
+            Corte corte1 = new(EtapaCorte.Tizando, new DateTime(2023, 5, 25), new DateTime(2023, 5, 10));
+            
+            Administracion.AgregarPrenda_Corte(corte1, prenda1);
+            Administracion.AgregarPrenda_Corte(corte1, prenda2);
+            Administracion.AgregarPrenda_Corte(corte1, prenda3);
+            Administracion.AgregarPrenda_Corte(corte1, prenda4);
+            corte1.ObtenerHorasTotalesCorte();
+
+            Administracion.AgregarCorte_Diccionario(corte1);
+            
+        }
+
+        public static List<Persona> PersonasSistema
+        {
+            get
+            {
+                if (_personasSistema is not null)
+                {
+
+                    return _personasSistema;
+                }
+                else
+                {
+                    throw new NullReferenceException();
+                }
+
+            }
+            set => _personasSistema = value;
         }
 
         public static List<Prenda> PrendasSistema
@@ -32,14 +92,14 @@
             }
             set => _prendasSistema = value;
         }
-        public static SortedDictionary<DateTime, List<Confeccion>> ConfeccionesPorFecha
+        public static SortedDictionary<DateTime, List<Corte>> CortesPorFecha
         {
             get
             {
-                if (_confeccionesPorFecha is not null)
+                if (_cortesPorFecha is not null)
                 {
 
-                    return _confeccionesPorFecha;
+                    return _cortesPorFecha;
                 }
                 else
                 {
@@ -47,27 +107,16 @@
                 }
 
             }
-            set => _confeccionesPorFecha = value;
+            set => _cortesPorFecha = value;
         }
-
-        public static List<Confeccion>? ConfeccionesConEntregas
+        public static List<Corte> CortesConEntregas
         {
             get
             {
-
-                return _confeccionesConEntregas;
-
-            }
-            set => _confeccionesConEntregas = value;
-        }
-        public static SortedDictionary<Prenda, TallePrenda> PrendasParaConfeccion
-        {
-            get
-            {
-                if (_prendasParaConfeccion is not null)
+                if (_cortesConEntregas is not null)
                 {
 
-                    return _prendasParaConfeccion;
+                    return _cortesConEntregas;
                 }
                 else
                 {
@@ -75,7 +124,26 @@
                 }
 
             }
-            set => _prendasParaConfeccion = value;
+            set => _cortesConEntregas = value;
+        }
+
+
+        public static SortedDictionary<TallePrenda,List<Corte>> PrendasParaCortes
+        {
+            get
+            {
+                if (_prendasParaCortes is not null)
+                {
+
+                    return _prendasParaCortes;
+                }
+                else
+                {
+                    throw new NullReferenceException();
+                }
+
+            }
+            set => _prendasParaCortes = value;
         }
 
 

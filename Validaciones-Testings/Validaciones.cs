@@ -27,8 +27,62 @@ namespace Validaciones_Testings
             }
 
         }
-        
-        
+
+        public static string GenerarCodigoAlfanumericoRandom()
+        {
+            string caracteresPermitidos = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
+
+            Char[] codigo = new char[12];
+            Random random = new();
+
+            for (int i = 0; i < codigo.Length; i++)
+            {
+                codigo[i] = caracteresPermitidos[random.Next(caracteresPermitidos.Length)];
+            }
+
+            string stringRetorno = new(codigo);
+
+            return stringRetorno;
+        }
+        public static bool ValidarAlfanumerico(string cadena)
+        {
+            if (cadena is not null)
+            {
+
+                for (int i = 0; i < cadena.Length; i++)
+                {
+                    if (!char.IsLetter(cadena[i]))
+                    {
+                        if (cadena.Length == 8)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            throw new Exception("El largo de la matricula debe ser de 8 caracteres");
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                throw new ArgumentNullException();
+            }
+            return false;
+        }
+
+        public static bool VerificarDni(int dni)
+        {
+            if (dni > 29999999 && dni < 59999999)
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception($"El dni debe ser mayor a 29.999.999 y menor a 59.999.999");
+            }
+        }
 
     }
 }

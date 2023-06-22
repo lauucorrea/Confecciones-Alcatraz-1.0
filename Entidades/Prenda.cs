@@ -6,34 +6,52 @@ namespace Entidades
     {
         Remera,
         Pantalon,
-        Campera
+        Campera,
+        Chomba
     }
 
 
-    public class Prenda : IComparable
+    public class Prenda 
     {
         private CategoriaPrenda _categoria;
-        private int _prendasPorHora;
+        private TallePrenda _talle;
+        //datos de calculo de produccion
+        private int _cantidadPrendas;
+        private int _horasProduccion;
+        private int _prendasHora;
+
+        private int _unidadesCorte;
+        private decimal _horasDeProduccion;
+        //informacion adicional
         private string? _detallePrenda;
         private string? _informacionAdicional;
 
+        //identificador
         private int idPrenda;
         private static int contadorPrendas;
         static Prenda()
         {
             contadorPrendas = 0;
         }
-        public Prenda(CategoriaPrenda categoria, int cantidadPrendasHora)
+        public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion)
         {
             Categoria = categoria;
-            PrendasHora = cantidadPrendasHora;
+            CantidadPrendas = cantidadPrendas;
+            HorasProduccion = horasProduccion;
+
+            PrendasHora = CantidadPrendas / HorasProduccion ;
+
+            if(PrendasHora <= 0)
+            {
+                PrendasHora = 1;
+            }
         }
 
-        public Prenda(CategoriaPrenda categoria, int cantidadPrendasHora, string detallePrenda) : this(categoria, cantidadPrendasHora)
+        public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion, string detallePrenda) : this(categoria, cantidadPrendas,horasProduccion)
         {
             Detalles = detallePrenda;
         }
-        public Prenda(CategoriaPrenda categoria, int cantidadPrendasHora, string? detallePrenda, string informacionAdicional) : this(categoria, cantidadPrendasHora, detallePrenda)
+        public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion, string? detallePrenda, string informacionAdicional) : this(categoria, cantidadPrendas, horasProduccion, detallePrenda)
         {
             Adicional = informacionAdicional;
             contadorPrendas++;
@@ -42,6 +60,32 @@ namespace Entidades
             {
                 Detalles = string.Empty;
             }
+            else
+            {
+                Detalles = detallePrenda;
+            }
+        }
+
+        public int UnidadesCorte
+        {
+            get => _unidadesCorte;
+            set
+            {
+                _unidadesCorte = value;
+
+                HorasDeProduccion = UnidadesCorte / PrendasHora;
+            }
+        }
+
+        public decimal HorasDeProduccion
+        {
+            get => _horasDeProduccion;
+            set => _horasDeProduccion = value;
+        }
+        public int PrendasHora
+        {
+            get => _prendasHora;
+            set => _prendasHora = value;
         }
 
         public CategoriaPrenda Categoria
@@ -49,24 +93,25 @@ namespace Entidades
             get => _categoria;
             set => _categoria = value;
         }
-
-        public int PrendasHora
+        public TallePrenda TallePrenda
         {
-            get => _prendasPorHora;
-            set => _prendasPorHora = value;
+            get => _talle;
+            set => _talle = value;
         }
+
         public override string ToString()
         {
             StringBuilder sb = new();
 
             sb.AppendLine(Categoria.ToString());
-            sb.AppendLine(PrendasHora.ToString());
+            sb.AppendLine(HorasProduccion.ToString());
+            sb.AppendLine(CantidadPrendas.ToString());
             sb.AppendLine(Detalles.ToString());
             sb.AppendLine(Adicional.ToString());
 
             return sb.ToString();
         }
-        public override int GetHashCode()
+        /*public override int GetHashCode()
         {
             unchecked
             {
@@ -129,7 +174,7 @@ namespace Entidades
             }
 
             return comparacion;
-        }
+        }*/
 
         public string Detalles
         {
@@ -179,5 +224,7 @@ namespace Entidades
             }
         }
 
+        public int HorasProduccion { get => _horasProduccion; set => _horasProduccion = value; }
+        public int CantidadPrendas { get => _cantidadPrendas; set => _cantidadPrendas = value; }
     }
 }

@@ -9,15 +9,15 @@ namespace VistaConfeccion
             InitializeComponent();
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void BtnAgregar_Click(object sender, EventArgs e)
         {
             try
             {
-                if (CmbCategoria.SelectedIndex > -1 && NumPrendasHora.Value > 0)
+                if (CmbCategoria.SelectedIndex > -1 && NumHoras.Value > 0)
                 {
                     CategoriaPrenda categoriaSeleccionada = (CategoriaPrenda)Enum.Parse(typeof(CategoriaPrenda), CmbCategoria.SelectedIndex.ToString());
 
-                    Prenda prendaCreada = Administracion.CrearPrenda(categoriaSeleccionada, (int)NumPrendasHora.Value, TxtDistintivo.Text, RchDescripcion.Text);
+                    Prenda prendaCreada = Administracion.CrearPrenda(categoriaSeleccionada, (int)NumUnidaes.Value, (int)NumHoras.Value, TxtDistintivo.Text, RchDescripcion.Text);
 
                     if (prendaCreada is not null)
                     {
@@ -46,34 +46,34 @@ namespace VistaConfeccion
         }
         private void CargarDatagridPrendasSistema()
         {
-            if (GestionDatos.PrendasSistema is not null)
+            // Suponiendo que tienes un DataGridView llamado dataGridViewConfecciones
+            DtgPrendasSistema.DataSource = null;
+            // Limpiar las columnas existentes en el DataGridView
+            DtgPrendasSistema.Columns.Clear();
+
+            // Agregar las columnas necesarias al DataGridView
+            DtgPrendasSistema.Columns.Add("ColumnaCategoria", "Categoria");
+            DtgPrendasSistema.Columns.Add("ColumnaPrendas", "Unidades Produccion");
+            DtgPrendasSistema.Columns.Add("ColumnaHoras", "Horas Produccion");
+            DtgPrendasSistema.Columns.Add("ColumnaPrendasHora", "Promedio Prendas/Hora");
+            DtgPrendasSistema.Columns.Add("ColumnaDetalle", "Detalle");
+            DtgPrendasSistema.Columns.Add("ColumnaAdicionales", "Adicionales");
+
+            // Recorrer el diccionario y agregar filas al DataGridView
+            foreach (Prenda prenda in GestionDatos.PrendasSistema)
             {
+                // Crear una nueva fila y asignar los valores de las celdas
+                DataGridViewRow fila = new();
+                fila.CreateCells(DtgPrendasSistema);
+                fila.Cells[0].Value = prenda.Categoria; // Suponiendo que Prenda tiene una propiedad "Nombre"
+                fila.Cells[1].Value = prenda.CantidadPrendas; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[2].Value = prenda.HorasProduccion; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[3].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[4].Value = prenda.Detalles; // Suponiendo que TallePrenda tiene una propiedad "Talle"
+                fila.Cells[5].Value = prenda.Adicional; // Suponiendo que Prenda tiene una propiedad "Cantidad"
 
-                // Suponiendo que tienes un DataGridView llamado dataGridViewConfecciones
-                DtgPrendasSistema.DataSource = null;
-                // Limpiar las columnas existentes en el DataGridView
-                DtgPrendasSistema.Columns.Clear();
-
-                // Agregar las columnas necesarias al DataGridView
-                DtgPrendasSistema.Columns.Add("ColumnaCategoria", "Categoria");
-                DtgPrendasSistema.Columns.Add("ColumnaPrendasHora", "PrendasHora");
-                DtgPrendasSistema.Columns.Add("ColumnaDetalle", "Detalle");
-                DtgPrendasSistema.Columns.Add("ColumnaAdicionales", "Adicionales");
-
-                // Recorrer el diccionario y agregar filas al DataGridView
-                foreach (Prenda prenda in GestionDatos.PrendasSistema)
-                {
-                    // Crear una nueva fila y asignar los valores de las celdas
-                    DataGridViewRow fila = new();
-                    fila.CreateCells(DtgPrendasSistema);
-                    fila.Cells[0].Value = prenda.Categoria; // Suponiendo que Prenda tiene una propiedad "Nombre"
-                    fila.Cells[1].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
-                    fila.Cells[3].Value = prenda.Detalles; // Suponiendo que TallePrenda tiene una propiedad "Talle"
-                    fila.Cells[2].Value = prenda.Adicional; // Suponiendo que Prenda tiene una propiedad "Cantidad"
-
-                    // Agregar la fila al DataGridView
-                    DtgPrendasSistema.Rows.Add(fila);
-                }
+                // Agregar la fila al DataGridView
+                DtgPrendasSistema.Rows.Add(fila);
             }
         }
 
@@ -94,7 +94,7 @@ namespace VistaConfeccion
         {
             TxtDistintivo.Text = string.Empty;
             RchDescripcion.Clear();
-            NumPrendasHora.Value = 1;
+            NumHoras.Value = 1;
         }
     }
 }
