@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using Procesos;
+using Vista;
 
 namespace VistaConfeccion
 {
@@ -17,7 +18,12 @@ namespace VistaConfeccion
 
         private void BtnAgregarConfeccion_Click(object sender, EventArgs e)
         {
-
+            FrmCalendario registro = new();
+            if (registro.ShowDialog() != DialogResult.OK)
+            {
+                registro.Close();
+            }
+            /*
             if (CorteCreado != null && GestionDatos.PrendasParaCortes is not null)
             {
                 fechaInicio = McFechaEntrega.SelectionStart;
@@ -49,7 +55,7 @@ namespace VistaConfeccion
                 {
                     LblErrores.Text = "Debe elegir prendas del sistema para mandar a produccion";
                 }
-            }
+            }*/
         }
 
         private void BtnCancelar_Click(object sender, EventArgs e)
@@ -95,14 +101,17 @@ namespace VistaConfeccion
                             TallePrenda talle = talles[CmbTalle.SelectedIndex];
 
                             //si el corte es nulo se crea uno nuevo
-                            CorteCreado = new(EtapaCorte.Tizando);
+                            if (CorteCreado is null)
+                            {
+                                CorteCreado = new(EtapaCorte.Tizando);
+                            }
                             PrendaSeleccionada.UnidadesCorte = (int)NumUnidades.Value;
                             PrendaSeleccionada.TallePrenda = talle;
                             //Agrego la prenda a la lista de prendas guardada en el corte creado
                             if (CorteCreado.PrendasEnConfeccion is not null)
                             {
                                 Administracion.AgregarPrenda_Corte(CorteCreado, PrendaSeleccionada);
-                                
+                                CargarDatagridPrendasCorte();
                             }
                             else
                             {
@@ -227,7 +236,7 @@ namespace VistaConfeccion
                 fila.Cells[0].Value = prenda.Categoria; // Suponiendo que Prenda tiene una propiedad "Nombre"
                 fila.Cells[1].Value = prenda.CantidadPrendas; // Suponiendo que Prenda tiene una propiedad "Tipo"
                 fila.Cells[2].Value = prenda.HorasProduccion; // Suponiendo que Prenda tiene una propiedad "Tipo"
-                fila.Cells[3].Value = prenda.CantidadPrendas / prenda.HorasProduccion; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[3].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
                 fila.Cells[4].Value = prenda.Detalles; // Suponiendo que TallePrenda tiene una propiedad "Talle"
                 fila.Cells[5].Value = prenda.Adicional; // Suponiendo que Prenda tiene una propiedad "Cantidad"
 

@@ -4,19 +4,19 @@ namespace Procesos
     public static class EstimacionCortes
     {
 
-        public static int CalcularHorasCorte(SortedDictionary<TallePrenda, List<Prenda>> PrendasConfeccion, int cantidadPrendasRequeridas)
+        public static int CalcularHorasCorte(SortedDictionary<TallePrenda, List<Prenda>> PrendasCorte, int cantidadPrendasRequeridas)
         {
             try
             {
 
                 int totalHorasProduccion;
 
-                if (PrendasConfeccion is not null && PrendasConfeccion.Count > 0)
+                if (PrendasCorte is not null && PrendasCorte.Count > 0)
                 {
                     int totalPrendas = 0;
                     int totalHoras = 0;
 
-                    foreach (KeyValuePair<TallePrenda, List<Prenda>> par in PrendasConfeccion)
+                    foreach (KeyValuePair<TallePrenda, List<Prenda>> par in PrendasCorte)
                     {
                         List<Prenda> prendas = par.Value;
 

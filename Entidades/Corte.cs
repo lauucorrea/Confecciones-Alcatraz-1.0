@@ -17,7 +17,7 @@ namespace Entidades
         Tizando,
         Encimando,
         Cortando,
-        Finalizado
+        Terminado
     }
 
     public class Corte
@@ -26,7 +26,7 @@ namespace Entidades
         private DateTime _fechaInicio;
         private EtapaCorte _etapa;
         private int _horasTotalesCorte;
-        private SortedDictionary<TallePrenda, List<Prenda>>? _prendasEnConfeccion;
+        private SortedDictionary<TallePrenda, List<Prenda>> _prendasEnConfeccion;
         private int _identificadorDeConfeccion;
         private static int _contadorConfecciones;
         static Corte()
@@ -49,7 +49,9 @@ namespace Entidades
         public override string ToString()
         {
             StringBuilder sb = new();
+            sb.AppendLine("Fecha de entrega: ");
             sb.AppendLine(FechaFinal.ToString());
+            sb.AppendLine("Fecha de inicio: ");
             sb.AppendLine(FechaInicio.ToString());
             if (PrendasEnConfeccion is not null)
             {
@@ -58,7 +60,12 @@ namespace Entidades
                 {
                     foreach (Prenda prenda in par.Value)
                     {
-                        sb.AppendLine(prenda.ToString());
+                        for(int i = 1; i <= par.Value.Count() ; i++)
+                        {
+                            sb.AppendLine("Prenda "+ i);
+                            sb.AppendLine(prenda.ToString());
+                            
+                        }
                     }
                 }
             }
@@ -77,7 +84,7 @@ namespace Entidades
             get => _horasTotalesCorte;
             set => _horasTotalesCorte = value;
         }
-        public SortedDictionary<TallePrenda, List<Prenda>>? PrendasEnConfeccion
+        public SortedDictionary<TallePrenda, List<Prenda>> PrendasEnConfeccion
         {
             set
             {

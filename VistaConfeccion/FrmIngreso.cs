@@ -22,7 +22,8 @@ namespace Vista
         {
             try
             {
-                if (LogCredenciales(TxtUsuario.Text, TxtPassword.Text))
+                PersonaLogueada = LogCredenciales(TxtUsuario.Text,TxtPassword.Text);
+                if (PersonaLogueada is not null)
                 {
                     FrmMain menu = new(PersonaLogueada);
                     menu.Show();
@@ -34,9 +35,9 @@ namespace Vista
                 MessageBox.Show(ex.Message);
             }
         }
-        private bool LogCredenciales(string usuario, string passwd)
+        private Persona LogCredenciales(string usuario, string passwd )
         {
-            bool seEncontroPersona = false;
+            Persona personaEncontrada = new();
 
             if (!string.IsNullOrEmpty(usuario) && !string.IsNullOrEmpty(passwd))
             {
@@ -45,17 +46,20 @@ namespace Vista
 
                     if (persona.AdministrarLogIn(usuario, passwd))
                     {
-                        seEncontroPersona = true;
+                        personaEncontrada = persona;
                     }
 
                 }
-                if (!seEncontroPersona)
+                if (personaEncontrada is null)
                 {
                     TxtUsuario.Text = string.Empty;
                     TxtPassword.Text = string.Empty;
                     throw new Exception("Los registros del usuario no coinciden");
                 }
-                return seEncontroPersona;
+                else
+                {
+                    return personaEncontrada;
+                }
             }
             throw new Exception("Los campos deben completarse para loguear");
 

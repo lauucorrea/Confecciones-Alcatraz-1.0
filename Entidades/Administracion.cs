@@ -2,6 +2,25 @@
 {
     public static class Administracion
     {
+        static List<string> EnumALista<T>()
+        {
+            var enumType = typeof(T);
+
+            if (!enumType.IsEnum)
+            {
+                throw new ArgumentException("El tipo especificado no es un enum.");
+            }
+
+            var names = Enum.GetNames(enumType);
+            var list = new List<string>(names.Length);
+
+            foreach (string name in names)
+            {
+                list.Add(name);
+            }
+
+            return list;
+        }
         /// <summary>
         /// Creamos la prenda segun los datos ingresados. detallePrenda e informacionAdicional son campos opcionales de la clase Prenda
         /// Talle forma parte de Confecciones ahora, ya que la tanda va a depender del talle, y no se pueden crear 5
@@ -101,36 +120,66 @@
             }
         }
 
-
+        public static List<Corte> ObtenerCorte_Diccionario(DateTime fechaBusqueda)
+        {
+            if (GestionDatos.CortesPorFecha is not null)
+            {
+                foreach (KeyValuePair<DateTime, List<Corte>> kp in GestionDatos.CortesPorFecha)
+                {
+                    if (kp.Key == fechaBusqueda)
+                    {
+                        return kp.Value;
+                    }
+                }
+                return new List<Corte>();
+            }
+            else
+            {
+                throw new NullReferenceException("No hay cortes cargados en el sistema");
+            }
+        }
         public static bool AgregarCorte_Diccionario(Corte unCorte)
         {
             try
             {
                 if (unCorte is not null)
                 {
-                    if (EncontrarCorte(unCorte))
+                    if (!EncontrarCorte(unCorte))
                     {
-                        foreach (KeyValuePair<DateTime, List<Corte>> par in GestionDatos.CortesPorFecha)
+                        if (GestionDatos.CortesPorFecha.ContainsKey(unCorte.FechaInicio))
                         {
-                            if (par.Key == unCorte.FechaFinal)
+
+                            foreach (KeyValuePair<DateTime, List<Corte>> par in GestionDatos.CortesPorFecha)
                             {
-                                par.Value.Add(unCorte);
+                                if (par.Key == unCorte.FechaInicio)
+                                {
+                                    par.Value.Add(unCorte);
+                                    return true;
+                                }
+
                             }
 
                         }
-                        return true;
+                        else
+                        {
+                            //el corte no existe aun en el sistema
+                            List<Corte> cortes = new()
+                            {
+                                unCorte
+                            };
+
+                            if (cortes is not null)
+                            {
+                                GestionDatos.CortesPorFecha.Add(unCorte.FechaInicio, cortes);
+                                return true;
+                            }
+                        }
                     }
                     else
                     {
-                        //el corte no existe aun en el sistema
-                        List<Corte> cortes = new();
-                        cortes.Add(unCorte);
-                        if (cortes is not null)
-                        {
-                            GestionDatos.CortesPorFecha.Add(unCorte.FechaFinal, cortes);
-                            return true;
-                        }
+                        throw new Exception("El corte: " + unCorte.ToString() + " ya existe en nuestro sistema");
                     }
+
                     return false;
                 }
                 else
@@ -205,6 +254,92 @@
                 throw new ArgumentNullException("El corte recibido no es valido");
             }
         }
+        public static List<int> ObtenerConteoDeEstado(List<Corte> listaCortes)
+        {
+            List<int> conteo = new();
+            int contadorTizando = 0;
+            int contadorEncimando = 0;
+            int contadorCortando = 0;
+            int contadorTerminando = 0;
+
+            foreach (Corte corte in listaCortes)
+            {
+                switch (corte.Etapa.ToString())
+                {
+                    case "Tizando":
+                        contadorTizando++;
+                        break;
+                    case "Encimando":
+                        contadorEncimando++;
+                        break;
+                    case "Cortando":
+                        contadorCortando++;
+                        break;
+                    case "Terminando":
+                        contadorTerminando++;
+                        break;
+                }
+            }
+
+            conteo.Add(contadorTizando);
+            conteo.Add(contadorEncimando);
+            conteo.Add(contadorCortando);
+            conteo.Add(contadorTerminando);
+
+            return conteo;
+        }
+        public static List<int> ObtenerConteoDeTalles(Corte corte)
+        {
+            List<int> conteo = new();
+            int contadorXS = 0;
+            int contadorS = 0;
+            int contadorM = 0;
+            int contadorL = 0;
+            int contadorXL = 0;
+            int contadorXXL = 0;
+
+            foreach (KeyValuePair<TallePrenda, List<Prenda>> kvp in corte.PrendasEnConfeccion)
+            {
+                foreach (Prenda prenda in kvp.Value)
+                {
+
+                    switch (prenda.TallePrenda.ToString())
+                    {
+                        case "XS":
+                            contadorXS++;
+                            break;
+                        case "S":
+                            contadorS++;
+                            break;
+                        case "M":
+                            contadorM++;
+                            break;
+                        case "L":
+                            contadorL++;
+                            break;
+                        case "XL":
+                            contadorXL++;
+                            break;
+                        case "XXL":
+                            contadorXXL++;
+                            break;
+                    }
+                }
+
+            }
+
+            conteo.Add(contadorXS);
+            conteo.Add(contadorS);
+            conteo.Add(contadorM);
+            conteo.Add(contadorL);
+            conteo.Add(contadorXL);
+            conteo.Add(contadorXXL);
+
+            return conteo;
+        }
+
+
+
 
 
 

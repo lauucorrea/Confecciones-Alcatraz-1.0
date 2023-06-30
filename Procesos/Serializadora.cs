@@ -97,7 +97,7 @@ namespace Procesos
             rutaArchivo = Path.Combine(rutaBase, RutaConfeccionesJSON);
             string jsonString = File.ReadAllText(rutaArchivo);
 
-            SortedDictionary<DateTime, List<Corte>>? dict = JsonConvert.DeserializeObject<SortedDictionary<DateTime, List<Corte>>>(jsonString);
+            Dictionary<DateTime, List<Corte>>? dict = JsonConvert.DeserializeObject<Dictionary<DateTime, List<Corte>>>(jsonString);
 
             if (dict is not null)
             {

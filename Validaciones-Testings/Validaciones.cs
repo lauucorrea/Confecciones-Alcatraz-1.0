@@ -8,6 +8,25 @@ namespace Validaciones_Testings
 {
     public static class Validaciones
     {
+        static List<string> EnumALista<T>()
+        {
+            var enumType = typeof(T);
+
+            if (!enumType.IsEnum)
+            {
+                throw new ArgumentException("El tipo especificado no es un enum.");
+            }
+
+            var names = Enum.GetNames(enumType);
+            var list = new List<string>(names.Length);
+
+            foreach (string name in names)
+            {
+                list.Add(name);
+            }
+
+            return list;
+        }
         /// <summary>
         /// Si la palabra completa se convierte, es un numero
         /// Si la letra recorrida se convierte, es alfanumerico
