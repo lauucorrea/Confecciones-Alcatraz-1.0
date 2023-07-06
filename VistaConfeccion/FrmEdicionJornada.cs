@@ -9,7 +9,8 @@ namespace Vista
         public FrmEdicionJornada(Persona personaLogueada)
         {
             InitializeComponent();
-            if (PersonaLogueada is not null)
+
+            if (personaLogueada is not null)
             {
 
                 PersonaLogueada = personaLogueada;
