@@ -14,16 +14,18 @@ namespace Vista
 {
     public partial class FrmCalendario : Form
     {
-        public FrmCalendario()
+        Persona personaLogueada;
+        public FrmCalendario(Persona persona)
         {
             InitializeComponent();
+            personaLogueada = persona;
         }
 
         private void FrmCalendario_Load(object sender, EventArgs e)
         {
-            CreateDataGridView(GestionDatos.DiasLaborales);
+            CreateDataGridView(personaLogueada.DiasLaborales);
             DtgCalendario.RowTemplate.Height = 30;
-            DtgCalendario.Dock = DockStyle.Fill;
+           // DtgCalendario.Dock = DockStyle.Fill;
         }
 
         private void CreateDataGridView(List<string> diasLaborales)

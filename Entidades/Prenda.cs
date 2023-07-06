@@ -9,7 +9,14 @@ namespace Entidades
         Campera,
         Chomba
     }
-
+    public enum EtapaCorte
+    {
+        Pendiente,
+        Tizando,
+        Encimando,
+        Cortando,
+        Terminado
+    }
 
     public class Prenda 
     {
@@ -22,6 +29,7 @@ namespace Entidades
 
         private int _unidadesCorte;
         private decimal _horasDeProduccion;
+        private EtapaCorte _etapa;
         //informacion adicional
         private string? _detallePrenda;
         private string? _informacionAdicional;
@@ -76,7 +84,11 @@ namespace Entidades
                 HorasDeProduccion = UnidadesCorte / PrendasHora;
             }
         }
-
+        public EtapaCorte Etapa
+        {
+            get => _etapa;
+            set => _etapa = value;
+        }
         public decimal HorasDeProduccion
         {
             get => _horasDeProduccion;

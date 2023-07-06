@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using Newtonsoft.Json;
+using System.Text;
 using System.Text.Json;
 namespace Procesos
 {
@@ -73,19 +74,27 @@ namespace Procesos
                 foreach (KeyValuePair<DateTime, List<Corte>> par in GestionDatos.CortesPorFecha)
                 {
                     DateTime fecha = par.Key;
-                    List<Corte> confecciones = par.Value;
+                    List<Corte> cortesSistema = par.Value;
 
-                    foreach (Corte confeccion in confecciones)
+                    foreach (Corte corte in cortesSistema)
                     {
-                        if (confeccion is not null)
+                        if (corte is not null)
                         {
-                            DateTime fechaInicio = confeccion.FechaInicio;
-                            DateTime fechaFinal = confeccion.FechaFinal;
-                            EtapaCorte condicion = confeccion.Etapa;
-                            int idConfeccion = confeccion.IdentificadorDeConfeccion;
-
+                            DateTime fechaInicio = corte.FechaInicio;
+                            DateTime fechaFinal = corte.FechaFinal;
+                            int idConfeccion = corte.IdentificadorDeConfeccion;
+                            StringBuilder sb = new();
+                            List<Prenda> listaPrendasCorte = Administracion.ObtenerPrendasCorte(corte);
+                            for(int i = 0; i < listaPrendasCorte.Count; i++)
+                            {
+                                if(i != listaPrendasCorte.Count - 1)
+                                {
+                                    sb.Append(",");
+                                }
+                                sb.Append(listaPrendasCorte[i].ToString());
+                            }
                             // Escribir los datos en una línea separada por comas
-                            writer.WriteLine($"{fechaInicio}, {fechaFinal}, {condicion}, {idConfeccion}");
+                            writer.WriteLine($"{fechaInicio}, {fechaFinal}, {sb.ToString()}, {idConfeccion}");
                         }
                     }
                 }

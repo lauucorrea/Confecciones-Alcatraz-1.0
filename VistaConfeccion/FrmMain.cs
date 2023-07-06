@@ -8,8 +8,7 @@ namespace VistaConfeccion
 {
     public partial class FrmMain : Form
     {
-        private TimeSpan horarioApertura;
-        private TimeSpan horarioCierre;
+
         private Persona PersonaLogueada;
 
         public FrmMain(Persona personaLogueada)
@@ -18,8 +17,6 @@ namespace VistaConfeccion
             if (personaLogueada is not null)
             {
                 PersonaLogueada = personaLogueada;
-                horarioApertura = new(9, 0, 0); // Ejemplo: 9:00 AM
-                horarioCierre = new(17, 0, 0); // Ejemplo: 5:00 PM
             }
         }
         private void FrmConfecciones_Load(object sender, EventArgs e)
@@ -27,7 +24,7 @@ namespace VistaConfeccion
             //CrearDatagridCortes_General(GestionDatos.CortesPorFecha.Values.SelectMany(c => c).OrderBy(c => c.FechaInicio).ToList());
             CrearCalendario();
             DtgMuestreoMain.RowTemplate.Height = 30;
-           
+
         }
 
         public void CrearCalendario()
@@ -47,7 +44,7 @@ namespace VistaConfeccion
 
             SortedDictionary<DateTime, string> diasLaboralesProximos = new();
 
-            if (GestionDatos.DiasLaborales is not null)
+            if (PersonaLogueada.DiasLaborales is not null)
             {
                 CultureInfo cultura = new("es-ES");
                 string diaSemana;
@@ -59,7 +56,7 @@ namespace VistaConfeccion
                     diaSemana = cultura.DateTimeFormat.GetDayName(fechaActual.DayOfWeek);
                     diaSemana = cultura.TextInfo.ToTitleCase(diaSemana);
 
-                    if (GestionDatos.DiasLaborales.Contains(diaSemana))
+                    if (PersonaLogueada.DiasLaborales.Contains(diaSemana))
                     {
                         diaSemana = $"{diaSemana} {fechaActual.Day}/{fechaActual.Month}";
                         diasLaboralesProximos.Add(fechaActual, diaSemana);
@@ -75,7 +72,7 @@ namespace VistaConfeccion
                 }
 
                 // Obtén la cantidad de horas de trabajo
-                TimeSpan horasJornada = horarioCierre - horarioApertura; // Ejemplo: 8 horas
+                TimeSpan horasJornada = PersonaLogueada.HorarioCierre - PersonaLogueada.HorarioApertura; // Ejemplo: 8 horas
 
                 // Agrega las filas de horas
                 for (int j = 0; j < (int)horasJornada.TotalHours; j++)
@@ -179,7 +176,7 @@ namespace VistaConfeccion
         {
             try
             {
-                FrmAltaCortes altaCortes = new();
+                FrmAltaCortes altaCortes = new(PersonaLogueada);
                 if (altaCortes.ShowDialog() != DialogResult.OK)
                 {
                     altaCortes.Close();
@@ -377,7 +374,6 @@ namespace VistaConfeccion
             DtgMuestreoMain.Columns.Add("ColumnaFechaFin", "Fecha Fin");
             DtgMuestreoMain.Columns.Add("ColumnaDuracionHs", "Horas Produccion");
             DtgMuestreoMain.Columns.Add("ColumnaDuracionDias", "Dias Produccion");
-            DtgMuestreoMain.Columns.Add("ColumnaEtapa", "Etapa");
             DtgMuestreoMain.Columns.Add("ColumnaPrendas", "Prendas en corte");
 
             // Recorrer el diccionario y agregar filas al DataGridView
@@ -400,8 +396,7 @@ namespace VistaConfeccion
                 fila.Cells[2].Value = corte.FechaFinal.ToShortDateString();
                 fila.Cells[3].Value = corte.HorasTotalesCorte;
                 fila.Cells[4].Value = corte.HorasTotalesCorte / PersonaLogueada.HorasJornada;
-                fila.Cells[5].Value = corte.Etapa;
-                fila.Cells[6].Value = corte.PrendasEnConfeccion.Count;
+                fila.Cells[5].Value = corte.PrendasEnConfeccion.Count;
 
                 // Agregar la fila al DataGridView
                 DtgMuestreoMain.Rows.Add(fila);
@@ -454,6 +449,7 @@ namespace VistaConfeccion
             DtgMuestreoMain.Columns.Add("ColumnaFechaInicio", "Fecha inicio");
             DtgMuestreoMain.Columns.Add("ColumnaFechaFin", "Fecha fin");
             DtgMuestreoMain.Columns.Add("ColumnaTotalPrendas", "Cantidad prendas");
+            DtgMuestreoMain.Columns.Add("ColumnaEtapaTizando", "Pendiente");
             DtgMuestreoMain.Columns.Add("ColumnaEtapaTizando", "Tizando");
             DtgMuestreoMain.Columns.Add("ColumnaEtapaEncimando", "Encimando");
             DtgMuestreoMain.Columns.Add("ColumnaEtapaCortando", "Cortando");
@@ -465,19 +461,24 @@ namespace VistaConfeccion
             {
                 foreach (Corte corte in par.Value)
                 {
-                    List<int> conteo = Administracion.ObtenerConteoDeEstado(par.Value);
-                    DataGridViewRow fila = new();
-                    fila.CreateCells(DtgMuestreoMain);
-                    fila.Cells[0].Value = corte.IdentificadorDeConfeccion;
-                    fila.Cells[1].Value = corte.FechaInicio;
-                    fila.Cells[2].Value = par.Key;
-                    fila.Cells[3].Value = corte.PrendasEnConfeccion.Count();
-                    fila.Cells[4].Value = conteo[0];
-                    fila.Cells[5].Value = conteo[1];
-                    fila.Cells[6].Value = conteo[2];
-                    fila.Cells[7].Value = conteo[3];
-                    fila.Cells[8].Value = corte.HorasTotalesCorte;
-                    DtgMuestreoMain.Rows.Add(fila);
+                    foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnConfeccion)
+                    {
+                        List<int> conteo = Administracion.ObtenerConteoDeEstado(par.Value);
+
+                        DataGridViewRow fila = new();
+                        fila.CreateCells(DtgMuestreoMain);
+                        fila.Cells[0].Value = corte.IdentificadorDeConfeccion;
+                        fila.Cells[1].Value = corte.FechaInicio;
+                        fila.Cells[2].Value = par.Key;
+                        fila.Cells[3].Value = corte.PrendasEnConfeccion.Count();
+                        fila.Cells[4].Value = conteo[0];
+                        fila.Cells[5].Value = conteo[1];
+                        fila.Cells[6].Value = conteo[2];
+                        fila.Cells[7].Value = conteo[3];
+                        fila.Cells[8].Value = conteo[4];
+                        fila.Cells[9].Value = corte.HorasTotalesCorte;
+                        DtgMuestreoMain.Rows.Add(fila);
+                    }
                 }
 
 
@@ -541,7 +542,7 @@ namespace VistaConfeccion
             try
             {
 
-                FrmEdicionJornada frmEdicion = new();
+                FrmEdicionJornada frmEdicion = new(PersonaLogueada);
 
                 if (frmEdicion.ShowDialog() != DialogResult.OK)
                 {
@@ -553,5 +554,6 @@ namespace VistaConfeccion
                 MessageBox.Show(ex.Message);
             }
         }
+
     }
 }

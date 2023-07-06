@@ -37,8 +37,6 @@
             LblTalle = new Label();
             LblUnidades = new Label();
             NumUnidades = new NumericUpDown();
-            McFechaEntrega = new MiCalendario();
-            label1 = new Label();
             BtnAgregarPrenda = new Button();
             DtgPrendasConfeccion = new DataGridView();
             DtgFechasPrevistas = new DataGridView();
@@ -125,26 +123,6 @@
             NumUnidades.Name = "NumUnidades";
             NumUnidades.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // McFechaEntrega
-            // 
-            resources.ApplyResources(McFechaEntrega, "McFechaEntrega");
-            McFechaEntrega.BackColor = Color.LightSteelBlue;
-            McFechaEntrega.Cursor = Cursors.Hand;
-            McFechaEntrega.ForeColor = SystemColors.ControlText;
-            McFechaEntrega.MaxSelectionCount = 800;
-            McFechaEntrega.Name = "McFechaEntrega";
-            McFechaEntrega.ShowToday = false;
-            McFechaEntrega.TitleBackColor = Color.AliceBlue;
-            McFechaEntrega.TitleForeColor = Color.Black;
-            McFechaEntrega.TrailingForeColor = Color.DarkGoldenrod;
-            McFechaEntrega.DateChanged += McFechaEntrega_DateChanged;
-            McFechaEntrega.DateSelected += McFechaEntrega_DateSelected;
-            // 
-            // label1
-            // 
-            resources.ApplyResources(label1, "label1");
-            label1.Name = "label1";
-            // 
             // BtnAgregarPrenda
             // 
             resources.ApplyResources(BtnAgregarPrenda, "BtnAgregarPrenda");
@@ -224,8 +202,6 @@
             Controls.Add(DtgFechasPrevistas);
             Controls.Add(DtgPrendasConfeccion);
             Controls.Add(BtnAgregarPrenda);
-            Controls.Add(label1);
-            Controls.Add(McFechaEntrega);
             Controls.Add(NumUnidades);
             Controls.Add(LblUnidades);
             Controls.Add(LblTalle);
@@ -254,8 +230,6 @@
         private Label LblTalle;
         private Label LblUnidades;
         private NumericUpDown NumUnidades;
-        private MiCalendario McFechaEntrega;
-        private Label label1;
         private Button BtnAgregarPrenda;
         private DataGridView DtgPrendasConfeccion;
         private DataGridView DtgFechasPrevistas;

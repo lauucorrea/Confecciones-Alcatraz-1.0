@@ -92,7 +92,7 @@
             // 
             usuariosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { agregToolStripMenuItem, mostrarUsuariosToolStripMenuItem });
             usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            usuariosToolStripMenuItem.Size = new Size(180, 22);
+            usuariosToolStripMenuItem.Size = new Size(169, 22);
             usuariosToolStripMenuItem.Text = "Usuarios";
             usuariosToolStripMenuItem.Click += usuariosToolStripMenuItem_Click;
             // 
@@ -114,7 +114,7 @@
             // 
             prendasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { agregarPrendaToolStripMenuItem, mostrarPrendasToolStripMenuItem });
             prendasToolStripMenuItem.Name = "prendasToolStripMenuItem";
-            prendasToolStripMenuItem.Size = new Size(180, 22);
+            prendasToolStripMenuItem.Size = new Size(169, 22);
             prendasToolStripMenuItem.Text = "Prendas";
             // 
             // agregarPrendaToolStripMenuItem
@@ -135,7 +135,7 @@
             // 
             cortesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevoCorteToolStripMenuItem, mostrarCortesToolStripMenuItem });
             cortesToolStripMenuItem.Name = "cortesToolStripMenuItem";
-            cortesToolStripMenuItem.Size = new Size(180, 22);
+            cortesToolStripMenuItem.Size = new Size(169, 22);
             cortesToolStripMenuItem.Text = "Cortes";
             // 
             // crearNuevoCorteToolStripMenuItem
@@ -156,7 +156,7 @@
             // 
             confreccionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevaConfeccionToolStripMenuItem, mostrarConfeccionesToolStripMenuItem });
             confreccionesToolStripMenuItem.Name = "confreccionesToolStripMenuItem";
-            confreccionesToolStripMenuItem.Size = new Size(180, 22);
+            confreccionesToolStripMenuItem.Size = new Size(169, 22);
             confreccionesToolStripMenuItem.Text = "Confrecciones";
             // 
             // crearNuevaConfeccionToolStripMenuItem
@@ -175,7 +175,7 @@
             // 
             terminacionToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevaTerminacionToolStripMenuItem, mostrarTerminacionesToolStripMenuItem });
             terminacionToolStripMenuItem.Name = "terminacionToolStripMenuItem";
-            terminacionToolStripMenuItem.Size = new Size(180, 22);
+            terminacionToolStripMenuItem.Size = new Size(169, 22);
             terminacionToolStripMenuItem.Text = "Terminaciones";
             // 
             // crearNuevaTerminacionToolStripMenuItem
@@ -193,7 +193,7 @@
             // modificarJornadaToolStripMenuItem
             // 
             modificarJornadaToolStripMenuItem.Name = "modificarJornadaToolStripMenuItem";
-            modificarJornadaToolStripMenuItem.Size = new Size(180, 22);
+            modificarJornadaToolStripMenuItem.Size = new Size(169, 22);
             modificarJornadaToolStripMenuItem.Text = "Modificar Jornada";
             modificarJornadaToolStripMenuItem.Click += modificarJornadaToolStripMenuItem_Click;
             // 
@@ -215,7 +215,7 @@
             // 
             reporteDeUsuariosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ordenarPorJerarquiaToolStripMenuItem, ordenarPorNombreToolStripMenuItem, ordenarPorDNIToolStripMenuItem });
             reporteDeUsuariosToolStripMenuItem.Name = "reporteDeUsuariosToolStripMenuItem";
-            reporteDeUsuariosToolStripMenuItem.Size = new Size(150, 22);
+            reporteDeUsuariosToolStripMenuItem.Size = new Size(180, 22);
             reporteDeUsuariosToolStripMenuItem.Text = "Usuarios";
             // 
             // ordenarPorJerarquiaToolStripMenuItem
@@ -243,7 +243,7 @@
             // 
             reportesDePrendasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ordenarPorTalleToolStripMenuItem, ordenarPorTipoToolStripMenuItem, ordenarPorProduccionToolStripMenuItem });
             reportesDePrendasToolStripMenuItem.Name = "reportesDePrendasToolStripMenuItem";
-            reportesDePrendasToolStripMenuItem.Size = new Size(150, 22);
+            reportesDePrendasToolStripMenuItem.Size = new Size(180, 22);
             reportesDePrendasToolStripMenuItem.Text = "Prendas";
             // 
             // ordenarPorTalleToolStripMenuItem
@@ -271,7 +271,7 @@
             // 
             cortesToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { porFechaToolStripMenuItem, porFechaDeEntregaToolStripMenuItem, porEtapaToolStripMenuItem, porTiempoDeProduccionToolStripMenuItem, porTallesDePrendasToolStripMenuItem });
             cortesToolStripMenuItem1.Name = "cortesToolStripMenuItem1";
-            cortesToolStripMenuItem1.Size = new Size(150, 22);
+            cortesToolStripMenuItem1.Size = new Size(180, 22);
             cortesToolStripMenuItem1.Text = "Cortes";
             // 
             // porFechaToolStripMenuItem
@@ -312,13 +312,13 @@
             // confreccionesToolStripMenuItem1
             // 
             confreccionesToolStripMenuItem1.Name = "confreccionesToolStripMenuItem1";
-            confreccionesToolStripMenuItem1.Size = new Size(150, 22);
+            confreccionesToolStripMenuItem1.Size = new Size(180, 22);
             confreccionesToolStripMenuItem1.Text = "Confrecciones";
             // 
             // terminacionesToolStripMenuItem
             // 
             terminacionesToolStripMenuItem.Name = "terminacionesToolStripMenuItem";
-            terminacionesToolStripMenuItem.Size = new Size(150, 22);
+            terminacionesToolStripMenuItem.Size = new Size(180, 22);
             terminacionesToolStripMenuItem.Text = "Terminaciones";
             // 
             // DtgMuestreoMain

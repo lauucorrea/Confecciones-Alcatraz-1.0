@@ -207,40 +207,43 @@
             {
                 if (prendaSeleccionada is not null)
                 {
-                    if (!corte.EncontrarPrenda(prendaSeleccionada))
+                    if (!corte.EncontrarPrenda(prendaSeleccionada) && corte.PrendasEnConfeccion is not null)
                     {
-
                         if (corte.PrendasEnConfeccion.ContainsKey(prendaSeleccionada.TallePrenda))
                         {
-                            if (corte.PrendasEnConfeccion is not null && corte.PrendasEnConfeccion.Count > 0)
+
+                            if (corte.PrendasEnConfeccion.Count > 0)
                             {
 
                                 foreach (KeyValuePair<TallePrenda, List<Prenda>> par in corte.PrendasEnConfeccion)
                                 {
                                     if (par.Key == prendaSeleccionada.TallePrenda)
                                     {
+                                        prendaSeleccionada.Etapa = EtapaCorte.Pendiente;
                                         par.Value.Add(prendaSeleccionada);
                                         return true;
                                     }
                                 }
                             }
                         }
-                        else
-                        {
-                            //la prenda no existe aun en el corte
-                            List<Prenda> prendas = new();
-                            prendas.Add(prendaSeleccionada);
-
-                            if (prendas is not null)
-                            {
-                                corte.PrendasEnConfeccion.Add(prendaSeleccionada.TallePrenda, prendas);
-                                return true;
-                            }
-                        }
                     }
-                    else
+                    else if (corte.PrendasEnConfeccion is null || corte.PrendasEnConfeccion.Count == 0)
                     {
-                        throw new Exception("Ya existe una prenda con estas caracteristicas");
+
+                        //la prenda no existe aun en el corte
+                        List<Prenda> prendas = new()
+                            {
+                                prendaSeleccionada
+                            };
+
+                        if (prendas is not null)
+                        {
+                            corte.PrendasEnConfeccion = new()
+                            {
+                                { prendaSeleccionada.TallePrenda, prendas }
+                            };
+                            return true;
+                        }
                     }
                     return false;
                 }
@@ -257,35 +260,44 @@
         public static List<int> ObtenerConteoDeEstado(List<Corte> listaCortes)
         {
             List<int> conteo = new();
+            int contadorPendiente = 0;
             int contadorTizando = 0;
             int contadorEncimando = 0;
             int contadorCortando = 0;
             int contadorTerminando = 0;
-
             foreach (Corte corte in listaCortes)
             {
-                switch (corte.Etapa.ToString())
+                foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnConfeccion)
                 {
-                    case "Tizando":
-                        contadorTizando++;
-                        break;
-                    case "Encimando":
-                        contadorEncimando++;
-                        break;
-                    case "Cortando":
-                        contadorCortando++;
-                        break;
-                    case "Terminando":
-                        contadorTerminando++;
-                        break;
+                    foreach (Prenda prenda in kp.Value)
+                    {
+                        switch (prenda.Etapa.ToString())
+                        {
+                            case "Pendiente":
+                                contadorPendiente++;
+                                break;
+                            case "Tizando":
+                                contadorTizando++;
+                                break;
+                            case "Encimando":
+                                contadorEncimando++;
+                                break;
+                            case "Cortando":
+                                contadorCortando++;
+                                break;
+                            case "Terminando":
+                                contadorTerminando++;
+                                break;
+                        }
+                    }
                 }
             }
 
+            conteo.Add(contadorPendiente);
             conteo.Add(contadorTizando);
             conteo.Add(contadorEncimando);
             conteo.Add(contadorCortando);
             conteo.Add(contadorTerminando);
-
             return conteo;
         }
         public static List<int> ObtenerConteoDeTalles(Corte corte)
@@ -336,6 +348,30 @@
             conteo.Add(contadorXXL);
 
             return conteo;
+        }
+
+        public static List<Prenda> ObtenerPrendasCorte(Corte corte)
+        {
+            List<Prenda> listaObtenida = new();
+
+            if (corte.PrendasEnConfeccion is not null)
+            {
+
+                foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnConfeccion)
+                {
+                    foreach (Prenda prenda in kp.Value)
+                    {
+                        listaObtenida.Add(prenda);
+                    }
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException("Las prendas recibidas no son validas");
+            }
+
+            return listaObtenida;
+
         }
 
 

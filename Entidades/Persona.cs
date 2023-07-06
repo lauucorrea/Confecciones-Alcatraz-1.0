@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using Entidades;
+﻿using System.Text;
 using Validaciones_Testings;
 
 namespace Entidades
@@ -19,6 +12,9 @@ namespace Entidades
     [Serializable]
     public class Persona
     {
+        private TimeSpan horarioApertura;
+        private TimeSpan horarioCierre;
+        private List<string> diasLaborales;
         private string nombre;
         private string apellido;
         private int dni;
@@ -32,15 +28,26 @@ namespace Entidades
 
         }
         //[JsonConstructor]
-        public Persona(string nombre, string apellido, int dni, string usuario, string password)
+        public Persona(string nombre, string apellido, int dni, string usuario, string password) : this()
         {
             Nombre = nombre;
             Apellido = apellido;
             Dni = dni;
             Usuario = usuario;
             Password = password;
+
+            DiasLaborales = new(){
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes"
+            };
+            HorarioApertura = new(8, 30, 0);
+            HorarioCierre = new(16, 30, 0);
+
         }
-        
+
 
         public Rol RolPersona
         {
@@ -51,6 +58,35 @@ namespace Entidades
         {
             set => horasJornada = value;
             get => horasJornada;
+        }
+        public List<string> DiasLaborales
+        {
+            set => diasLaborales = value;
+            get => diasLaborales;
+        }
+        public TimeSpan HorarioApertura
+        {
+            get => horarioApertura;
+            set
+            {
+                horarioApertura = value;
+            }
+        }
+        public TimeSpan HorarioCierre
+        {
+            get => horarioCierre;
+            set
+            {
+                if (value > horarioApertura)
+                {
+                    horarioCierre = value;
+                }
+                else
+                {
+                    throw new Exception("El horario de cierre debe ser mayor al de apertura");
+                }
+
+            }
         }
 
         public string Nombre

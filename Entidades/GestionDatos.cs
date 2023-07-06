@@ -10,7 +10,6 @@ namespace Entidades
         private static Dictionary<DateTime, List<Corte>>? _cortesPorFecha;
         private static List<Corte>? _cortesConEntregas;
 
-        private static List<string> _diasLaborales;
         static GestionDatos()
         {
             PrendasSistema = new();
@@ -18,21 +17,9 @@ namespace Entidades
             PrendasParaCortes = new();
             PersonasSistema = new();
             CortesConEntregas = new();
-            DiasLaborales = new(){
-            "Lunes",
-            "Martes",
-            "Miercoles",
-            "Jueves",
-            "Viernes"
-            };
+            
             HardcodeListas();
 
-        }
-
-        public static List<string> DiasLaborales
-        {
-            get => _diasLaborales;
-            set => _diasLaborales = value;
         }
         public static List<Persona> PersonasSistema
         {
@@ -134,6 +121,15 @@ namespace Entidades
             prenda4.TallePrenda = TallePrenda.XL;
 
             Persona roberto = new("Roberto", "Correa", 50666452, "Rober", "asd123");
+
+            roberto.DiasLaborales = new(){
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes"
+            };
+
             // Ejemplo 1
             Persona persona1 = new Persona
             {
@@ -233,7 +229,8 @@ namespace Entidades
                 RolPersona = Rol.Propietario
             };
             roberto.RolPersona = Rol.Propietario;
-            roberto.HorasJornada = 8;
+            TimeSpan horasTrabajo = roberto.HorarioCierre.Subtract(roberto.HorarioApertura);
+            roberto.HorasJornada = (int)horasTrabajo.TotalHours;
 
             PersonasSistema.Add(roberto);
             PersonasSistema.Add(persona1);
@@ -252,41 +249,41 @@ namespace Entidades
             PrendasSistema.Add(prenda4);
 
             //creo un corte ficticio
-            Corte corte1 = new(EtapaCorte.Tizando, new DateTime(2023, 7, 25), new DateTime(2023, 7, 25));
+            Corte corte1 = new(new DateTime(2023, 7, 25), new DateTime(2023, 7, 25));
 
             Administracion.AgregarPrenda_Corte(corte1, prenda1);
             Administracion.AgregarPrenda_Corte(corte1, prenda3);
             Administracion.AgregarPrenda_Corte(corte1, prenda4);
 
-            Corte corte2 = new(EtapaCorte.Encimando, new DateTime(2023, 8, 25), new DateTime(2023, 7, 3));
+            Corte corte2 = new(new DateTime(2023, 8, 25), new DateTime(2023, 7, 3));
 
             Administracion.AgregarPrenda_Corte(corte2, prenda1);
             Administracion.AgregarPrenda_Corte(corte2, prenda2);
 
-            Corte corte3 = new(EtapaCorte.Cortando, new DateTime(2023, 8, 25), new DateTime(2023, 7, 4));
+            Corte corte3 = new( new DateTime(2023, 8, 25), new DateTime(2023, 7, 4));
 
             Administracion.AgregarPrenda_Corte(corte3, prenda3);
             Administracion.AgregarPrenda_Corte(corte3, prenda4);
 
-            Corte corte4 = new(EtapaCorte.Terminado, new DateTime(2023, 8, 25), DateTime.Now.Date);
+            Corte corte4 = new(new DateTime(2023, 8, 25), DateTime.Now.Date);
 
             Administracion.AgregarPrenda_Corte(corte4, prenda1);
             Administracion.AgregarPrenda_Corte(corte4, prenda2);;
             Administracion.AgregarPrenda_Corte(corte4, prenda4);
 
-            Corte corte5 = new(EtapaCorte.Terminado, new DateTime(2023, 8, 25), new DateTime(2023, 7, 5));
+            Corte corte5 = new(new DateTime(2023, 8, 25), new DateTime(2023, 7, 5));
 
             Administracion.AgregarPrenda_Corte(corte5, prenda2);
             Administracion.AgregarPrenda_Corte(corte5, prenda3);
             Administracion.AgregarPrenda_Corte(corte5, prenda4);
 
-            Corte corte6 = new(EtapaCorte.Encimando, new DateTime(2023, 8, 24), new DateTime(2023, 7, 6));
+            Corte corte6 = new(new DateTime(2023, 8, 24), new DateTime(2023, 7, 6));
 
             Administracion.AgregarPrenda_Corte(corte6, prenda1);
             Administracion.AgregarPrenda_Corte(corte6, prenda2);
             Administracion.AgregarPrenda_Corte(corte6, prenda3);
 
-            Corte corte7 = new(EtapaCorte.Tizando, new DateTime(2023, 8, 25), DateTime.Now.Date);
+            Corte corte7 = new(new DateTime(2023, 8, 25), DateTime.Now.Date);
 
             Administracion.AgregarPrenda_Corte(corte7, prenda1);
             Administracion.AgregarPrenda_Corte(corte7, prenda3);

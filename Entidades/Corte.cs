@@ -12,19 +12,13 @@ namespace Entidades
         XL,
         XXL
     }
-    public enum EtapaCorte
-    {
-        Tizando,
-        Encimando,
-        Cortando,
-        Terminado
-    }
+    
 
     public class Corte
     {
         private DateTime _fechaFinal;
         private DateTime _fechaInicio;
-        private EtapaCorte _etapa;
+       
         private int _horasTotalesCorte;
         private SortedDictionary<TallePrenda, List<Prenda>> _prendasEnConfeccion;
         private int _identificadorDeConfeccion;
@@ -34,13 +28,12 @@ namespace Entidades
             _contadorConfecciones = 0;
 
         }
-        public Corte(EtapaCorte condicion)
+        public Corte()
         {
-            PrendasEnConfeccion = new();
-            Etapa = condicion;
         }
-        public Corte(EtapaCorte condicion, DateTime fechaFinal, DateTime fechaInicio) : this(condicion)
+        public Corte(DateTime fechaFinal, DateTime fechaInicio):this()
         {
+           // PrendasEnConfeccion = new();
             FechaFinal = fechaFinal;
             FechaInicio = fechaInicio;
             _contadorConfecciones++;
@@ -64,21 +57,18 @@ namespace Entidades
                         {
                             sb.AppendLine("Prenda "+ i);
                             sb.AppendLine(prenda.ToString());
-                            
+                            sb.AppendLine(prenda.Etapa.ToString());
                         }
                     }
                 }
             }
-            sb.AppendLine(Etapa.ToString());
+            
+            
 
             return sb.ToString();
         }
 
-        public EtapaCorte Etapa
-        {
-            get => _etapa;
-            set => _etapa = value;
-        }
+       
         public int HorasTotalesCorte
         {
             get => _horasTotalesCorte;
@@ -92,14 +82,7 @@ namespace Entidades
             }
             get
             {
-                if (_prendasEnConfeccion is not null)
-                {
                     return _prendasEnConfeccion;
-                }
-                else
-                {
-                    throw new Exception("No hay datos registrados de prendas");
-                }
             }
         }
 

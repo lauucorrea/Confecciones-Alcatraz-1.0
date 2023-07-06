@@ -1,5 +1,4 @@
 ﻿using Entidades;
-using Procesos;
 using Vista;
 
 namespace VistaConfeccion
@@ -10,52 +9,59 @@ namespace VistaConfeccion
         DateTime fechaFinal;
         Corte CorteCreado;
         Prenda? PrendaSeleccionada;
+        Persona PersonaLogueada;
         int cantidadHorasCorte;
-        public FrmAltaCortes()
+        public FrmAltaCortes(Persona personaLogueada)
         {
             InitializeComponent();
+            PersonaLogueada = personaLogueada;  
         }
 
         private void BtnAgregarConfeccion_Click(object sender, EventArgs e)
         {
-            FrmCalendario registro = new();
+            FrmCalendario registro = new(PersonaLogueada);
             if (registro.ShowDialog() != DialogResult.OK)
             {
                 registro.Close();
             }
+
+        }
+
+        private void EncontrarFechasConEntregas()
+        {
             /*
-            if (CorteCreado != null && GestionDatos.PrendasParaCortes is not null)
-            {
-                fechaInicio = McFechaEntrega.SelectionStart;
-                if (CorteCreado is not null && CorteCreado.PrendasEnConfeccion is not null)
-                {
-
-                    if (CorteCreado.PrendasEnConfeccion.Count > 0)
-                    {
-
-                        cantidadHorasCorte = EstimacionCortes.CalcularHorasCorte(CorteCreado.PrendasEnConfeccion, Convert.ToInt32(NumUnidades.Value));
-                        if (cantidadHorasCorte != -1)
+                        if (CorteCreado != null && GestionDatos.PrendasParaCortes is not null)
                         {
-                            fechaFinal = fechaInicio.AddDays(cantidadHorasCorte);
-                            GestionDatos.CortesConEntregas = ControlCortes.ObtenerEntregasEnDias(fechaInicio, cantidadHorasCorte);
-                            if (GestionDatos.CortesConEntregas is not null)
+                            fechaInicio = McFechaEntrega.SelectionStart;
+                            if (CorteCreado is not null && CorteCreado.PrendasEnConfeccion is not null)
                             {
-                                CargarDatagridConfeccionesConEntrega();
-                                lblDiasEntrega.Text = cantidadHorasCorte.ToString() + " dias estimados para entrega";
+
+                                if (CorteCreado.PrendasEnConfeccion.Count > 0)
+                                {
+
+                                    cantidadHorasCorte = EstimacionCortes.CalcularHorasCorte(CorteCreado.PrendasEnConfeccion, Convert.ToInt32(NumUnidades.Value));
+                                    if (cantidadHorasCorte != -1)
+                                    {
+                                        fechaFinal = fechaInicio.AddDays(cantidadHorasCorte);
+                                        GestionDatos.CortesConEntregas = ControlCortes.ObtenerEntregasEnDias(fechaInicio, cantidadHorasCorte);
+                                        if (GestionDatos.CortesConEntregas is not null)
+                                        {
+                                            CargarDatagridConfeccionesConEntrega();
+                                            lblDiasEntrega.Text = cantidadHorasCorte.ToString() + " dias estimados para entrega";
+                                        }
+                                        McFechaEntrega.SelectionEnd = fechaFinal;
+                                    }
+                                    else
+                                    {
+                                        LblErrores.Text = "Error al crear esta confeccion. no se pudo calcular el tiempo";
+                                    }
+                                }
                             }
-                            McFechaEntrega.SelectionEnd = fechaFinal;
-                        }
-                        else
-                        {
-                            LblErrores.Text = "Error al crear esta confeccion. no se pudo calcular el tiempo";
-                        }
-                    }
-                }
-                else
-                {
-                    LblErrores.Text = "Debe elegir prendas del sistema para mandar a produccion";
-                }
-            }*/
+                            else
+                            {
+                                LblErrores.Text = "Debe elegir prendas del sistema para mandar a produccion";
+                            }
+                        }*/
         }
 
         private void BtnCancelar_Click(object sender, EventArgs e)
@@ -100,11 +106,6 @@ namespace VistaConfeccion
                             TallePrenda[] talles = (TallePrenda[])Enum.GetValues(typeof(TallePrenda));
                             TallePrenda talle = talles[CmbTalle.SelectedIndex];
 
-                            //si el corte es nulo se crea uno nuevo
-                            if (CorteCreado is null)
-                            {
-                                CorteCreado = new(EtapaCorte.Tizando);
-                            }
                             PrendaSeleccionada.UnidadesCorte = (int)NumUnidades.Value;
                             PrendaSeleccionada.TallePrenda = talle;
                             //Agrego la prenda a la lista de prendas guardada en el corte creado
@@ -141,36 +142,36 @@ namespace VistaConfeccion
             }
         }
 
-        private void McFechaEntrega_DateSelected(object sender, DateRangeEventArgs e)
-        {
-            try
-            {
+        /* private void McFechaEntrega_DateSelected(object sender, DateRangeEventArgs e)
+         {
+             try
+             {
 
-                if (CorteCreado is not null && GestionDatos.PrendasParaCortes is not null)
-                {
-                    CorteCreado.FechaInicio = McFechaEntrega.SelectionRange.Start;
-                }
-                else
-                {
-                    throw new NullReferenceException("Primero debe cargar prendas a la confeccion");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+                 if (CorteCreado is not null && GestionDatos.PrendasParaCortes is not null)
+                 {
+                     CorteCreado.FechaInicio = McFechaEntrega.SelectionRange.Start;
+                 }
+                 else
+                 {
+                     throw new NullReferenceException("Primero debe cargar prendas a la confeccion");
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show(ex.Message);
+             }
+         }
 
-        private void McFechaEntrega_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            if (GestionDatos.PrendasParaCortes is not null && GestionDatos.PrendasParaCortes.Count > 0)
-            {
-                fechaInicio = fechaInicio.AddDays(cantidadHorasCorte);
-                fechaFinal = fechaInicio.AddDays(cantidadHorasCorte);
-                McFechaEntrega.SelectionRange.End = fechaFinal;
-            }
-        }
-
+         private void McFechaEntrega_DateChanged(object sender, DateRangeEventArgs e)
+         {
+             if (GestionDatos.PrendasParaCortes is not null && GestionDatos.PrendasParaCortes.Count > 0)
+             {
+                 fechaInicio = fechaInicio.AddDays(cantidadHorasCorte);
+                 fechaFinal = fechaInicio.AddDays(cantidadHorasCorte);
+                 McFechaEntrega.SelectionRange.End = fechaFinal;
+             }
+         }
+         */
         private Prenda? ObtenerPrendaSeleccionada()
         {
             PrendaSeleccionada = null;
