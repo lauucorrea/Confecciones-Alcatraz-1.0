@@ -1,69 +1,90 @@
 ﻿using Entidades;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Vista
 {
     public partial class FrmCalendario : Form
     {
-        Persona personaLogueada;
+        Persona PersonaLogueada;
         public FrmCalendario(Persona persona)
         {
             InitializeComponent();
-            personaLogueada = persona;
+            PersonaLogueada = persona;
         }
 
         private void FrmCalendario_Load(object sender, EventArgs e)
         {
-            CreateDataGridView(personaLogueada.DiasLaborales);
+            CrearCalendario();
             DtgCalendario.RowTemplate.Height = 30;
-           // DtgCalendario.Dock = DockStyle.Fill;
+            // DtgCalendario.Dock = DockStyle.Fill;
         }
 
-        private void CreateDataGridView(List<string> diasLaborales)
+
+        public void CrearCalendario()
         {
-            // Obtener la fecha y hora actual
-            DateTime horaActual = DateTime.Now;
-
-            // Crear una tabla de datos para el DataGridView
             DataTable dataTable = new DataTable();
-
-            // Agregar la columna de horas
-            dataTable.Columns.Add("Hora", typeof(string));
-
-            // Agregar las columnas de fechas
-            for (int i = 0; i < 7; i++)
+            // Obtener el primer día del mes actual
+            DateTime diaInicioActualizable = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            // Obtener el día de la semana en el que empieza el mes
+            int diaSemanaInicio = (int)diaInicioActualizable.DayOfWeek;
+            // Obtener el último día del mes actual
+            DateTime ultimoDiaDelMes = diaInicioActualizable.AddMonths(1).AddDays(-1);
+            string[] nombresDiasSemana = { "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
+            DateTime diaActualizado = diaInicioActualizable.AddDays(-diaSemanaInicio); // Ajustar para empezar en el día de la semana correcto
+                                                                                       // Agregar columnas al DataTable para cada día de la semana
+            foreach (string nombreDia in nombresDiasSemana)
             {
-                DateTime fecha = horaActual.AddDays(i);
-                dataTable.Columns.Add(fecha.ToString("dddd d"), typeof(string));
+                dataTable.Columns.Add(nombreDia, typeof(string));
             }
 
-            // Agregar las filas de horas
-            for (int j = 0; j < 8; j++)
+            while (diaActualizado <= ultimoDiaDelMes)
             {
-                DateTime hora = horaActual.AddHours(j);
+                // Agregar filas al DataTable para cada semana del mes
                 DataRow row = dataTable.NewRow();
-                row["Hora"] = hora.ToString("HH:mm", CultureInfo.InvariantCulture);
 
+                // Iterar sobre los días de la semana
                 for (int i = 0; i < 7; i++)
                 {
-                    DateTime fecha = horaActual.AddDays(i);
-                    row[fecha.ToString("dddd d")] = fecha.ToString();
+                    // Verificar si el día actual está dentro del mes
+                    if (diaActualizado.Month == diaInicioActualizable.Month)
+                    {
+                        // Obtener los cortes correspondientes a la fecha actual
+                        List<Corte> cortesEnFecha = Administracion.ObtenerCortesPorFecha(diaActualizado);
+                        if (cortesEnFecha is not null && cortesEnFecha.Count > 0)
+                        {
+                            // Construir una cadena con los identificadores de los cortes
+                            StringBuilder sb = new StringBuilder();
+                            foreach (Corte corte in cortesEnFecha)
+                            {
+                                sb.Append($"{corte.IdentificadorDeConfeccion}");
+                                if (cortesEnFecha.IndexOf(corte) != cortesEnFecha.Count - 1)
+                                {
+                                    sb.Append(", ");
+                                }
+                            }
+                            // Eliminar la coma final y los espacios
+                            row[i] = sb.ToString();
+                        }
+                        else
+                        {
+                            row[i] = diaActualizado.ToShortDateString();
+                        }
+                    }
+                    else
+                    {
+                        row[i] = string.Empty; // Rellenar con una cadena vacía para los días fuera del mes
+                    }
+
+                    diaActualizado = diaActualizado.AddDays(1);
                 }
 
                 dataTable.Rows.Add(row);
             }
 
-            // Asignar la tabla de datos al DataGridView
             DtgCalendario.DataSource = dataTable;
         }
     }
 }
+
+

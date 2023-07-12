@@ -374,10 +374,106 @@
 
         }
 
+        public static List<Corte> ObtenerCortesPorFecha(DateTime fechaBusqueda)
+        {
+            List<Corte> ListaCortesEncontrados = new();
+            foreach(KeyValuePair<DateTime,List<Corte>> kvp in GestionDatos.CortesPorFecha)
+            {
+                foreach(Corte corte in kvp.Value)
+                {
+                    List<DateTime> fechas = ObtenerListaFechasEnRango(corte.FechaInicio, corte.FechaFinal);
+
+                    if (fechas.Contains(fechaBusqueda))
+                    {
+                        ListaCortesEncontrados.Add(corte);
+                    }
+                }
+            }
+
+            return ListaCortesEncontrados;
+            
+        }
 
 
+        public static Dictionary<DateTime, List<Corte>> ObtenerCortesEnFechas(DateTime fechaInicio, DateTime fechaFinal)
+        {
+            Dictionary<DateTime, List<Corte>> CortesEnFechas = new();
+            if (fechaInicio != DateTime.MinValue && fechaFinal != DateTime.MinValue)
+            {
+                List<DateTime> fechas = ObtenerListaFechasEnRango(fechaInicio, fechaFinal);
+                if (fechas is not null)
+                {
+                    foreach (DateTime fecha in fechas)
+                    {
+                        foreach (KeyValuePair<DateTime, List<Corte>> kvp in GestionDatos.CortesPorFecha)
+                        {
+                            foreach (Corte corte in kvp.Value)
+                            {
 
+                                if (CortesEnFechas.ContainsKey(fecha) && !kvp.Value.Contains(corte))
+                                {
+                                    kvp.Value.Add(corte);
+                                }
+                                else if (!CortesEnFechas.ContainsKey(fecha))
+                                {
+                                    List<Corte> lista = new List<Corte>
+                                {
+                                    corte
+                                };
+                                    CortesEnFechas.Add(fecha, lista);
 
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    throw new NullReferenceException("No se pudo obtener fechas en Administracion.ObtenerCortesEnFechas:null return");
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException("Fechas recibidas no validas en ObtenerCortesEnFechas(PARAM)");
+            }
+            return CortesEnFechas;
+
+        }
+        static List<DateTime> ObtenerListaFechasEnRango(DateTime fechaInicio, DateTime fechaFinal)
+        {
+            List<DateTime> listaFechas = new List<DateTime>
+            {
+                // Agregar la fecha de inicio a la lista
+                fechaInicio
+            };
+
+            // Calcular el número de días en el rango
+            int diasEnRango = (int)(fechaFinal - fechaInicio).TotalDays;
+
+            // Agregar las fechas intermedias al rango
+            for (int i = 1; i <= diasEnRango; i++)
+            {
+                DateTime fechaIntermedia = fechaInicio.AddDays(i);
+                listaFechas.Add(fechaIntermedia);
+            }
+
+            return listaFechas;
+        }
+
+        public static bool ExisteFechaEnCortes(DateTime fechaBusqueda, List<KeyValuePair<DateTime, Corte>> keyValuesList)
+        {
+            bool ret = false;
+            foreach (KeyValuePair<DateTime, Corte> kvp in keyValuesList)
+            {
+                List<DateTime> fechasRango = ObtenerListaFechasEnRango(kvp.Value.FechaInicio, kvp.Value.FechaFinal);
+                if (fechasRango.Contains(fechaBusqueda))
+                {
+                    ret = true;
+                }
+
+            }
+            return ret;
+        }
 
 
     }

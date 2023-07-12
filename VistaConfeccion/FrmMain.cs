@@ -40,7 +40,6 @@ namespace VistaConfeccion
 
             // Obtén los días laborales siguientes
             DateTime fechaActual = DateTime.Today;
-            List<string> diasLaboralesSiguientes = new();
 
             SortedDictionary<DateTime, string> diasLaboralesProximos = new();
 
@@ -73,9 +72,9 @@ namespace VistaConfeccion
 
                 // Obtén la cantidad de horas de trabajo
                 TimeSpan horasJornada = PersonaLogueada.HorarioCierre - PersonaLogueada.HorarioApertura; // Ejemplo: 8 horas
-
+                PersonaLogueada.HorasJornada = (int)horasJornada.TotalHours;
                 // Agrega las filas de horas
-                for (int j = 0; j < (int)horasJornada.TotalHours; j++)
+                for (int j = 0; j < PersonaLogueada.HorasJornada; j++)
                 {
                     DataRow row = dataTable.NewRow();
                     row["Hora"] = horaActual.ToString("HH:mm", CultureInfo.InvariantCulture);
@@ -176,7 +175,7 @@ namespace VistaConfeccion
         {
             try
             {
-                FrmAltaCortes altaCortes = new(PersonaLogueada);
+                FrmAltaCorte altaCortes = new(PersonaLogueada);
                 if (altaCortes.ShowDialog() != DialogResult.OK)
                 {
                     altaCortes.Close();

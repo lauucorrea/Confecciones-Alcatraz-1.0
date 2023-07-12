@@ -1,9 +1,9 @@
 ﻿using Entidades;
-using Vista;
+using System.Diagnostics;
 
-namespace VistaConfeccion
+namespace Vista
 {
-    public partial class FrmAltaCortes : Form
+    public partial class FrmAltaCorte : Form
     {
         DateTime fechaInicio;
         DateTime fechaFinal;
@@ -11,21 +11,13 @@ namespace VistaConfeccion
         Prenda? PrendaSeleccionada;
         Persona PersonaLogueada;
         int cantidadHorasCorte;
-        public FrmAltaCortes(Persona personaLogueada)
+        public FrmAltaCorte(Persona personaLogueada)
         {
             InitializeComponent();
-            PersonaLogueada = personaLogueada;  
+            CorteCreado = new();
+            PersonaLogueada = personaLogueada;
         }
 
-        private void BtnAgregarConfeccion_Click(object sender, EventArgs e)
-        {
-            FrmCalendario registro = new(PersonaLogueada);
-            if (registro.ShowDialog() != DialogResult.OK)
-            {
-                registro.Close();
-            }
-
-        }
 
         private void EncontrarFechasConEntregas()
         {
@@ -70,7 +62,17 @@ namespace VistaConfeccion
             DialogResult = DialogResult.Cancel;
         }
 
-        private void FrmAltaConfeccion_Load(object sender, EventArgs e)
+
+        private void BtnAgregarConfeccion_Click(object sender, EventArgs e)
+        {
+            FrmCalendario registro = new(PersonaLogueada);
+            if (registro.ShowDialog() != DialogResult.OK)
+            {
+                registro.Close();
+            }
+
+        }
+        private void FrmAltaCorte_Load(object sender, EventArgs e)
         {
 
             string[] talles = Enum.GetNames(typeof(TallePrenda));
@@ -78,10 +80,6 @@ namespace VistaConfeccion
             DtgPrendasSistema.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DtgPrendasConfeccion.AutoGenerateColumns = true;
             lblDiasEntrega.Text = string.Empty;
-            //TEMPORALMENTE HARDCODE
-            //GestionDatos.PrendasSistema.Clear();
-
-
 
             CargarDatagridPrendasSistema();
 
@@ -108,16 +106,9 @@ namespace VistaConfeccion
 
                             PrendaSeleccionada.UnidadesCorte = (int)NumUnidades.Value;
                             PrendaSeleccionada.TallePrenda = talle;
-                            //Agrego la prenda a la lista de prendas guardada en el corte creado
-                            if (CorteCreado.PrendasEnConfeccion is not null)
-                            {
-                                Administracion.AgregarPrenda_Corte(CorteCreado, PrendaSeleccionada);
-                                CargarDatagridPrendasCorte();
-                            }
-                            else
-                            {
-                                LblErrores.Text = "Hubo un problema en la creacion de el corte";
-                            }
+
+                            Administracion.AgregarPrenda_Corte(CorteCreado, PrendaSeleccionada);
+                            CargarDatagridPrendasCorte();
 
                         }
                         else
@@ -295,47 +286,47 @@ namespace VistaConfeccion
                 throw new Exception("Debe cargar al menos una prenda");
             }
         }
-        private void CargarDatagridConfeccionesConEntrega()
-        {
-            // Suponiendo que tienes un DataGridView llamado dataGridViewConfecciones
-            DtgFechasPrevistas.DataSource = null; // Limpia el origen de datos
-            // Limpiar las columnas existentes en el DataGridView
-            DtgFechasPrevistas.Columns.Clear();
+        /*private void CargarDatagridConfeccionesConEntrega()
+         {
+             // Suponiendo que tienes un DataGridView llamado dataGridViewConfecciones
+             DtgFechasPrevistas.DataSource = null; // Limpia el origen de datos
+             // Limpiar las columnas existentes en el DataGridView
+             DtgFechasPrevistas.Columns.Clear();
 
-            // Agregar las columnas necesarias al DataGridView
-            DtgFechasPrevistas.Columns.Add("ColumnaId", "ID");
-            DtgFechasPrevistas.Columns.Add("ColumnaPrendas", "Prendas");
-            DtgFechasPrevistas.Columns.Add("ColumnaEntrega", "Fecha Entrega");
-            DtgFechasPrevistas.Columns.Add("ColumnaInicio", "Fecha Inicio");
-            DtgFechasPrevistas.Columns.Add("ColumnaTiempo", "Tiempo Estimado");
+             // Agregar las columnas necesarias al DataGridView
+             DtgFechasPrevistas.Columns.Add("ColumnaId", "ID");
+             DtgFechasPrevistas.Columns.Add("ColumnaPrendas", "Prendas");
+             DtgFechasPrevistas.Columns.Add("ColumnaEntrega", "Fecha Entrega");
+             DtgFechasPrevistas.Columns.Add("ColumnaInicio", "Fecha Inicio");
+             DtgFechasPrevistas.Columns.Add("ColumnaTiempo", "Tiempo Estimado");
 
-            if (GestionDatos.CortesConEntregas is not null)
-            {
+             if (GestionDatos.CortesConEntregas is not null)
+             {
 
-                // Recorrer el diccionario y agregar filas al DataGridView
-                foreach (Corte confeccion in GestionDatos.CortesConEntregas)
-                {
-                    // Crear una nueva fila y asignar los valores de las celdas
-                    DataGridViewRow fila = new();
-                    fila.CreateCells(DtgFechasPrevistas);
-                    fila.Cells[0].Value = confeccion.IdentificadorDeConfeccion;
-                    fila.Cells[1].Value = confeccion.PrendasEnConfeccion.Count;
-                    fila.Cells[2].Value = confeccion.FechaFinal.ToShortDateString();
-                    fila.Cells[3].Value = confeccion.FechaInicio.ToShortDateString();
-                    fila.Cells[4].Value = cantidadHorasCorte;
+                 // Recorrer el diccionario y agregar filas al DataGridView
+                 foreach (Corte confeccion in GestionDatos.CortesConEntregas)
+                 {
+                     // Crear una nueva fila y asignar los valores de las celdas
+                     DataGridViewRow fila = new();
+                     fila.CreateCells(DtgFechasPrevistas);
+                     fila.Cells[0].Value = confeccion.IdentificadorDeConfeccion;
+                     fila.Cells[1].Value = confeccion.PrendasEnConfeccion.Count;
+                     fila.Cells[2].Value = confeccion.FechaFinal.ToShortDateString();
+                     fila.Cells[3].Value = confeccion.FechaInicio.ToShortDateString();
+                     fila.Cells[4].Value = cantidadHorasCorte;
 
-                    // Agregar la fila al DataGridView
-                    DtgFechasPrevistas.Rows.Add(fila);
-                }
-            }
-        }
+                     // Agregar la fila al DataGridView
+                     DtgFechasPrevistas.Rows.Add(fila);
+                 }
+             }
+         }*/
         private void VaciarInformacion()
         {
             if (GestionDatos.PrendasParaCortes is not null && GestionDatos.PrendasParaCortes.Count > 0)
             {
                 GestionDatos.PrendasParaCortes.Clear();
                 CorteCreado = null;
-                DtgFechasPrevistas.DataSource = null;
+                //DtgFechasPrevistas.DataSource = null;
                 DtgPrendasConfeccion.DataSource = null;
                 NumUnidades.Value = 1;
             }
@@ -345,5 +336,6 @@ namespace VistaConfeccion
         {
 
         }
+
     }
 }

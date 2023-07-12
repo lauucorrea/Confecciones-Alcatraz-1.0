@@ -45,7 +45,7 @@ namespace Entidades
             };
             HorarioApertura = new(8, 30, 0);
             HorarioCierre = new(16, 30, 0);
-
+            horasJornada =(int) (HorarioCierre.TotalHours - HorarioApertura.TotalHours);
         }
 
 
