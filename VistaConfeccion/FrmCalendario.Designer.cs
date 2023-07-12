@@ -48,6 +48,7 @@
             DtgCalendario.Dock = DockStyle.Fill;
             DtgCalendario.GridColor = Color.FromArgb(10, 102, 194);
             DtgCalendario.Location = new Point(0, 0);
+            DtgCalendario.Margin = new Padding(0);
             DtgCalendario.Name = "DtgCalendario";
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
@@ -60,6 +61,7 @@
             DtgCalendario.RowHeadersVisible = false;
             DtgCalendario.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             DtgCalendario.RowTemplate.Height = 25;
+            DtgCalendario.RowTemplate.Resizable = DataGridViewTriState.False;
             DtgCalendario.ShowEditingIcon = false;
             DtgCalendario.Size = new Size(1384, 861);
             DtgCalendario.TabIndex = 7;
@@ -68,6 +70,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             ClientSize = new Size(1384, 861);
             Controls.Add(DtgCalendario);
             Icon = (Icon)resources.GetObject("$this.Icon");
