@@ -135,5 +135,20 @@ namespace Vista
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void BtnCancelar_Click(object sender, EventArgs e)
+        {
+            const string mensaje = "Estas seguro de que queres cerrar? Se perderan los cambios sin guardar";
+            const string comentario = "Formulario cerrandose";
+            var result = MessageBox.Show(mensaje, comentario, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+               // Clase_serializadora serializadora = new();
+                //serializadora.GuardarPersonasXML();
+                //serializadora.GuardarAvionesXML();
+                DialogResult = DialogResult.Cancel;
+            }
+        }
     }
 }

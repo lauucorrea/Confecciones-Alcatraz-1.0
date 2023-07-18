@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAltaCorte));
-            lblDiasEntrega = new Label();
             label2 = new Label();
             lblSistema = new Label();
             LblErrores = new Label();
@@ -43,29 +42,19 @@
             DtgPrendasSistema = new DataGridView();
             BtnCancelar = new Button();
             BtnCrearCorte = new Button();
+            BtnCerrarSesion = new Button();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)DtgPrendasConfeccion).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NumUnidades).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DtgPrendasSistema).BeginInit();
             SuspendLayout();
-            // 
-            // lblDiasEntrega
-            // 
-            lblDiasEntrega.AutoSize = true;
-            lblDiasEntrega.Font = new Font("Segoe UI Semibold", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
-            lblDiasEntrega.ForeColor = Color.MediumSeaGreen;
-            lblDiasEntrega.ImeMode = ImeMode.NoControl;
-            lblDiasEntrega.Location = new Point(1115, 439);
-            lblDiasEntrega.Name = "lblDiasEntrega";
-            lblDiasEntrega.Size = new Size(239, 23);
-            lblDiasEntrega.TabIndex = 33;
-            lblDiasEntrega.Text = "x dias estimados para entrega";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ImeMode = ImeMode.NoControl;
-            label2.Location = new Point(32, 439);
+            label2.Location = new Point(32, 414);
             label2.Name = "label2";
             label2.Size = new Size(247, 23);
             label2.TabIndex = 32;
@@ -103,7 +92,7 @@
             DtgPrendasConfeccion.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DtgPrendasConfeccion.Cursor = Cursors.Hand;
             DtgPrendasConfeccion.GridColor = Color.FromArgb(10, 102, 194);
-            DtgPrendasConfeccion.Location = new Point(32, 465);
+            DtgPrendasConfeccion.Location = new Point(32, 440);
             DtgPrendasConfeccion.Name = "DtgPrendasConfeccion";
             DtgPrendasConfeccion.RowHeadersVisible = false;
             DtgPrendasConfeccion.RowTemplate.Height = 25;
@@ -182,14 +171,14 @@
             DtgPrendasSistema.GridColor = Color.FromArgb(10, 102, 194);
             DtgPrendasSistema.Location = new Point(32, 46);
             DtgPrendasSistema.Name = "DtgPrendasSistema";
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            DtgPrendasSistema.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            DtgPrendasSistema.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             DtgPrendasSistema.RowHeadersVisible = false;
             DtgPrendasSistema.RowTemplate.Height = 25;
             DtgPrendasSistema.ShowEditingIcon = false;
@@ -223,7 +212,30 @@
             BtnCrearCorte.TabIndex = 21;
             BtnCrearCorte.Text = "Crear confeccion";
             BtnCrearCorte.UseVisualStyleBackColor = false;
-            BtnCrearCorte.Click += BtnAgregarConfeccion_Click;
+            BtnCrearCorte.Click += BtnCrearCorte_Click;
+            // 
+            // BtnCerrarSesion
+            // 
+            BtnCerrarSesion.FlatStyle = FlatStyle.Flat;
+            BtnCerrarSesion.ForeColor = Color.Transparent;
+            BtnCerrarSesion.Image = (Image)resources.GetObject("BtnCerrarSesion.Image");
+            BtnCerrarSesion.Location = new Point(37, 757);
+            BtnCerrarSesion.Name = "BtnCerrarSesion";
+            BtnCerrarSesion.Size = new Size(72, 80);
+            BtnCerrarSesion.TabIndex = 34;
+            BtnCerrarSesion.UseVisualStyleBackColor = true;
+            BtnCerrarSesion.Click += BtnCerrarSesion_Click;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.ForeColor = Color.DarkBlue;
+            label4.Location = new Point(31, 835);
+            label4.Name = "label4";
+            label4.Size = new Size(87, 17);
+            label4.TabIndex = 38;
+            label4.Text = "Cerrar sesion";
             // 
             // FrmAltaCorte
             // 
@@ -231,7 +243,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Azure;
             ClientSize = new Size(1384, 861);
-            Controls.Add(lblDiasEntrega);
+            Controls.Add(label4);
+            Controls.Add(BtnCerrarSesion);
             Controls.Add(label2);
             Controls.Add(lblSistema);
             Controls.Add(LblErrores);
@@ -257,8 +270,6 @@
         }
 
         #endregion
-
-        private Label lblDiasEntrega;
         private Label label2;
         private Label lblSistema;
         private Label LblErrores;
@@ -271,5 +282,7 @@
         private DataGridView DtgPrendasSistema;
         private Button BtnCancelar;
         private Button BtnCrearCorte;
+        private Button BtnCerrarSesion;
+        private Label label4;
     }
 }

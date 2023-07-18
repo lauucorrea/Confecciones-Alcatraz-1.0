@@ -2,6 +2,7 @@ using Entidades;
 using System.Data;
 using System.Globalization;
 using System.Text;
+using System.Windows.Forms;
 using Vista;
 
 namespace VistaConfeccion
@@ -21,6 +22,11 @@ namespace VistaConfeccion
         }
         private void FrmConfecciones_Load(object sender, EventArgs e)
         {
+            if (PersonaLogueada.RolPersona.ToString() == "Empleado")
+            {
+                // Ocultar el elemento del menú
+                TsmiReportes.Visible = false; // Reemplaza "toolStripMenuItem1" con el nombre de tu elemento
+            }
             //CrearDatagridCortes_General(GestionDatos.CortesPorFecha.Values.SelectMany(c => c).OrderBy(c => c.FechaInicio).ToList());
             CrearCalendario();
             DtgMuestreoMain.RowTemplate.Height = 30;
@@ -81,13 +87,14 @@ namespace VistaConfeccion
 
                     foreach (KeyValuePair<DateTime, string> kvp in diasLaboralesProximos)
                     {
-                        List<Corte> listaCortesFecha = Administracion.ObtenerCorte_Diccionario(kvp.Key);
+                        //este es el metodo que deberia estar obteniendo los cortes, y los dias correspondientes
+                        List<Corte> listaCortesFecha = Administracion.ObtenerCorte_Lista(kvp.Key);
 
 
                         StringBuilder sb = new();
                         foreach (Corte corte in listaCortesFecha)
                         {
-                            sb.AppendLine(corte.IdentificadorDeConfeccion + " ");
+                            sb.AppendLine(corte.IdentificadorDeCorte + " ");
                         }
                         row[kvp.Value] = sb.ToString();
                         horaActual = horaActual.AddHours(1); // Avanza una hora
@@ -107,12 +114,12 @@ namespace VistaConfeccion
 
         }
 
-        private void gestionarInformacionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void GestionarInformacionToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void agregToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AgregToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -128,17 +135,17 @@ namespace VistaConfeccion
             }
         }
 
-        private void mostrarToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MostrarToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void UsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void mostrarUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MostrarUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -150,7 +157,7 @@ namespace VistaConfeccion
             }
         }
 
-        private void agregarPrendaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AgregarPrendaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -166,12 +173,12 @@ namespace VistaConfeccion
             }
         }
 
-        private void mostrarPrendasToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MostrarPrendasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CargarDatagridPrendasSistema();
         }
 
-        private void crearNuevoCorteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CrearNuevoCorteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -187,12 +194,12 @@ namespace VistaConfeccion
             }
         }
 
-        private void mostrarCortesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MostrarCortesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CrearDatagridCortes_General(GestionDatos.CortesPorFecha.Values.SelectMany(c => c).OrderBy(c => c.FechaInicio).ToList());
+            CrearDatagridCortes_General(GestionDatos.CortesSistema.Select(c => c).OrderBy(c => c.FechaInicio).ToList());
         }
 
-        private void ordenarPorJerarquiaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OrdenarPorJerarquiaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GestionDatos.PersonasSistema = GestionDatos.PersonasSistema.OrderBy(u =>
             {
@@ -208,7 +215,7 @@ namespace VistaConfeccion
             CrearDatagridUsuarios_General();
         }
 
-        private void ordenarPorNombreToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OrdenarPorNombreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -222,7 +229,7 @@ namespace VistaConfeccion
             }
         }
 
-        private void ordenarPorDNIToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OrdenarPorDNIToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -236,7 +243,7 @@ namespace VistaConfeccion
             }
         }
 
-        private void ordenarPorTalleToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OrdenarPorTalleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -248,7 +255,7 @@ namespace VistaConfeccion
             }
         }
 
-        private void ordenarPorTipoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OrdenarPorTipoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -262,11 +269,11 @@ namespace VistaConfeccion
             }
         }
 
-        private void ordenarPorProduccionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OrdenarPorProduccionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                GestionDatos.PrendasSistema = GestionDatos.PrendasSistema.OrderBy(u => u.HorasProduccion).ToList();
+                GestionDatos.PrendasSistema = GestionDatos.PrendasSistema.OrderBy(u => u.HorasParaCantidad).ToList();
                 CargarDatagridPrendasSistema();
             }
             catch (Exception ex)
@@ -275,11 +282,11 @@ namespace VistaConfeccion
             }
         }
 
-        private void porFechaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PorFechaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                List<Corte> cortesOrdenados = GestionDatos.CortesPorFecha.Values.SelectMany(c => c).OrderBy(c => c.FechaInicio).ToList();
+                List<Corte> cortesOrdenados = GestionDatos.CortesSistema.Select(c => c).OrderBy(c => c.FechaInicio).ToList();
                 CrearDatagridCortes_General(cortesOrdenados);
 
             }
@@ -289,11 +296,11 @@ namespace VistaConfeccion
             }
         }
 
-        private void porFechaDeEntregaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PorFechaDeEntregaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                List<Corte> cortesOrdenados = GestionDatos.CortesPorFecha.Values.SelectMany(c => c).OrderBy(c => c.FechaFinal).ToList();
+                List<Corte> cortesOrdenados = GestionDatos.CortesSistema.Select(c => c).OrderBy(c => c.FechaFinal).ToList();
                 CrearDatagridCortes_General(cortesOrdenados);
 
             }
@@ -303,7 +310,7 @@ namespace VistaConfeccion
             }
         }
 
-        private void porEtapaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PorEtapaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -315,11 +322,11 @@ namespace VistaConfeccion
             }
         }
 
-        private void porTiempoDeProduccionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PorTiempoDeProduccionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                List<Corte> cortesOrdenados = GestionDatos.CortesPorFecha.Values.SelectMany(c => c).OrderBy(c => c.HorasTotalesCorte).ToList();
+                List<Corte> cortesOrdenados = GestionDatos.CortesSistema.Select(c => c).OrderBy(c => c.HorasTotalesCorte).ToList();
                 CrearDatagridCortes_General(cortesOrdenados);
             }
             catch (Exception ex)
@@ -382,7 +389,7 @@ namespace VistaConfeccion
                 // Crear una nueva fila y asignar los valores de las celdas
                 DataGridViewRow fila = new();
                 fila.CreateCells(DtgMuestreoMain);
-                fila.Cells[0].Value = corte.IdentificadorDeConfeccion;
+                fila.Cells[0].Value = corte.IdentificadorDeCorte;
                 if (corte.FechaInicio <= DateTime.Now.Date && corte.FechaFinal >= DateTime.Now.Date)
                 {
                     fila.Cells[1].Value = "HOY";
@@ -395,7 +402,7 @@ namespace VistaConfeccion
                 fila.Cells[2].Value = corte.FechaFinal.ToShortDateString();
                 fila.Cells[3].Value = corte.HorasTotalesCorte;
                 fila.Cells[4].Value = corte.HorasTotalesCorte / PersonaLogueada.HorasJornada;
-                fila.Cells[5].Value = corte.PrendasEnConfeccion.Count;
+                fila.Cells[5].Value = corte.PrendasEnCorte.Count;
 
                 // Agregar la fila al DataGridView
                 DtgMuestreoMain.Rows.Add(fila);
@@ -426,8 +433,8 @@ namespace VistaConfeccion
                 fila.CreateCells(DtgMuestreoMain);
                 fila.Cells[0].Value = prenda.Categoria; // Suponiendo que Prenda tiene una propiedad "Nombre"
                 fila.Cells[1].Value = prenda.TallePrenda;
-                fila.Cells[2].Value = prenda.CantidadPrendas; // Suponiendo que Prenda tiene una propiedad "Tipo"
-                fila.Cells[3].Value = prenda.HorasProduccion; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[2].Value = prenda.CantidadEnHoras; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[3].Value = prenda.HorasParaCantidad; // Suponiendo que Prenda tiene una propiedad "Tipo"
                 fila.Cells[4].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
                 fila.Cells[5].Value = prenda.Detalles; // Suponiendo que TallePrenda tiene una propiedad "Talle"
                 fila.Cells[6].Value = prenda.Adicional; // Suponiendo que Prenda tiene una propiedad "Cantidad"
@@ -456,29 +463,27 @@ namespace VistaConfeccion
             DtgMuestreoMain.Columns.Add("ColumnaHorasProduccion", "Horas produccion");
 
             // Recorrer el diccionario y agregar filas al DataGridView
-            foreach (KeyValuePair<DateTime, List<Corte>> par in GestionDatos.CortesPorFecha)
+            foreach (Corte corte in GestionDatos.CortesSistema)
             {
-                foreach (Corte corte in par.Value)
+                foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnCorte)
                 {
-                    foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnConfeccion)
-                    {
-                        List<int> conteo = Administracion.ObtenerConteoDeEstado(par.Value);
+                    List<int> conteo = Administracion.ObtenerConteoDeEstado(GestionDatos.CortesSistema);
 
-                        DataGridViewRow fila = new();
-                        fila.CreateCells(DtgMuestreoMain);
-                        fila.Cells[0].Value = corte.IdentificadorDeConfeccion;
-                        fila.Cells[1].Value = corte.FechaInicio;
-                        fila.Cells[2].Value = par.Key;
-                        fila.Cells[3].Value = corte.PrendasEnConfeccion.Count();
-                        fila.Cells[4].Value = conteo[0];
-                        fila.Cells[5].Value = conteo[1];
-                        fila.Cells[6].Value = conteo[2];
-                        fila.Cells[7].Value = conteo[3];
-                        fila.Cells[8].Value = conteo[4];
-                        fila.Cells[9].Value = corte.HorasTotalesCorte;
-                        DtgMuestreoMain.Rows.Add(fila);
-                    }
+                    DataGridViewRow fila = new();
+                    fila.CreateCells(DtgMuestreoMain);
+                    fila.Cells[0].Value = corte.IdentificadorDeCorte;
+                    fila.Cells[1].Value = corte.FechaInicio;
+                    fila.Cells[2].Value = corte.FechaFinal;
+                    fila.Cells[3].Value = corte.PrendasEnCorte.Count();
+                    fila.Cells[4].Value = conteo[0];
+                    fila.Cells[5].Value = conteo[1];
+                    fila.Cells[6].Value = conteo[2];
+                    fila.Cells[7].Value = conteo[3];
+                    fila.Cells[8].Value = conteo[4];
+                    fila.Cells[9].Value = corte.HorasTotalesCorte;
+                    DtgMuestreoMain.Rows.Add(fila);
                 }
+
 
 
             }
@@ -505,38 +510,37 @@ namespace VistaConfeccion
             DtgMuestreoMain.Columns.Add("ColumnaHorasProduccion", "Horas produccion");
 
             // Recorrer el diccionario y agregar filas al DataGridView
-            foreach (KeyValuePair<DateTime, List<Corte>> par in GestionDatos.CortesPorFecha)
-            {
-                foreach (Corte corte in par.Value)
-                {
-                    List<int> conteo = Administracion.ObtenerConteoDeTalles(corte);
-                    DataGridViewRow fila = new();
-                    fila.CreateCells(DtgMuestreoMain);
-                    fila.Cells[0].Value = corte.IdentificadorDeConfeccion;
-                    fila.Cells[1].Value = corte.FechaInicio;
-                    fila.Cells[2].Value = par.Key;
-                    fila.Cells[3].Value = corte.PrendasEnConfeccion.Count();
-                    fila.Cells[4].Value = conteo[0];
-                    fila.Cells[5].Value = conteo[1];
-                    fila.Cells[6].Value = conteo[2];
-                    fila.Cells[7].Value = conteo[3];
-                    fila.Cells[8].Value = conteo[4];
-                    fila.Cells[9].Value = conteo[5];
-                    fila.Cells[10].Value = corte.HorasTotalesCorte;
-                    DtgMuestreoMain.Rows.Add(fila);
-                }
 
+            foreach (Corte corte in GestionDatos.CortesSistema)
+            {
+                List<int> conteo = Administracion.ObtenerConteoDeTalles(corte);
+                DataGridViewRow fila = new();
+                fila.CreateCells(DtgMuestreoMain);
+                fila.Cells[0].Value = corte.IdentificadorDeCorte;
+                fila.Cells[1].Value = corte.FechaInicio;
+                fila.Cells[2].Value = corte.FechaFinal;
+                fila.Cells[3].Value = corte.PrendasEnCorte.Count();
+                fila.Cells[4].Value = conteo[0];
+                fila.Cells[5].Value = conteo[1];
+                fila.Cells[6].Value = conteo[2];
+                fila.Cells[7].Value = conteo[3];
+                fila.Cells[8].Value = conteo[4];
+                fila.Cells[9].Value = conteo[5];
+                fila.Cells[10].Value = corte.HorasTotalesCorte;
+                DtgMuestreoMain.Rows.Add(fila);
             }
+
+
         }
 
 
 
-        private void porTallesDePrendasToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PorTallesDePrendasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CargarDatagridCortes_PorTalle();
         }
 
-        private void modificarJornadaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ModificarJornadaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -551,6 +555,21 @@ namespace VistaConfeccion
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void BtnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            const string mensaje = "Estas seguro de que queres cerrar?";
+            const string comentario = "Formulario cerrandose";
+            var result = MessageBox.Show(mensaje, comentario, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                //Clase_serializadora serializadora = new();
+                //serializadora.GuardarPersonasXML();
+                //serializadora.GuardarAvionesXML();
+                Application.Exit();
             }
         }
 

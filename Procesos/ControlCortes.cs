@@ -14,7 +14,7 @@ namespace Procesos
             }
             set => _cortesConEntregas = value;
         }
-        
+
 
         public static List<Corte>? ObtenerEntregasEnDias(DateTime fechaSeleccionada, int cantidadDiasProduccion)
         {
@@ -63,26 +63,18 @@ namespace Procesos
             List<DateTime> fechasOrdenadas = fechasParaProduccion.OrderBy(fecha => fecha).ToList();
             int contadorFechasValidas = 0;
 
-            Corte? CorteConEntregaEncontrado = null;
-
             List<Corte>? confeccionesEncontradasConEntrega = new();
 
+            List<Corte> listaRetorno = new();
             foreach (DateTime fechaProduccion in fechasOrdenadas)
             {
-                foreach (DateTime fechasCortes in GestionDatos.CortesPorFecha.Keys)
+                confeccionesEncontradasConEntrega = ObtenerCortesEntrega(fechaProduccion);
+
+                if(confeccionesEncontradasConEntrega is not null)
                 {
-                    if (fechaProduccion == fechasCortes)
-                    {
-                        if (!TieneEntrega(fechasCortes, out CorteConEntregaEncontrado))
-                        {
-                            contadorFechasValidas++;
-                        }
-                        else if (CorteConEntregaEncontrado is not null)
-                        {
-                            confeccionesEncontradasConEntrega.Add(CorteConEntregaEncontrado);
-                        }
-                    }
+                    listaRetorno.AddRange(confeccionesEncontradasConEntrega.ToArray());
                 }
+
             }
 
             return confeccionesEncontradasConEntrega;
@@ -95,35 +87,19 @@ namespace Procesos
         /// <returns>true si tiene entrega, false si no</returns>
         /// <exception cref="Exception"></exception>
         /// <exception cref="NullReferenceException">La lista de cortes del corte </exception>
-        public static bool TieneEntrega(DateTime fecha, out Corte? CorteConEntrega)
+        public static List<Corte> ObtenerCortesEntrega(DateTime fecha)
         {
             List<Corte>? Cortes = new();
 
-            if (GestionDatos.CortesPorFecha.ContainsKey(fecha) && GestionDatos.CortesPorFecha.TryGetValue(fecha, out Cortes))
+            foreach (Corte corte in GestionDatos.CortesSistema)
             {
-                if (Cortes is not null)
+                if (corte.FechaFinal == fecha)
                 {
+                    Cortes.Add(corte);
+                }
+            }
 
-                    foreach (Corte confeccion in Cortes)
-                    {
-                        if (confeccion.FechaFinal == fecha)
-                        {
-                            CorteConEntrega = confeccion;
-                            return true;
-                        }
-                    }
-                }
-                else
-                {
-                    throw new NullReferenceException("No se obtuvo un corte con la fecha buscada");
-                }
-            }
-            else
-            {
-                throw new Exception("Hubo un problema buscando la fecha en el sistema");
-            }
-            CorteConEntrega = null;
-            return false;
+            return Cortes;
 
         }
     }

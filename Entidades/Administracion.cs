@@ -2,25 +2,6 @@
 {
     public static class Administracion
     {
-        static List<string> EnumALista<T>()
-        {
-            var enumType = typeof(T);
-
-            if (!enumType.IsEnum)
-            {
-                throw new ArgumentException("El tipo especificado no es un enum.");
-            }
-
-            var names = Enum.GetNames(enumType);
-            var list = new List<string>(names.Length);
-
-            foreach (string name in names)
-            {
-                list.Add(name);
-            }
-
-            return list;
-        }
         /// <summary>
         /// Creamos la prenda segun los datos ingresados. detallePrenda e informacionAdicional son campos opcionales de la clase Prenda
         /// Talle forma parte de Confecciones ahora, ya que la tanda va a depender del talle, y no se pueden crear 5
@@ -64,8 +45,6 @@
         }
 
 
-
-
         public static bool AgregarPrenda_Lista(Prenda unaPrenda)
         {
             try
@@ -98,15 +77,11 @@
             {
                 if (corteBuscado is not null)
                 {
-
-                    foreach (KeyValuePair<DateTime, List<Corte>> par in GestionDatos.CortesPorFecha)
+                    if (GestionDatos.CortesSistema.Contains(corteBuscado))
                     {
-                        List<Corte> Cortes = par.Value;
-                        if (Cortes.Contains(corteBuscado))
-                        {
-                            return true;
-                        }
+                        return true;
                     }
+
                 }
                 else
                 {
@@ -120,16 +95,14 @@
             }
         }
 
-        public static List<Corte> ObtenerCorte_Diccionario(DateTime fechaBusqueda)
+        //aca metodo que resuelve
+        public static List<Corte> ObtenerCorte_Lista(DateTime fechaBusqueda)
         {
-            if (GestionDatos.CortesPorFecha is not null)
+            if (GestionDatos.CortesSistema is not null)
             {
-                foreach (KeyValuePair<DateTime, List<Corte>> kp in GestionDatos.CortesPorFecha)
+                foreach (Corte corte in GestionDatos.CortesSistema)
                 {
-                    if (kp.Key == fechaBusqueda)
-                    {
-                        return kp.Value;
-                    }
+                    //
                 }
                 return new List<Corte>();
             }
@@ -138,124 +111,55 @@
                 throw new NullReferenceException("No hay cortes cargados en el sistema");
             }
         }
-        public static bool AgregarCorte_Diccionario(Corte unCorte)
-        {
-            try
-            {
-                if (unCorte is not null)
-                {
-                    if (!EncontrarCorte(unCorte))
-                    {
-                        if (GestionDatos.CortesPorFecha.ContainsKey(unCorte.FechaInicio))
-                        {
 
-                            foreach (KeyValuePair<DateTime, List<Corte>> par in GestionDatos.CortesPorFecha)
-                            {
-                                if (par.Key == unCorte.FechaInicio)
-                                {
-                                    par.Value.Add(unCorte);
-                                    return true;
-                                }
-
-                            }
-
-                        }
-                        else
-                        {
-                            //el corte no existe aun en el sistema
-                            List<Corte> cortes = new()
-                            {
-                                unCorte
-                            };
-
-                            if (cortes is not null)
-                            {
-                                GestionDatos.CortesPorFecha.Add(unCorte.FechaInicio, cortes);
-                                return true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("El corte: " + unCorte.ToString() + " ya existe en nuestro sistema");
-                    }
-
-                    return false;
-                }
-                else
-                {
-                    throw new ArgumentNullException("Los datos ingresados no son validos");
-                }
-            }
-            catch (ArgumentNullException ex)
-            {
-                throw new ArgumentException("Ocurrio un error. Detalle: " + ex.Message);
-            }
-            catch (NullReferenceException ex)
-            {
-                throw new NullReferenceException("Ocurrio un error. Detalle: " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Ocurrio un error. Detalle: " + ex.Message);
-            }
-        }
 
         public static bool AgregarPrenda_Corte(Corte corte, Prenda prendaSeleccionada)
         {
-            if (corte is not null)
+            // Verificar si el corte es nulo
+            if (corte is null)
             {
-                if (prendaSeleccionada is not null)
-                {
-                    if (!corte.EncontrarPrenda(prendaSeleccionada) && corte.PrendasEnConfeccion is not null)
-                    {
-                        if (corte.PrendasEnConfeccion.ContainsKey(prendaSeleccionada.TallePrenda))
-                        {
+                throw new ArgumentNullException("El corte recibido no es válido");
+            }
 
-                            if (corte.PrendasEnConfeccion.Count > 0)
-                            {
+            // Verificar si la prenda seleccionada es nula
+            if (prendaSeleccionada is null)
+            {
+                throw new ArgumentNullException("La prenda recibida no es válida");
+            }
 
-                                foreach (KeyValuePair<TallePrenda, List<Prenda>> par in corte.PrendasEnConfeccion)
-                                {
-                                    if (par.Key == prendaSeleccionada.TallePrenda)
-                                    {
-                                        prendaSeleccionada.Etapa = EtapaCorte.Pendiente;
-                                        par.Value.Add(prendaSeleccionada);
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else if (corte.PrendasEnConfeccion is null || corte.PrendasEnConfeccion.Count == 0)
-                    {
+            // Verificar si la prenda ya existe en el corte
+            if (corte.EncontrarPrenda(prendaSeleccionada))
+            {
+                // La prenda ya existe en el corte, retornar false
+                return false;
+            }
 
-                        //la prenda no existe aun en el corte
-                        List<Prenda> prendas = new()
-                            {
-                                prendaSeleccionada
-                            };
+            // Verificar si PrendasEnCorte es nulo y crear una nueva instancia si es necesario
+            if (corte.PrendasEnCorte is null)
+            {
+                corte.PrendasEnCorte = new SortedDictionary<TallePrenda, List<Prenda>>();
+            }
 
-                        if (prendas is not null)
-                        {
-                            corte.PrendasEnConfeccion = new()
-                            {
-                                { prendaSeleccionada.TallePrenda, prendas }
-                            };
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-                else
-                {
-                    throw new ArgumentNullException("La prenda recibida no es valida");
-                }
+            // Verificar si la prenda pertenece a un talle existente en el corte
+            if (corte.PrendasEnCorte.ContainsKey(prendaSeleccionada.TallePrenda))
+            {
+                // La prenda pertenece a un talle existente en el corte
+                List<Prenda> prendas = corte.PrendasEnCorte[prendaSeleccionada.TallePrenda];
+                prendaSeleccionada.Etapa = EtapaCorte.Pendiente;
+                prendas.Add(prendaSeleccionada);
             }
             else
             {
-                throw new ArgumentNullException("El corte recibido no es valido");
+                // La prenda no pertenece a un talle existente en el corte
+
+                // Crear una nueva lista para el talle de la prenda y agregar la prenda a esa lista
+                List<Prenda> prendas = new List<Prenda> { prendaSeleccionada };
+
+                // Agregar la lista al diccionario PrendasEnCorte con la clave del talle
+                corte.PrendasEnCorte.Add(prendaSeleccionada.TallePrenda, prendas);
             }
+
+            return true; // Retornar true indicando que se agregó la prenda correctamente
         }
         public static List<int> ObtenerConteoDeEstado(List<Corte> listaCortes)
         {
@@ -265,9 +169,10 @@
             int contadorEncimando = 0;
             int contadorCortando = 0;
             int contadorTerminando = 0;
+
             foreach (Corte corte in listaCortes)
             {
-                foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnConfeccion)
+                foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnCorte)
                 {
                     foreach (Prenda prenda in kp.Value)
                     {
@@ -310,7 +215,7 @@
             int contadorXL = 0;
             int contadorXXL = 0;
 
-            foreach (KeyValuePair<TallePrenda, List<Prenda>> kvp in corte.PrendasEnConfeccion)
+            foreach (KeyValuePair<TallePrenda, List<Prenda>> kvp in corte.PrendasEnCorte)
             {
                 foreach (Prenda prenda in kvp.Value)
                 {
@@ -354,10 +259,10 @@
         {
             List<Prenda> listaObtenida = new();
 
-            if (corte.PrendasEnConfeccion is not null)
+            if (corte.PrendasEnCorte is not null)
             {
 
-                foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnConfeccion)
+                foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnCorte)
                 {
                     foreach (Prenda prenda in kp.Value)
                     {
@@ -377,21 +282,20 @@
         public static List<Corte> ObtenerCortesPorFecha(DateTime fechaBusqueda)
         {
             List<Corte> ListaCortesEncontrados = new();
-            foreach(KeyValuePair<DateTime,List<Corte>> kvp in GestionDatos.CortesPorFecha)
-            {
-                foreach(Corte corte in kvp.Value)
-                {
-                    List<DateTime> fechas = ObtenerListaFechasEnRango(corte.FechaInicio, corte.FechaFinal);
 
-                    if (fechas.Contains(fechaBusqueda))
-                    {
-                        ListaCortesEncontrados.Add(corte);
-                    }
+            foreach (Corte corte in GestionDatos.CortesSistema)
+            {
+                List<DateTime> fechas = ObtenerListaFechasEnRango(corte.FechaInicio, corte.FechaFinal);
+
+                if (fechas.Any(fecha => fecha.Date == fechaBusqueda.Date))
+                {
+                    ListaCortesEncontrados.Add(corte);
                 }
             }
 
+
             return ListaCortesEncontrados;
-            
+
         }
 
 
@@ -405,25 +309,25 @@
                 {
                     foreach (DateTime fecha in fechas)
                     {
-                        foreach (KeyValuePair<DateTime, List<Corte>> kvp in GestionDatos.CortesPorFecha)
+                        foreach (Corte corte in GestionDatos.CortesSistema)
                         {
-                            foreach (Corte corte in kvp.Value)
+                            List<DateTime> fechasEnRango = ObtenerListaFechasEnRango(corte.FechaInicio, corte.FechaFinal);
+
+                            // Verificar si hay fechas en común entre fechasEnRango y la lista fechas
+                            List<DateTime> fechasComunes = fechas.Intersect(fechasEnRango).ToList();
+
+                            if (fechasComunes.Count > 0)
                             {
-
-                                if (CortesEnFechas.ContainsKey(fecha) && !kvp.Value.Contains(corte))
+                                foreach (DateTime fechaComun in fechasComunes)
                                 {
-                                    kvp.Value.Add(corte);
-                                }
-                                else if (!CortesEnFechas.ContainsKey(fecha))
-                                {
-                                    List<Corte> lista = new List<Corte>
-                                {
-                                    corte
-                                };
-                                    CortesEnFechas.Add(fecha, lista);
-
+                                    if (!CortesEnFechas.ContainsKey(fechaComun))
+                                    {
+                                        CortesEnFechas[fechaComun] = new List<Corte>();
+                                    }
+                                    CortesEnFechas[fechaComun].Add(corte);
                                 }
                             }
+
                         }
                     }
                 }
@@ -439,7 +343,7 @@
             return CortesEnFechas;
 
         }
-        static List<DateTime> ObtenerListaFechasEnRango(DateTime fechaInicio, DateTime fechaFinal)
+        public static List<DateTime> ObtenerListaFechasEnRango(DateTime fechaInicio, DateTime fechaFinal)
         {
             List<DateTime> listaFechas = new List<DateTime>
             {
@@ -448,30 +352,36 @@
             };
 
             // Calcular el número de días en el rango
-            int diasEnRango = (int)(fechaFinal - fechaInicio).TotalDays;
+            int diasEnRango = (int)(fechaFinal - fechaInicio).TotalDays - 1;
+            DateTime fechaActual = fechaInicio;
 
             // Agregar las fechas intermedias al rango
             for (int i = 1; i <= diasEnRango; i++)
             {
-                DateTime fechaIntermedia = fechaInicio.AddDays(i);
-                listaFechas.Add(fechaIntermedia);
+                fechaActual = fechaActual.AddDays(1);
+                listaFechas.Add(fechaActual);
             }
 
             return listaFechas;
         }
 
-        public static bool ExisteFechaEnCortes(DateTime fechaBusqueda, List<KeyValuePair<DateTime, Corte>> keyValuesList)
+        public static bool ExisteFechaFinalEnCortes(DateTime fechaBusqueda, out Corte? corteConFinal)
         {
             bool ret = false;
-            foreach (KeyValuePair<DateTime, Corte> kvp in keyValuesList)
+            Corte corteEncontrado = new();
+            if (GestionDatos.CortesSistema is not null && GestionDatos.CortesSistema.Count > 0)
             {
-                List<DateTime> fechasRango = ObtenerListaFechasEnRango(kvp.Value.FechaInicio, kvp.Value.FechaFinal);
-                if (fechasRango.Contains(fechaBusqueda))
+                foreach (Corte corte in GestionDatos.CortesSistema)
                 {
-                    ret = true;
-                }
+                    if (corte.FechaFinal == fechaBusqueda)
+                    {
+                        corteEncontrado = corte;
+                        ret = true;
+                    }
 
+                }
             }
+            corteConFinal = corteEncontrado;
             return ret;
         }
 

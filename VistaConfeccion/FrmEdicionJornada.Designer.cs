@@ -226,6 +226,7 @@
             BtnCancelar.TabIndex = 33;
             BtnCancelar.Text = "Cancelar";
             BtnCancelar.UseVisualStyleBackColor = false;
+            BtnCancelar.Click += BtnCancelar_Click;
             // 
             // FrmEdicionJornada
             // 

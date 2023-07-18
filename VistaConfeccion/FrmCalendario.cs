@@ -32,9 +32,9 @@ namespace Vista
             int diaSemanaInicio = (int)diaInicioActualizable.DayOfWeek;
             // Obtener el último día del mes actual
             DateTime ultimoDiaDelMes = diaInicioActualizable.AddMonths(1).AddDays(-1);
-            string[] nombresDiasSemana = { "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
-            DateTime diaActualizado = diaInicioActualizable.AddDays(-diaSemanaInicio); // Ajustar para empezar en el día de la semana correcto
-                                                                                       // Agregar columnas al DataTable para cada día de la semana
+            string[] nombresDiasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
+            DateTime diaActualizado = diaInicioActualizable.AddDays(-diaSemanaInicio); 
+
             foreach (string nombreDia in nombresDiasSemana)
             {
                 dataTable.Columns.Add(nombreDia, typeof(string));
@@ -59,13 +59,19 @@ namespace Vista
                             StringBuilder sb = new StringBuilder();
                             foreach (Corte corte in cortesEnFecha)
                             {
-                                sb.Append($"{corte.IdentificadorDeConfeccion}");
+                                if(cortesEnFecha.IndexOf(corte) == 0)
+                                {
+                                    sb.Append("Identificador de cortes: ");
+                                }
+                                sb.Append($"{corte.IdentificadorDeCorte}\n");
+                                sb.Append(corte.ToString());
                                 if (cortesEnFecha.IndexOf(corte) != cortesEnFecha.Count - 1)
                                 {
                                     sb.Append(", ");
                                 }
                             }
-                            sb.AppendLine($" | Fecha: {diaActualizado.Day}/{diaActualizado.Month}");
+
+                            sb.AppendLine($"\n Fecha: {diaActualizado.Day}/{diaActualizado.Month}");
                             // Eliminar la coma final y los espacios
                             row[i] = sb.ToString();
                         }

@@ -50,7 +50,7 @@ namespace Procesos
                 JsonSerializerOptions opciones = new();
                 opciones.WriteIndented = true;
                 rutaArchivo = Path.Combine(RutaConfeccionesJSON);
-                string jsonString = System.Text.Json.JsonSerializer.Serialize(GestionDatos.CortesPorFecha, opciones);
+                string jsonString = System.Text.Json.JsonSerializer.Serialize(GestionDatos.CortesSistema, opciones);
 
                 File.WriteAllText(rutaArchivo, jsonString);
 
@@ -71,33 +71,29 @@ namespace Procesos
                 writer.WriteLine("Fecha Inicio,FechaFinal,Estado Confeccion,Talle,Identificador");
 
                 // Escribir los datos de cada confección en el archivo CSV
-                foreach (KeyValuePair<DateTime, List<Corte>> par in GestionDatos.CortesPorFecha)
-                {
-                    DateTime fecha = par.Key;
-                    List<Corte> cortesSistema = par.Value;
 
-                    foreach (Corte corte in cortesSistema)
+                foreach (Corte corte in GestionDatos.CortesSistema)
+                {
+                    if (corte is not null)
                     {
-                        if (corte is not null)
+                        DateTime fechaInicio = corte.FechaInicio;
+                        DateTime fechaFinal = corte.FechaFinal;
+                        int idConfeccion = corte.IdentificadorDeCorte;
+                        StringBuilder sb = new();
+                        List<Prenda> listaPrendasCorte = Administracion.ObtenerPrendasCorte(corte);
+                        for (int i = 0; i < listaPrendasCorte.Count; i++)
                         {
-                            DateTime fechaInicio = corte.FechaInicio;
-                            DateTime fechaFinal = corte.FechaFinal;
-                            int idConfeccion = corte.IdentificadorDeConfeccion;
-                            StringBuilder sb = new();
-                            List<Prenda> listaPrendasCorte = Administracion.ObtenerPrendasCorte(corte);
-                            for(int i = 0; i < listaPrendasCorte.Count; i++)
+                            if (i != listaPrendasCorte.Count - 1)
                             {
-                                if(i != listaPrendasCorte.Count - 1)
-                                {
-                                    sb.Append(",");
-                                }
-                                sb.Append(listaPrendasCorte[i].ToString());
+                                sb.Append(",");
                             }
-                            // Escribir los datos en una línea separada por comas
-                            writer.WriteLine($"{fechaInicio}, {fechaFinal}, {sb.ToString()}, {idConfeccion}");
+                            sb.Append(listaPrendasCorte[i].ToString());
                         }
+                        // Escribir los datos en una línea separada por comas
+                        writer.WriteLine($"{fechaInicio}, {fechaFinal}, {sb.ToString()}, {idConfeccion}");
                     }
                 }
+
             }
         }
 
@@ -106,17 +102,17 @@ namespace Procesos
             rutaArchivo = Path.Combine(rutaBase, RutaConfeccionesJSON);
             string jsonString = File.ReadAllText(rutaArchivo);
 
-            Dictionary<DateTime, List<Corte>>? dict = JsonConvert.DeserializeObject<Dictionary<DateTime, List<Corte>>>(jsonString);
+            List<Corte> cortes = JsonConvert.DeserializeObject<List<Corte>>(jsonString);
 
-            if (dict is not null)
+            if (cortes is not null)
             {
-                GestionDatos.CortesPorFecha = dict;
+                GestionDatos.CortesSistema = cortes;
             }
             else
             {
                 throw new Exception("No se pudo desearlizar las confecciones");
             }
-            }
-
         }
+
     }
+}

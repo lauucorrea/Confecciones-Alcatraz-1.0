@@ -23,12 +23,12 @@ namespace Entidades
         private CategoriaPrenda _categoria;
         private TallePrenda _talle;
         //datos de calculo de produccion
-        private int _cantidadPrendas;
-        private int _horasProduccion;
+        private int _cantidadEnHoras;
+        private int _horasParaCantidad;
         private int _prendasHora;
 
-        private int _unidadesCorte;
-        private decimal _horasDeProduccion;
+        private decimal _unidadesCorte;
+        private decimal _tiempoFinalEtapa;
         private EtapaCorte _etapa;
         //informacion adicional
         private string? _detallePrenda;
@@ -44,10 +44,10 @@ namespace Entidades
         public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion)
         {
             Categoria = categoria;
-            CantidadPrendas = cantidadPrendas;
-            HorasProduccion = horasProduccion;
+            CantidadEnHoras = cantidadPrendas;
+            HorasParaCantidad = horasProduccion;
 
-            PrendasHora = CantidadPrendas / HorasProduccion ;
+            PrendasHora = CantidadEnHoras / HorasParaCantidad ;
 
             if(PrendasHora <= 0)
             {
@@ -74,14 +74,14 @@ namespace Entidades
             }
         }
 
-        public int UnidadesCorte
+        public decimal UnidadesCorte
         {
             get => _unidadesCorte;
             set
             {
-                _unidadesCorte = value;
+                _unidadesCorte = Math.Round(value);
 
-                HorasDeProduccion = UnidadesCorte / PrendasHora;
+                TiempoFinalEtapa = UnidadesCorte / PrendasHora;
             }
         }
         public EtapaCorte Etapa
@@ -89,10 +89,10 @@ namespace Entidades
             get => _etapa;
             set => _etapa = value;
         }
-        public decimal HorasDeProduccion
+        public decimal TiempoFinalEtapa
         {
-            get => _horasDeProduccion;
-            set => _horasDeProduccion = value;
+            get => _tiempoFinalEtapa;
+            set => _tiempoFinalEtapa = Math.Round(value,1);
         }
         public int PrendasHora
         {
@@ -116,8 +116,9 @@ namespace Entidades
             StringBuilder sb = new();
 
             sb.AppendLine(Categoria.ToString());
-            sb.AppendLine(HorasProduccion.ToString());
-            sb.AppendLine(CantidadPrendas.ToString());
+            sb.Append("Horas para completar: ");
+            sb.AppendLine(HorasParaCantidad.ToString());
+            sb.AppendLine(CantidadEnHoras.ToString());
             sb.AppendLine(Detalles.ToString());
             sb.AppendLine(Adicional.ToString());
 
@@ -236,7 +237,7 @@ namespace Entidades
             }
         }
 
-        public int HorasProduccion { get => _horasProduccion; set => _horasProduccion = value; }
-        public int CantidadPrendas { get => _cantidadPrendas; set => _cantidadPrendas = value; }
+        public int HorasParaCantidad { get => _horasParaCantidad; set => _horasParaCantidad = value; }
+        public int CantidadEnHoras { get => _cantidadEnHoras; set => _cantidadEnHoras = value; }
     }
 }

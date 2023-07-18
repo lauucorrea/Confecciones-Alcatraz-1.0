@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Design;
-using System.Text;
+﻿using System.Text;
 
 namespace Entidades
 {
@@ -12,77 +11,78 @@ namespace Entidades
         XL,
         XXL
     }
-    
+
 
     public class Corte
     {
         private DateTime _fechaFinal;
         private DateTime _fechaInicio;
-       
-        private int _horasTotalesCorte;
-        private SortedDictionary<TallePrenda, List<Prenda>> _prendasEnConfeccion;
-        private int _identificadorDeConfeccion;
-        private static int _contadorConfecciones;
+
+        private decimal _horasTotalesCorte;
+        private SortedDictionary<TallePrenda, List<Prenda>> _prendasEnCorte;
+        private int _identificadorDeCorte;
+        private static int _contadorCortes;
         static Corte()
         {
-            _contadorConfecciones = 0;
+            _contadorCortes = 0;
 
         }
         public Corte()
         {
         }
-        public Corte(DateTime fechaFinal, DateTime fechaInicio):this()
+        public Corte(DateTime fechaFinal, DateTime fechaInicio) : this()
         {
-           // PrendasEnConfeccion = new();
+            // PrendasEnConfeccion = new();
             FechaFinal = fechaFinal;
             FechaInicio = fechaInicio;
-            _contadorConfecciones++;
-            IdentificadorDeConfeccion = _contadorConfecciones;
+            _contadorCortes++;
+            IdentificadorDeCorte = _contadorCortes;
         }
         public override string ToString()
         {
             StringBuilder sb = new();
-            sb.AppendLine("Fecha de entrega: ");
-            sb.AppendLine(FechaFinal.ToString());
-            sb.AppendLine("Fecha de inicio: ");
-            sb.AppendLine(FechaInicio.ToString());
-            if (PrendasEnConfeccion is not null)
+            if (PrendasEnCorte is not null)
             {
-
-                foreach (KeyValuePair<TallePrenda, List<Prenda>> par in PrendasEnConfeccion)
-                {
-                    foreach (Prenda prenda in par.Value)
-                    {
-                        for(int i = 1; i <= par.Value.Count() ; i++)
-                        {
-                            sb.AppendLine("Prenda "+ i);
-                            sb.AppendLine(prenda.ToString());
-                            sb.AppendLine(prenda.Etapa.ToString());
-                        }
-                    }
-                }
+                // sb.Append($"Identificador del corte: {IdentificadorDeConfeccion}/n");
+                sb.Clear();
+                sb.Append(ContarTallesPrendas());
             }
-            
-            
 
             return sb.ToString();
         }
 
-       
-        public int HorasTotalesCorte
+        public string ContarTallesPrendas()
+        {
+            StringBuilder sb = new();
+
+            sb.Append($"Prendas en corte: \n");
+            foreach (KeyValuePair<TallePrenda, List<Prenda>> kvp in PrendasEnCorte)
+            {
+                if (kvp.Value.Count > 0)
+                {
+                    sb.Append($"{kvp.Key.ToString()} | {kvp.Value.Count} prendas\n");
+                }
+            }
+            return sb.ToString();
+        }
+        public decimal HorasTotalesCorte
         {
             get => _horasTotalesCorte;
-            set => _horasTotalesCorte = value;
+            set => _horasTotalesCorte = Math.Round(value, 1);
         }
-        public SortedDictionary<TallePrenda, List<Prenda>> PrendasEnConfeccion
+        public SortedDictionary<TallePrenda, List<Prenda>> PrendasEnCorte
         {
             set
             {
-                _prendasEnConfeccion = value;
+                if (value is not null)
+                {
+                    _prendasEnCorte = value;
+                    ObtenerHorasTotalesCorte();
+                }
             }
             get
             {
-                    return _prendasEnConfeccion;
+                return _prendasEnCorte;
             }
         }
 
@@ -97,22 +97,22 @@ namespace Entidades
             set => _fechaInicio = value;
         }
 
-        public int IdentificadorDeConfeccion
+        public int IdentificadorDeCorte
         {
-            get => _identificadorDeConfeccion;
-            set => _identificadorDeConfeccion = value;
+            get => _identificadorDeCorte;
+            set => _identificadorDeCorte = value;
         }
 
         public void ObtenerHorasTotalesCorte()
         {
             HorasTotalesCorte = 0;
-            if (PrendasEnConfeccion is not null)
+            if (PrendasEnCorte is not null)
             {
-                foreach (KeyValuePair<TallePrenda, List<Prenda>> par in PrendasEnConfeccion)
+                foreach (KeyValuePair<TallePrenda, List<Prenda>> par in PrendasEnCorte)
                 {
                     foreach (Prenda prenda in par.Value)
                     {
-                        HorasTotalesCorte += prenda.HorasProduccion;
+                        HorasTotalesCorte += prenda.TiempoFinalEtapa;
                     }
                 }
             }
@@ -125,9 +125,9 @@ namespace Entidades
             {
                 if (prendaBuscada is not null)
                 {
-                    if (PrendasEnConfeccion is not null && PrendasEnConfeccion.Count > 0)
+                    if (PrendasEnCorte is not null && PrendasEnCorte.Count > 0)
                     {
-                        foreach (KeyValuePair<TallePrenda, List<Prenda>> par in PrendasEnConfeccion)
+                        foreach (KeyValuePair<TallePrenda, List<Prenda>> par in PrendasEnCorte)
                         {
                             if (par.Value.Contains(prendaBuscada))
                             {

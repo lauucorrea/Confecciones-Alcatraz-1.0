@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             MstGestion = new MenuStrip();
-            gestionarInformacionToolStripMenuItem = new ToolStripMenuItem();
+            GestionarInformacionToolStripMenuItem = new ToolStripMenuItem();
             usuariosToolStripMenuItem = new ToolStripMenuItem();
-            agregToolStripMenuItem = new ToolStripMenuItem();
-            mostrarUsuariosToolStripMenuItem = new ToolStripMenuItem();
+            Sistema_CrearUsuario = new ToolStripMenuItem();
+            Sistema_MostrarUsuarios = new ToolStripMenuItem();
             prendasToolStripMenuItem = new ToolStripMenuItem();
             agregarPrendaToolStripMenuItem = new ToolStripMenuItem();
             mostrarPrendasToolStripMenuItem = new ToolStripMenuItem();
@@ -49,7 +49,7 @@
             mostrarTerminacionesToolStripMenuItem = new ToolStripMenuItem();
             modificarJornadaToolStripMenuItem = new ToolStripMenuItem();
             mostrarToolStripMenuItem = new ToolStripMenuItem();
-            reportesToolStripMenuItem = new ToolStripMenuItem();
+            TsmiReportes = new ToolStripMenuItem();
             reporteDeUsuariosToolStripMenuItem = new ToolStripMenuItem();
             ordenarPorJerarquiaToolStripMenuItem = new ToolStripMenuItem();
             ordenarPorNombreToolStripMenuItem = new ToolStripMenuItem();
@@ -67,54 +67,56 @@
             confreccionesToolStripMenuItem1 = new ToolStripMenuItem();
             terminacionesToolStripMenuItem = new ToolStripMenuItem();
             DtgMuestreoMain = new DataGridView();
+            label4 = new Label();
+            BtnCerrarSesion = new Button();
             MstGestion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DtgMuestreoMain).BeginInit();
             SuspendLayout();
             // 
             // MstGestion
             // 
-            MstGestion.Items.AddRange(new ToolStripItem[] { gestionarInformacionToolStripMenuItem, mostrarToolStripMenuItem, reportesToolStripMenuItem });
+            MstGestion.Items.AddRange(new ToolStripItem[] { GestionarInformacionToolStripMenuItem, mostrarToolStripMenuItem, TsmiReportes });
             MstGestion.Location = new Point(0, 0);
             MstGestion.Name = "MstGestion";
             MstGestion.Size = new Size(1384, 24);
             MstGestion.TabIndex = 5;
             MstGestion.Text = "menuStrip1";
             // 
-            // gestionarInformacionToolStripMenuItem
+            // GestionarInformacionToolStripMenuItem
             // 
-            gestionarInformacionToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usuariosToolStripMenuItem, prendasToolStripMenuItem, cortesToolStripMenuItem, confreccionesToolStripMenuItem, terminacionToolStripMenuItem, modificarJornadaToolStripMenuItem });
-            gestionarInformacionToolStripMenuItem.Name = "gestionarInformacionToolStripMenuItem";
-            gestionarInformacionToolStripMenuItem.Size = new Size(60, 20);
-            gestionarInformacionToolStripMenuItem.Text = "Sistema";
-            gestionarInformacionToolStripMenuItem.Click += gestionarInformacionToolStripMenuItem_Click;
+            GestionarInformacionToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { usuariosToolStripMenuItem, prendasToolStripMenuItem, cortesToolStripMenuItem, confreccionesToolStripMenuItem, terminacionToolStripMenuItem, modificarJornadaToolStripMenuItem });
+            GestionarInformacionToolStripMenuItem.Name = "GestionarInformacionToolStripMenuItem";
+            GestionarInformacionToolStripMenuItem.Size = new Size(60, 20);
+            GestionarInformacionToolStripMenuItem.Text = "Sistema";
+            GestionarInformacionToolStripMenuItem.Click += GestionarInformacionToolStripMenuItem_Click;
             // 
             // usuariosToolStripMenuItem
             // 
-            usuariosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { agregToolStripMenuItem, mostrarUsuariosToolStripMenuItem });
+            usuariosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { Sistema_CrearUsuario, Sistema_MostrarUsuarios });
             usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            usuariosToolStripMenuItem.Size = new Size(169, 22);
+            usuariosToolStripMenuItem.Size = new Size(180, 22);
             usuariosToolStripMenuItem.Text = "Usuarios";
-            usuariosToolStripMenuItem.Click += usuariosToolStripMenuItem_Click;
+            usuariosToolStripMenuItem.Click += UsuariosToolStripMenuItem_Click;
             // 
-            // agregToolStripMenuItem
+            // Sistema_CrearUsuario
             // 
-            agregToolStripMenuItem.Name = "agregToolStripMenuItem";
-            agregToolStripMenuItem.Size = new Size(188, 22);
-            agregToolStripMenuItem.Text = "+Crear nuevo usuario";
-            agregToolStripMenuItem.Click += agregToolStripMenuItem_Click;
+            Sistema_CrearUsuario.Name = "Sistema_CrearUsuario";
+            Sistema_CrearUsuario.Size = new Size(188, 22);
+            Sistema_CrearUsuario.Text = "+Crear nuevo usuario";
+            Sistema_CrearUsuario.Click += AgregToolStripMenuItem_Click;
             // 
-            // mostrarUsuariosToolStripMenuItem
+            // Sistema_MostrarUsuarios
             // 
-            mostrarUsuariosToolStripMenuItem.Name = "mostrarUsuariosToolStripMenuItem";
-            mostrarUsuariosToolStripMenuItem.Size = new Size(188, 22);
-            mostrarUsuariosToolStripMenuItem.Text = "Mostrar usuarios";
-            mostrarUsuariosToolStripMenuItem.Click += mostrarUsuariosToolStripMenuItem_Click;
+            Sistema_MostrarUsuarios.Name = "Sistema_MostrarUsuarios";
+            Sistema_MostrarUsuarios.Size = new Size(188, 22);
+            Sistema_MostrarUsuarios.Text = "Mostrar usuarios";
+            Sistema_MostrarUsuarios.Click += MostrarUsuariosToolStripMenuItem_Click;
             // 
             // prendasToolStripMenuItem
             // 
             prendasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { agregarPrendaToolStripMenuItem, mostrarPrendasToolStripMenuItem });
             prendasToolStripMenuItem.Name = "prendasToolStripMenuItem";
-            prendasToolStripMenuItem.Size = new Size(169, 22);
+            prendasToolStripMenuItem.Size = new Size(180, 22);
             prendasToolStripMenuItem.Text = "Prendas";
             // 
             // agregarPrendaToolStripMenuItem
@@ -122,41 +124,41 @@
             agregarPrendaToolStripMenuItem.Name = "agregarPrendaToolStripMenuItem";
             agregarPrendaToolStripMenuItem.Size = new Size(188, 22);
             agregarPrendaToolStripMenuItem.Text = "+ Crear nueva prenda";
-            agregarPrendaToolStripMenuItem.Click += agregarPrendaToolStripMenuItem_Click;
+            agregarPrendaToolStripMenuItem.Click += AgregarPrendaToolStripMenuItem_Click;
             // 
             // mostrarPrendasToolStripMenuItem
             // 
             mostrarPrendasToolStripMenuItem.Name = "mostrarPrendasToolStripMenuItem";
             mostrarPrendasToolStripMenuItem.Size = new Size(188, 22);
             mostrarPrendasToolStripMenuItem.Text = "Mostrar prendas";
-            mostrarPrendasToolStripMenuItem.Click += mostrarPrendasToolStripMenuItem_Click;
+            mostrarPrendasToolStripMenuItem.Click += MostrarPrendasToolStripMenuItem_Click;
             // 
             // cortesToolStripMenuItem
             // 
             cortesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevoCorteToolStripMenuItem, mostrarCortesToolStripMenuItem });
             cortesToolStripMenuItem.Name = "cortesToolStripMenuItem";
-            cortesToolStripMenuItem.Size = new Size(169, 22);
+            cortesToolStripMenuItem.Size = new Size(180, 22);
             cortesToolStripMenuItem.Text = "Cortes";
             // 
             // crearNuevoCorteToolStripMenuItem
             // 
             crearNuevoCorteToolStripMenuItem.Name = "crearNuevoCorteToolStripMenuItem";
-            crearNuevoCorteToolStripMenuItem.Size = new Size(179, 22);
+            crearNuevoCorteToolStripMenuItem.Size = new Size(180, 22);
             crearNuevoCorteToolStripMenuItem.Text = "+ Crear nuevo corte";
-            crearNuevoCorteToolStripMenuItem.Click += crearNuevoCorteToolStripMenuItem_Click;
+            crearNuevoCorteToolStripMenuItem.Click += CrearNuevoCorteToolStripMenuItem_Click;
             // 
             // mostrarCortesToolStripMenuItem
             // 
             mostrarCortesToolStripMenuItem.Name = "mostrarCortesToolStripMenuItem";
-            mostrarCortesToolStripMenuItem.Size = new Size(179, 22);
+            mostrarCortesToolStripMenuItem.Size = new Size(180, 22);
             mostrarCortesToolStripMenuItem.Text = "Mostrar cortes";
-            mostrarCortesToolStripMenuItem.Click += mostrarCortesToolStripMenuItem_Click;
+            mostrarCortesToolStripMenuItem.Click += MostrarCortesToolStripMenuItem_Click;
             // 
             // confreccionesToolStripMenuItem
             // 
             confreccionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevaConfeccionToolStripMenuItem, mostrarConfeccionesToolStripMenuItem });
             confreccionesToolStripMenuItem.Name = "confreccionesToolStripMenuItem";
-            confreccionesToolStripMenuItem.Size = new Size(169, 22);
+            confreccionesToolStripMenuItem.Size = new Size(180, 22);
             confreccionesToolStripMenuItem.Text = "Confrecciones";
             // 
             // crearNuevaConfeccionToolStripMenuItem
@@ -175,7 +177,7 @@
             // 
             terminacionToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevaTerminacionToolStripMenuItem, mostrarTerminacionesToolStripMenuItem });
             terminacionToolStripMenuItem.Name = "terminacionToolStripMenuItem";
-            terminacionToolStripMenuItem.Size = new Size(169, 22);
+            terminacionToolStripMenuItem.Size = new Size(180, 22);
             terminacionToolStripMenuItem.Text = "Terminaciones";
             // 
             // crearNuevaTerminacionToolStripMenuItem
@@ -193,23 +195,23 @@
             // modificarJornadaToolStripMenuItem
             // 
             modificarJornadaToolStripMenuItem.Name = "modificarJornadaToolStripMenuItem";
-            modificarJornadaToolStripMenuItem.Size = new Size(169, 22);
+            modificarJornadaToolStripMenuItem.Size = new Size(180, 22);
             modificarJornadaToolStripMenuItem.Text = "Modificar Jornada";
-            modificarJornadaToolStripMenuItem.Click += modificarJornadaToolStripMenuItem_Click;
+            modificarJornadaToolStripMenuItem.Click += ModificarJornadaToolStripMenuItem_Click;
             // 
             // mostrarToolStripMenuItem
             // 
             mostrarToolStripMenuItem.Name = "mostrarToolStripMenuItem";
             mostrarToolStripMenuItem.Size = new Size(60, 20);
             mostrarToolStripMenuItem.Text = "Mostrar";
-            mostrarToolStripMenuItem.Click += mostrarToolStripMenuItem_Click;
+            mostrarToolStripMenuItem.Click += MostrarToolStripMenuItem_Click;
             // 
-            // reportesToolStripMenuItem
+            // TsmiReportes
             // 
-            reportesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { reporteDeUsuariosToolStripMenuItem, reportesDePrendasToolStripMenuItem, cortesToolStripMenuItem1, confreccionesToolStripMenuItem1, terminacionesToolStripMenuItem });
-            reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
-            reportesToolStripMenuItem.Size = new Size(65, 20);
-            reportesToolStripMenuItem.Text = "Reportes";
+            TsmiReportes.DropDownItems.AddRange(new ToolStripItem[] { reporteDeUsuariosToolStripMenuItem, reportesDePrendasToolStripMenuItem, cortesToolStripMenuItem1, confreccionesToolStripMenuItem1, terminacionesToolStripMenuItem });
+            TsmiReportes.Name = "TsmiReportes";
+            TsmiReportes.Size = new Size(65, 20);
+            TsmiReportes.Text = "Reportes";
             // 
             // reporteDeUsuariosToolStripMenuItem
             // 
@@ -223,21 +225,21 @@
             ordenarPorJerarquiaToolStripMenuItem.Name = "ordenarPorJerarquiaToolStripMenuItem";
             ordenarPorJerarquiaToolStripMenuItem.Size = new Size(187, 22);
             ordenarPorJerarquiaToolStripMenuItem.Text = "Ordenar por jerarquia";
-            ordenarPorJerarquiaToolStripMenuItem.Click += ordenarPorJerarquiaToolStripMenuItem_Click;
+            ordenarPorJerarquiaToolStripMenuItem.Click += OrdenarPorJerarquiaToolStripMenuItem_Click;
             // 
             // ordenarPorNombreToolStripMenuItem
             // 
             ordenarPorNombreToolStripMenuItem.Name = "ordenarPorNombreToolStripMenuItem";
             ordenarPorNombreToolStripMenuItem.Size = new Size(187, 22);
             ordenarPorNombreToolStripMenuItem.Text = "Ordenar por nombre";
-            ordenarPorNombreToolStripMenuItem.Click += ordenarPorNombreToolStripMenuItem_Click;
+            ordenarPorNombreToolStripMenuItem.Click += OrdenarPorNombreToolStripMenuItem_Click;
             // 
             // ordenarPorDNIToolStripMenuItem
             // 
             ordenarPorDNIToolStripMenuItem.Name = "ordenarPorDNIToolStripMenuItem";
             ordenarPorDNIToolStripMenuItem.Size = new Size(187, 22);
             ordenarPorDNIToolStripMenuItem.Text = "Ordenar por DNI";
-            ordenarPorDNIToolStripMenuItem.Click += ordenarPorDNIToolStripMenuItem_Click;
+            ordenarPorDNIToolStripMenuItem.Click += OrdenarPorDNIToolStripMenuItem_Click;
             // 
             // reportesDePrendasToolStripMenuItem
             // 
@@ -251,21 +253,21 @@
             ordenarPorTalleToolStripMenuItem.Name = "ordenarPorTalleToolStripMenuItem";
             ordenarPorTalleToolStripMenuItem.Size = new Size(202, 22);
             ordenarPorTalleToolStripMenuItem.Text = "Ordenar por talle";
-            ordenarPorTalleToolStripMenuItem.Click += ordenarPorTalleToolStripMenuItem_Click;
+            ordenarPorTalleToolStripMenuItem.Click += OrdenarPorTalleToolStripMenuItem_Click;
             // 
             // ordenarPorTipoToolStripMenuItem
             // 
             ordenarPorTipoToolStripMenuItem.Name = "ordenarPorTipoToolStripMenuItem";
             ordenarPorTipoToolStripMenuItem.Size = new Size(202, 22);
             ordenarPorTipoToolStripMenuItem.Text = "Ordenar por tipo";
-            ordenarPorTipoToolStripMenuItem.Click += ordenarPorTipoToolStripMenuItem_Click;
+            ordenarPorTipoToolStripMenuItem.Click += OrdenarPorTipoToolStripMenuItem_Click;
             // 
             // ordenarPorProduccionToolStripMenuItem
             // 
             ordenarPorProduccionToolStripMenuItem.Name = "ordenarPorProduccionToolStripMenuItem";
             ordenarPorProduccionToolStripMenuItem.Size = new Size(202, 22);
             ordenarPorProduccionToolStripMenuItem.Text = "Ordenar por produccion";
-            ordenarPorProduccionToolStripMenuItem.Click += ordenarPorProduccionToolStripMenuItem_Click;
+            ordenarPorProduccionToolStripMenuItem.Click += OrdenarPorProduccionToolStripMenuItem_Click;
             // 
             // cortesToolStripMenuItem1
             // 
@@ -279,35 +281,35 @@
             porFechaToolStripMenuItem.Name = "porFechaToolStripMenuItem";
             porFechaToolStripMenuItem.Size = new Size(213, 22);
             porFechaToolStripMenuItem.Text = "Por fecha de inicio";
-            porFechaToolStripMenuItem.Click += porFechaToolStripMenuItem_Click;
+            porFechaToolStripMenuItem.Click += PorFechaToolStripMenuItem_Click;
             // 
             // porFechaDeEntregaToolStripMenuItem
             // 
             porFechaDeEntregaToolStripMenuItem.Name = "porFechaDeEntregaToolStripMenuItem";
             porFechaDeEntregaToolStripMenuItem.Size = new Size(213, 22);
             porFechaDeEntregaToolStripMenuItem.Text = "Por fecha de entrega";
-            porFechaDeEntregaToolStripMenuItem.Click += porFechaDeEntregaToolStripMenuItem_Click;
+            porFechaDeEntregaToolStripMenuItem.Click += PorFechaDeEntregaToolStripMenuItem_Click;
             // 
             // porEtapaToolStripMenuItem
             // 
             porEtapaToolStripMenuItem.Name = "porEtapaToolStripMenuItem";
             porEtapaToolStripMenuItem.Size = new Size(213, 22);
             porEtapaToolStripMenuItem.Text = "Por etapa";
-            porEtapaToolStripMenuItem.Click += porEtapaToolStripMenuItem_Click;
+            porEtapaToolStripMenuItem.Click += PorEtapaToolStripMenuItem_Click;
             // 
             // porTiempoDeProduccionToolStripMenuItem
             // 
             porTiempoDeProduccionToolStripMenuItem.Name = "porTiempoDeProduccionToolStripMenuItem";
             porTiempoDeProduccionToolStripMenuItem.Size = new Size(213, 22);
             porTiempoDeProduccionToolStripMenuItem.Text = "Por tiempo de produccion";
-            porTiempoDeProduccionToolStripMenuItem.Click += porTiempoDeProduccionToolStripMenuItem_Click;
+            porTiempoDeProduccionToolStripMenuItem.Click += PorTiempoDeProduccionToolStripMenuItem_Click;
             // 
             // porTallesDePrendasToolStripMenuItem
             // 
             porTallesDePrendasToolStripMenuItem.Name = "porTallesDePrendasToolStripMenuItem";
             porTallesDePrendasToolStripMenuItem.Size = new Size(213, 22);
             porTallesDePrendasToolStripMenuItem.Text = "Por talles de prendas";
-            porTallesDePrendasToolStripMenuItem.Click += porTallesDePrendasToolStripMenuItem_Click;
+            porTallesDePrendasToolStripMenuItem.Click += PorTallesDePrendasToolStripMenuItem_Click;
             // 
             // confreccionesToolStripMenuItem1
             // 
@@ -335,20 +337,44 @@
             DtgMuestreoMain.GridColor = Color.FromArgb(10, 102, 194);
             DtgMuestreoMain.Location = new Point(12, 37);
             DtgMuestreoMain.Name = "DtgMuestreoMain";
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            DtgMuestreoMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            DtgMuestreoMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             DtgMuestreoMain.RowHeadersVisible = false;
             DtgMuestreoMain.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DtgMuestreoMain.RowTemplate.Height = 25;
             DtgMuestreoMain.ShowEditingIcon = false;
-            DtgMuestreoMain.Size = new Size(1360, 750);
+            DtgMuestreoMain.Size = new Size(1360, 705);
             DtgMuestreoMain.TabIndex = 6;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.ForeColor = Color.DarkBlue;
+            label4.Location = new Point(24, 834);
+            label4.Name = "label4";
+            label4.Size = new Size(87, 17);
+            label4.TabIndex = 43;
+            label4.Text = "Cerrar sesion";
+            // 
+            // BtnCerrarSesion
+            // 
+            BtnCerrarSesion.Cursor = Cursors.Hand;
+            BtnCerrarSesion.FlatStyle = FlatStyle.Flat;
+            BtnCerrarSesion.ForeColor = Color.Transparent;
+            BtnCerrarSesion.Image = (Image)resources.GetObject("BtnCerrarSesion.Image");
+            BtnCerrarSesion.Location = new Point(30, 756);
+            BtnCerrarSesion.Name = "BtnCerrarSesion";
+            BtnCerrarSesion.Size = new Size(72, 80);
+            BtnCerrarSesion.TabIndex = 42;
+            BtnCerrarSesion.UseVisualStyleBackColor = true;
+            BtnCerrarSesion.Click += BtnCerrarSesion_Click;
             // 
             // FrmMain
             // 
@@ -356,6 +382,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Azure;
             ClientSize = new Size(1384, 861);
+            Controls.Add(label4);
+            Controls.Add(BtnCerrarSesion);
             Controls.Add(DtgMuestreoMain);
             Controls.Add(MstGestion);
             ForeColor = Color.DarkBlue;
@@ -376,8 +404,8 @@
         #endregion
         private MenuStrip MstGestion;
         private ToolStripMenuItem mostrarToolStripMenuItem;
-        private ToolStripMenuItem reportesToolStripMenuItem;
-        private ToolStripMenuItem gestionarInformacionToolStripMenuItem;
+        private ToolStripMenuItem TsmiReportes;
+        private ToolStripMenuItem GestionarInformacionToolStripMenuItem;
         private ToolStripMenuItem usuariosToolStripMenuItem;
         private ToolStripMenuItem cortesToolStripMenuItem1;
         private ToolStripMenuItem porFechaToolStripMenuItem;
@@ -386,8 +414,8 @@
         private ToolStripMenuItem agregarPrendaToolStripMenuItem;
         private ToolStripMenuItem cortesToolStripMenuItem;
         private ToolStripMenuItem confreccionesToolStripMenuItem;
-        private ToolStripMenuItem agregToolStripMenuItem;
-        private ToolStripMenuItem mostrarUsuariosToolStripMenuItem;
+        private ToolStripMenuItem Sistema_CrearUsuario;
+        private ToolStripMenuItem Sistema_MostrarUsuarios;
         private ToolStripMenuItem mostrarPrendasToolStripMenuItem;
         private ToolStripMenuItem crearNuevoCorteToolStripMenuItem;
         private ToolStripMenuItem terminacionToolStripMenuItem;
@@ -411,5 +439,7 @@
         private ToolStripMenuItem porTiempoDeProduccionToolStripMenuItem;
         private ToolStripMenuItem porTallesDePrendasToolStripMenuItem;
         private ToolStripMenuItem modificarJornadaToolStripMenuItem;
+        private Label label4;
+        private Button BtnCerrarSesion;
     }
 }

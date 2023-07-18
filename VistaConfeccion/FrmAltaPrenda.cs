@@ -1,5 +1,4 @@
 ﻿using Entidades;
-using Procesos;
 namespace VistaConfeccion
 {
     public partial class FrmAltaPrenda : Form
@@ -66,8 +65,8 @@ namespace VistaConfeccion
                 DataGridViewRow fila = new();
                 fila.CreateCells(DtgPrendasSistema);
                 fila.Cells[0].Value = prenda.Categoria; // Suponiendo que Prenda tiene una propiedad "Nombre"
-                fila.Cells[1].Value = prenda.CantidadPrendas; // Suponiendo que Prenda tiene una propiedad "Tipo"
-                fila.Cells[2].Value = prenda.HorasProduccion; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[1].Value = prenda.CantidadEnHoras; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[2].Value = prenda.HorasParaCantidad; // Suponiendo que Prenda tiene una propiedad "Tipo"
                 fila.Cells[3].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
                 fila.Cells[4].Value = prenda.Detalles; // Suponiendo que TallePrenda tiene una propiedad "Talle"
                 fila.Cells[5].Value = prenda.Adicional; // Suponiendo que Prenda tiene una propiedad "Cantidad"
@@ -88,13 +87,39 @@ namespace VistaConfeccion
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
             VaciarDatos();
-            DialogResult = DialogResult.Cancel;
+            const string mensaje = "Estas seguro de que queres cerrar? No se guardaran los cambios sin guardar";
+            const string comentario = "Formulario cerrandose";
+            var result = MessageBox.Show(mensaje, comentario, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+               // Clase_serializadora serializadora = new();
+               // serializadora.GuardarPersonasXML();
+               // serializadora.GuardarAvionesXML();
+
+                DialogResult = DialogResult.Cancel;
+            }
         }
         private void VaciarDatos()
         {
             TxtDistintivo.Text = string.Empty;
             RchDescripcion.Clear();
             NumHoras.Value = 1;
+        }
+
+        private void BtnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            const string mensaje = "Estas seguro de que queres cerrar sesion? Se perderan los cambios sin guardar";
+            const string comentario = "Cerrando sesion";
+            var result = MessageBox.Show(mensaje, comentario, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                //Clase_serializadora serializadora = new();
+                //serializadora.GuardarPersonasXML();
+                //serializadora.GuardarAvionesXML();
+                Application.Exit();
+            }
         }
     }
 }
