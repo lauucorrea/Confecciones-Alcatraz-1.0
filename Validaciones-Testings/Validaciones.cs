@@ -42,7 +42,7 @@ namespace Validaciones_Testings
             }
             else
             {
-                throw new ArgumentNullException();
+                return false;
             }
 
         }
@@ -93,13 +93,15 @@ namespace Validaciones_Testings
 
         public static bool VerificarDni(int dni)
         {
-            if (dni > 29999999 && dni < 59999999)
+            int digitos = Math.Abs(dni).ToString().Length; // Obtener la cantidad de dígitos
+
+            if (digitos >= 8)
             {
-                return true;
+                return true; // El DNI tiene al menos 8 dígitos
             }
             else
             {
-                throw new Exception($"El dni debe ser mayor a 29.999.999 y menor a 59.999.999");
+                return false; // El DNI tiene menos de 8 dígitos
             }
         }
 

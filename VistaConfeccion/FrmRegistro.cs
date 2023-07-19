@@ -1,4 +1,5 @@
 ﻿using Entidades;
+using Procesos;
 
 namespace Vista
 {
@@ -21,12 +22,20 @@ namespace Vista
                     PersonaCreada = new(TxtNombre.Text, TxtApellido.Text, Convert.ToInt32(NumDni.Value), TxtUsuario.Text, TxtPassword.Text);
                     if (PersonaCreada is not null)
                     {
-                        MessageBox.Show(PersonaCreada.ToString());
                         cantidadElementos = GestionDatos.PersonasSistema.Count;
                         GestionDatos.PersonasSistema.Add(PersonaCreada);
 
                         if (cantidadElementos < GestionDatos.PersonasSistema.Count)
                         {
+                            MessageBox.Show(PersonaCreada.ToString());
+                            Serializadora.GuardarPersonasJSON();
+
+                            FrmEdicionJornada frmEdicion = new(PersonaCreada);
+
+                            if (frmEdicion.ShowDialog() != DialogResult.OK)
+                            {
+                                frmEdicion.Close();
+                            }
                             VaciarDatos();
                         }
                         else

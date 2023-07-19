@@ -91,24 +91,8 @@ namespace Entidades
         }
         public static void HardcodeListas()
         {
-            Prenda prenda1 = new(CategoriaPrenda.Remera, 300, 8)
-            {
-                TallePrenda = TallePrenda.M
-            };
-            Prenda prenda2 = new(CategoriaPrenda.Pantalon, 500, 15)
-            {
-                TallePrenda = TallePrenda.M
-            };
-            Prenda prenda3 = new(CategoriaPrenda.Campera, 350, 12)
-            {
-                TallePrenda = TallePrenda.L
-            };
-            Prenda prenda4 = new(CategoriaPrenda.Chomba, 300, 9)
-            {
-                TallePrenda = TallePrenda.XL
-            };
 
-            Persona roberto = new("Roberto", "Correa", 50666452, "Rober", "asd123")
+          /*  Persona roberto = new("Roberto", "Correa", 50666452, "Rober", "asd123")
             {
                 DiasLaborales = new(){
             "Lunes",
@@ -146,10 +130,7 @@ namespace Entidades
             PersonasSistema.Add(roberto);
             PersonasSistema.Add(persona1);
 
-            PrendasSistema.Add(prenda1);
-            PrendasSistema.Add(prenda2);
-            PrendasSistema.Add(prenda3);
-            PrendasSistema.Add(prenda4);
+            */
 
 
 

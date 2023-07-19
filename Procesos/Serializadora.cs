@@ -1,31 +1,57 @@
 ﻿using Entidades;
-using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json;
 namespace Procesos
 {
-    public class Serializadora
+    public static class Serializadora
     {
         static string rutaBase = string.Empty;
         static string rutaArchivo = string.Empty;
-        public Serializadora()
+        static Serializadora()
         {
             rutaBase = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
+            rutaBase = Path.Combine(rutaBase, "ArchivosJson/");
         }
         public static string RutaPrendasJSON
         {
-            get { return Path.Combine(rutaBase, "ArchivosJson/Prendas.json"); }
+            get { return Path.Combine(rutaBase, "Prendas.json"); }
         }
-        public static string RutaConfeccionesJSON
+        public static string RutaCortesJSON
         {
-            get { return Path.Combine(rutaBase, "ArchivosJson/Confecciones.json"); }
+            get { return Path.Combine(rutaBase, "Cortes.json"); }
         }
-        public static string RutaConfeccionesCSV
+        public static string RutaPersonasJSON
         {
-            get { return Path.Combine(rutaBase, "ArchivosCsv/Confecciones.csv"); }
+            get { return Path.Combine(rutaBase, "Personas.json"); }
+        }
+        public static string RutaCortesCSV
+        {
+            get { return Path.Combine(rutaBase, "Cortes.csv"); }
         }
 
+        public static void GuardarCortesJSON()
+        {
+            try
+            {
+                if (!Directory.Exists(rutaBase))
+                {
+                    Directory.CreateDirectory(rutaBase);
+                }
+
+                JsonSerializerOptions opciones = new();
+                opciones.WriteIndented = true;
+                rutaArchivo = Path.Combine(RutaCortesJSON);
+                string jsonString = JsonSerializer.Serialize(GestionDatos.CortesSistema, opciones);
+
+                File.WriteAllText(rutaArchivo, jsonString);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
         public static void GuardarPrendasJSON()
         {
             try
@@ -33,7 +59,7 @@ namespace Procesos
                 JsonSerializerOptions opciones = new();
                 opciones.WriteIndented = true;
                 rutaArchivo = Path.Combine(RutaPrendasJSON);
-                string jsonString = System.Text.Json.JsonSerializer.Serialize(GestionDatos.PrendasSistema, opciones);
+                string jsonString = JsonSerializer.Serialize(GestionDatos.PrendasSistema, opciones);
 
                 File.WriteAllText(rutaArchivo, jsonString);
 
@@ -43,14 +69,14 @@ namespace Procesos
                 throw new Exception(ex.Message);
             }
         }
-        public static void GuardarConfeccionesJSON()
+        public static void GuardarPersonasJSON()
         {
             try
             {
                 JsonSerializerOptions opciones = new();
                 opciones.WriteIndented = true;
-                rutaArchivo = Path.Combine(RutaConfeccionesJSON);
-                string jsonString = System.Text.Json.JsonSerializer.Serialize(GestionDatos.CortesSistema, opciones);
+                rutaArchivo = Path.Combine(RutaPersonasJSON);
+                string jsonString = JsonSerializer.Serialize(GestionDatos.PersonasSistema, opciones);
 
                 File.WriteAllText(rutaArchivo, jsonString);
 
@@ -59,11 +85,10 @@ namespace Procesos
             {
                 throw new Exception(ex.Message);
             }
-
         }
-        public static void GuardarConfeccionesCSV()
+        public static void GuardarCortesCSV()
         {
-            rutaArchivo = Path.Combine(RutaConfeccionesCSV);
+            rutaArchivo = Path.Combine(RutaCortesCSV);
             // Crear un StreamWriter para escribir en el archivo CSV
             using (StreamWriter writer = new(rutaArchivo))
             {
@@ -97,12 +122,12 @@ namespace Procesos
             }
         }
 
-        public void LevantarConfeccionesJSON()
+        public static void LevantarCortesJSON()
         {
-            rutaArchivo = Path.Combine(rutaBase, RutaConfeccionesJSON);
+            rutaArchivo = Path.Combine(rutaBase, RutaCortesJSON);
             string jsonString = File.ReadAllText(rutaArchivo);
 
-            List<Corte> cortes = JsonConvert.DeserializeObject<List<Corte>>(jsonString);
+            List<Corte>? cortes = JsonSerializer.Deserialize<List<Corte>>(jsonString);
 
             if (cortes is not null)
             {
@@ -110,7 +135,40 @@ namespace Procesos
             }
             else
             {
-                throw new Exception("No se pudo desearlizar las confecciones");
+                throw new Exception("No se pudo deserializar las confecciones");
+            }
+        }
+        public static void LevantarPrendasJSON()
+        {
+            rutaArchivo = Path.Combine(rutaBase, RutaPrendasJSON);
+            string jsonString = File.ReadAllText(rutaArchivo);
+
+            List<Prenda>? prendas = JsonSerializer.Deserialize<List<Prenda>>(jsonString);
+
+            if (prendas is not null)
+            {
+                GestionDatos.PrendasSistema = prendas;
+            }
+            else
+            {
+                throw new Exception("No se pudo deserializar las prendas");
+            }
+        }
+
+        public static void LevantarPersonasJSON()
+        {
+            rutaArchivo = Path.Combine(rutaBase, RutaPersonasJSON);
+            string jsonString = File.ReadAllText(rutaArchivo);
+
+            List<Persona>? personas = JsonSerializer.Deserialize<List<Persona>>(jsonString);
+
+            if (personas is not null)
+            {
+                GestionDatos.PersonasSistema = personas;
+            }
+            else
+            {
+                throw new Exception("No se pudo deserializar los usuarios");
             }
         }
 

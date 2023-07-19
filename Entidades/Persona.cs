@@ -149,7 +149,7 @@ namespace Entidades
                 }
                 else
                 {
-                    throw new Exception("Dni incorrecto");
+                    throw new Exception("Dni incorrecto. Debe tener al menos 8 digitos");
                 }
             }
         }

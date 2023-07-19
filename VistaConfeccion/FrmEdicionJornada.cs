@@ -124,6 +124,7 @@ namespace Vista
                     sb.AppendLine("Horario de cierre de " + PersonaLogueada.Nombre + ":");
                     sb.AppendLine(PersonaLogueada.HorarioCierre.ToString());
                     MessageBox.Show(sb.ToString());
+                    DialogResult = DialogResult.OK;
                 }
                 else
                 {

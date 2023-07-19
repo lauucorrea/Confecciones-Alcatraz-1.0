@@ -200,19 +200,21 @@
             // 
             LblDni.Font = new Font("Segoe UI", 12.25F, FontStyle.Regular, GraphicsUnit.Point);
             LblDni.ImeMode = ImeMode.NoControl;
-            LblDni.Location = new Point(541, 463);
+            LblDni.Location = new Point(541, 467);
             LblDni.Name = "LblDni";
             LblDni.Size = new Size(112, 58);
             LblDni.TabIndex = 54;
-            LblDni.Text = "Contraseña";
+            LblDni.Text = "Dni";
             LblDni.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // NumDni
             // 
-            NumDni.Location = new Point(686, 485);
+            NumDni.Location = new Point(685, 485);
+            NumDni.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
             NumDni.Name = "NumDni";
             NumDni.Size = new Size(154, 23);
             NumDni.TabIndex = 55;
+            NumDni.ThousandsSeparator = true;
             // 
             // CmbRolUsuario
             // 

@@ -1,4 +1,6 @@
 ﻿using Entidades;
+using Procesos;
+
 namespace VistaConfeccion
 {
     public partial class FrmAltaPrenda : Form
@@ -22,7 +24,8 @@ namespace VistaConfeccion
                     {
                         if (Administracion.AgregarPrenda_Lista(prendaCreada))
                         {
-                            MessageBox.Show(prendaCreada.ToString());
+                            MessageBox.Show($"Prenda creada con exito. \n{prendaCreada.ToString()}");
+                            Serializadora.GuardarPrendasJSON();
                             VaciarDatos();
                             CargarDatagridPrendasSistema();
 

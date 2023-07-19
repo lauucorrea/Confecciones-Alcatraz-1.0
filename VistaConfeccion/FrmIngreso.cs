@@ -1,4 +1,5 @@
 ﻿using Entidades;
+using Procesos;
 using VistaConfeccion;
 
 namespace Vista
@@ -16,6 +17,9 @@ namespace Vista
         {
             TxtUsuario.Text = "Rober";
             TxtPassword.Text = "asd123";
+            Serializadora.LevantarCortesJSON();
+            Serializadora.LevantarPrendasJSON();
+            Serializadora.LevantarPersonasJSON();
         }
 
         private void BtnSubmit_Click(object sender, EventArgs e)
@@ -37,7 +41,7 @@ namespace Vista
         }
         private Persona LogCredenciales(string usuario, string passwd )
         {
-            Persona personaEncontrada = new();
+            Persona personaEncontrada = null;
 
             if (!string.IsNullOrEmpty(usuario) && !string.IsNullOrEmpty(passwd))
             {
@@ -54,7 +58,7 @@ namespace Vista
                 {
                     TxtUsuario.Text = string.Empty;
                     TxtPassword.Text = string.Empty;
-                    throw new Exception("Los registros del usuario no coinciden");
+                    throw new Exception("No hay usuario registrado con estas credenciales");
                 }
                 else
                 {

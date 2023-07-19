@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json.Serialization;
 using Validaciones_Testings;
 namespace Entidades
 {
@@ -17,7 +18,7 @@ namespace Entidades
         Cortando,
         Terminado
     }
-
+    [Serializable]
     public class Prenda 
     {
         private CategoriaPrenda _categoria;
@@ -41,7 +42,12 @@ namespace Entidades
         {
             contadorPrendas = 0;
         }
-        public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion)
+        //[JsonConstructor]
+        public Prenda()
+        {
+
+        }
+        public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion):this()
         {
             Categoria = categoria;
             CantidadEnHoras = cantidadPrendas;
@@ -62,8 +68,8 @@ namespace Entidades
         public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion, string? detallePrenda, string informacionAdicional) : this(categoria, cantidadPrendas, horasProduccion, detallePrenda)
         {
             Adicional = informacionAdicional;
-            contadorPrendas++;
-            idPrenda = contadorPrendas;
+            ContadorPrendas++;
+            IdPrenda = contadorPrendas;
             if (string.IsNullOrEmpty(detallePrenda))
             {
                 Detalles = string.Empty;
@@ -73,6 +79,11 @@ namespace Entidades
                 Detalles = detallePrenda;
             }
         }
+        public int ContadorPrendas
+        {
+            get => contadorPrendas;
+            set => contadorPrendas = value;
+        }
 
         public decimal UnidadesCorte
         {
@@ -81,8 +92,13 @@ namespace Entidades
             {
                 _unidadesCorte = Math.Round(value);
 
-                TiempoFinalEtapa = UnidadesCorte / PrendasHora;
+                
             }
+        }
+        public int IdPrenda
+        {
+            get => idPrenda;
+            set => idPrenda = value;
         }
         public EtapaCorte Etapa
         {

@@ -22,7 +22,7 @@ namespace VistaConfeccion
         }
         private void FrmConfecciones_Load(object sender, EventArgs e)
         {
-            if (PersonaLogueada.RolPersona.ToString() == "Empleado")
+            if (PersonaLogueada.RolPersona.ToString() != "Propietario" && PersonaLogueada.RolPersona.ToString() != "Administrador")
             {
                 // Ocultar el elemento del menú
                 TsmiReportes.Visible = false; // Reemplaza "toolStripMenuItem1" con el nombre de tu elemento
@@ -36,7 +36,7 @@ namespace VistaConfeccion
         public void CrearCalendario()
         {
             // Obtén la fecha y hora actual
-            DateTime horaActual = DateTime.Now;
+            DateTime horaActual = DateTime.Now.Date + PersonaLogueada.HorarioApertura;
 
             // Crea una tabla de datos para el DataGridView
             DataTable dataTable = new DataTable();
@@ -550,6 +550,11 @@ namespace VistaConfeccion
                 if (frmEdicion.ShowDialog() != DialogResult.OK)
                 {
                     frmEdicion.Close();
+                }
+                else
+                {
+                    frmEdicion.Close();
+                    CrearCalendario();
                 }
             }
             catch (Exception ex)

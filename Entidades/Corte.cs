@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿ using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Entidades
 {
@@ -12,7 +13,7 @@ namespace Entidades
         XXL
     }
 
-
+    [Serializable]
     public class Corte
     {
         private DateTime _fechaFinal;
@@ -30,12 +31,13 @@ namespace Entidades
         public Corte()
         {
         }
+        //[JsonConstructor]
         public Corte(DateTime fechaFinal, DateTime fechaInicio) : this()
         {
             // PrendasEnConfeccion = new();
             FechaFinal = fechaFinal;
             FechaInicio = fechaInicio;
-            _contadorCortes++;
+            ContadorCortes++;
             IdentificadorDeCorte = _contadorCortes;
         }
         public override string ToString()
@@ -77,7 +79,6 @@ namespace Entidades
                 if (value is not null)
                 {
                     _prendasEnCorte = value;
-                    ObtenerHorasTotalesCorte();
                 }
             }
             get
@@ -103,6 +104,10 @@ namespace Entidades
             set => _identificadorDeCorte = value;
         }
 
+        public int ContadorCortes {
+            get => _contadorCortes;
+            set => _contadorCortes = value;
+        }
         public void ObtenerHorasTotalesCorte()
         {
             HorasTotalesCorte = 0;

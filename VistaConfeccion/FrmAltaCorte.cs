@@ -1,6 +1,5 @@
 ﻿using Entidades;
 using Procesos;
-using System.Text;
 
 namespace Vista
 {
@@ -33,6 +32,7 @@ namespace Vista
                 // Clase_serializadora serializadora = new();
                 //serializadora.GuardarPersonasXML();
                 //serializadora.GuardarAvionesXML();
+                GestionDatos.PrendasParaCortes.Clear();
                 DialogResult = DialogResult.Cancel;
             }
 
@@ -58,7 +58,9 @@ namespace Vista
                         {
                             Administracion.AgregarPrenda_Corte(CorteCreado, prenda);
                         }
+                        CorteCreado.ObtenerHorasTotalesCorte();
                         GestionDatos.CortesSistema.Add(CorteCreado);
+                        Serializadora.GuardarCortesJSON();
 
                         FrmCalendario registro = new(PersonaLogueada);
                         if (registro.ShowDialog() != DialogResult.OK)
@@ -113,6 +115,8 @@ namespace Vista
                             TallePrenda talle = talles[CmbTalle.SelectedIndex];
 
                             PrendaSeleccionada.UnidadesCorte = (int)NumUnidades.Value;
+                            PrendaSeleccionada.TiempoFinalEtapa = PrendaSeleccionada.UnidadesCorte / PrendaSeleccionada.PrendasHora;
+
                             PrendaSeleccionada.TallePrenda = talle;
 
                             //Administracion.AgregarPrenda_Corte(CorteCreado, PrendaSeleccionada);
@@ -247,7 +251,18 @@ namespace Vista
                         prenda.HorasParaCantidad = PrendaSeleccionada.HorasParaCantidad;
                     }
                     fila.Cells[4].Value = Math.Round(prenda.TiempoFinalEtapa, 1);
-                    fila.Cells[5].Value = Math.Round(prenda.TiempoFinalEtapa / 24, 1);
+
+                    decimal calculo = prenda.TiempoFinalEtapa / PersonaLogueada.HorasJornada;
+
+                    if (calculo < (decimal)0.2)
+                    {
+                        fila.Cells[5].Value = $"< 1 dia ({Math.Round(calculo,2)})";
+
+                    }
+                    else
+                    {
+                        fila.Cells[5].Value = Math.Round(calculo, 1);
+                    }
                     DtgPrendasConfeccion.Rows.Add(fila);
                 }
 
