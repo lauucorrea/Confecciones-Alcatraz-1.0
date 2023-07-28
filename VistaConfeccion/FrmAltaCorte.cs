@@ -9,7 +9,8 @@ namespace Vista
         DateTime fechaFinal;
         Corte CorteCreado;
         List<DateTime> posiblesFechas;
-        Prenda? PrendaSeleccionada;
+        Prenda? PrendaSeleccionada_Sistema;
+        Prenda? PrendaSeleccionada_Corte;
         Persona PersonaLogueada;
         int cantidadHorasCorte;
         public FrmAltaCorte(Persona personaLogueada)
@@ -29,9 +30,6 @@ namespace Vista
 
             if (result == DialogResult.Yes)
             {
-                // Clase_serializadora serializadora = new();
-                //serializadora.GuardarPersonasXML();
-                //serializadora.GuardarAvionesXML();
                 GestionDatos.PrendasParaCortes.Clear();
                 DialogResult = DialogResult.Cancel;
             }
@@ -89,8 +87,8 @@ namespace Vista
             string[] talles = Enum.GetNames(typeof(TallePrenda));
             CmbTalle.DataSource = talles;
             DtgPrendasSistema.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            DtgPrendasConfeccion.AutoGenerateColumns = true;
-
+            DtgPrendasCorte.AutoGenerateColumns = true;
+            this.ControlBox = false;
             CargarDatagridPrendasSistema();
 
 
@@ -103,9 +101,9 @@ namespace Vista
 
                 if (DtgPrendasSistema.SelectedRows.Count != 0)
                 {
-                    PrendaSeleccionada = ObtenerPrendaSeleccionada();
+                    PrendaSeleccionada_Sistema = ObtenerPrendaSeleccionada_Sistema();
 
-                    if (PrendaSeleccionada is not null)
+                    if (PrendaSeleccionada_Sistema is not null)
                     {
                         if (NumUnidades.Value > 0)
                         {
@@ -114,13 +112,13 @@ namespace Vista
                             TallePrenda[] talles = (TallePrenda[])Enum.GetValues(typeof(TallePrenda));
                             TallePrenda talle = talles[CmbTalle.SelectedIndex];
 
-                            PrendaSeleccionada.UnidadesCorte = (int)NumUnidades.Value;
-                            PrendaSeleccionada.TiempoFinalEtapa = PrendaSeleccionada.UnidadesCorte / PrendaSeleccionada.PrendasHora;
+                            PrendaSeleccionada_Sistema.UnidadesCorte = (int)NumUnidades.Value;
+                            PrendaSeleccionada_Sistema.TiempoFinalEtapa = PrendaSeleccionada_Sistema.UnidadesCorte / PrendaSeleccionada_Sistema.PrendasHora;
 
-                            PrendaSeleccionada.TallePrenda = talle;
+                            PrendaSeleccionada_Sistema.TallePrenda = talle;
 
                             //Administracion.AgregarPrenda_Corte(CorteCreado, PrendaSeleccionada);
-                            GestionDatos.PrendasParaCortes.Add(PrendaSeleccionada);
+                            GestionDatos.PrendasParaCortes.Add(PrendaSeleccionada_Sistema);
                             CargarDatagridPrendasCorte();
 
                         }
@@ -145,9 +143,18 @@ namespace Vista
                 DtgPrendasSistema.Rows[e.RowIndex].Selected = true;
             }
         }
-        private Prenda? ObtenerPrendaSeleccionada()
+
+        private void DtgPrendasCorte_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            PrendaSeleccionada = null;
+            if (e.RowIndex >= 0)
+            {
+                DtgPrendasCorte.Rows[e.RowIndex].Selected = true;
+            }
+        }
+
+        private Prenda? ObtenerPrendaSeleccionada_Sistema()
+        {
+            PrendaSeleccionada_Sistema = null;
             if (DtgPrendasSistema.SelectedRows.Count > 0)
             {
                 // Obtener la fila seleccionada
@@ -158,24 +165,26 @@ namespace Vista
                 {
 
                     // Obtener los valores de las celdas
-                    CategoriaPrenda categoria = (CategoriaPrenda)Enum.Parse(typeof(CategoriaPrenda), categoriaPrenda);
-                    int cantidadPrendas = Convert.ToInt32(filaSeleccionada.Cells["ColumnaPrendas"].Value);
-                    int horasProduccion = Convert.ToInt32(filaSeleccionada.Cells["ColumnaHoras"].Value);
-                    string? detalle = filaSeleccionada.Cells["ColumnaDetalle"].Value.ToString();
-                    string? adicionales = filaSeleccionada.Cells["ColumnaAdicionales"].Value.ToString();
+                    int IdPrenda = Convert.ToInt32(filaSeleccionada.Cells["ColumnaId"].Value);
 
                     // Crear una instancia de la prenda seleccionada
-                    if (string.IsNullOrEmpty(detalle) && string.IsNullOrEmpty(adicionales))
+                    foreach (Prenda prenda in GestionDatos.PrendasSistema)
                     {
-                        PrendaSeleccionada = new Prenda(categoria, cantidadPrendas, horasProduccion);
-                    }
-                    else if (string.IsNullOrEmpty(adicionales) && !string.IsNullOrEmpty(detalle))
-                    {
-                        PrendaSeleccionada = new Prenda(categoria, cantidadPrendas, horasProduccion, detalle);
-                    }
-                    else if (!string.IsNullOrEmpty(adicionales))
-                    {
-                        PrendaSeleccionada = new Prenda(categoria, cantidadPrendas, horasProduccion, detalle, adicionales);
+                        if (prenda.IdPrenda == IdPrenda)
+                        {
+                            if (string.IsNullOrEmpty(prenda.Detalles) && string.IsNullOrEmpty(prenda.Adicional))
+                            {
+                                PrendaSeleccionada_Sistema = new Prenda(prenda.Categoria, prenda.CantidadEnHoras, prenda.HorasParaCantidad);
+                            }
+                            else if (string.IsNullOrEmpty(prenda.Adicional) && !string.IsNullOrEmpty(prenda.Detalles))
+                            {
+                                PrendaSeleccionada_Sistema = new Prenda(prenda.Categoria, prenda.CantidadEnHoras, prenda.HorasParaCantidad, prenda.Detalles);
+                            }
+                            else if (!string.IsNullOrEmpty(prenda.Adicional))
+                            {
+                                PrendaSeleccionada_Sistema = new Prenda(prenda.Categoria, prenda.CantidadEnHoras, prenda.HorasParaCantidad, prenda.Detalles, prenda.Adicional);
+                            }
+                        }
                     }
                 }
                 else
@@ -184,8 +193,41 @@ namespace Vista
                 }
 
             }
-            return PrendaSeleccionada;
+            return PrendaSeleccionada_Sistema;
         }
+        private Prenda? ObtenerPrendaSeleccionada_Corte()
+        {
+            PrendaSeleccionada_Sistema = null;
+            if (DtgPrendasSistema.SelectedRows.Count > 0)
+            {
+                // Obtener la fila seleccionada
+                DataGridViewRow filaSeleccionada = DtgPrendasCorte.SelectedRows[0];
+
+                if (filaSeleccionada is not null)
+                {
+
+                    // Obtener los valores de las celdas
+                    int IdPrenda = Convert.ToInt32(filaSeleccionada.Cells["ColumnaId"].Value);
+
+                    // Crear una instancia de la prenda seleccionada
+                    foreach (Prenda prenda in GestionDatos.PrendasParaCortes)
+                    {
+                        if (prenda.IdPrenda == IdPrenda)
+                        {
+                            PrendaSeleccionada_Corte = prenda;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    throw new NullReferenceException("La prenda seleccionada no tiene categoria asignada");
+                }
+
+            }
+            return PrendaSeleccionada_Corte;
+        }
+
         private void CargarDatagridPrendasSistema()
         {
             // Suponiendo que tienes un DataGridView llamado dataGridViewConfecciones
@@ -194,6 +236,7 @@ namespace Vista
             DtgPrendasSistema.Columns.Clear();
 
             // Agregar las columnas necesarias al DataGridView
+            DtgPrendasSistema.Columns.Add("ColumnaID", "ID");
             DtgPrendasSistema.Columns.Add("ColumnaCategoria", "Categoria");
             DtgPrendasSistema.Columns.Add("ColumnaPrendas", "Unidades Produccion");
             DtgPrendasSistema.Columns.Add("ColumnaHoras", "Horas Produccion");
@@ -207,12 +250,13 @@ namespace Vista
                 // Crear una nueva fila y asignar los valores de las celdas
                 DataGridViewRow fila = new();
                 fila.CreateCells(DtgPrendasSistema);
-                fila.Cells[0].Value = prenda.Categoria; // Suponiendo que Prenda tiene una propiedad "Nombre"
-                fila.Cells[1].Value = prenda.CantidadEnHoras; // Suponiendo que Prenda tiene una propiedad "Tipo"
-                fila.Cells[2].Value = prenda.HorasParaCantidad; // Suponiendo que Prenda tiene una propiedad "Tipo"
-                fila.Cells[3].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
-                fila.Cells[4].Value = prenda.Detalles; // Suponiendo que TallePrenda tiene una propiedad "Talle"
-                fila.Cells[5].Value = prenda.Adicional; // Suponiendo que Prenda tiene una propiedad "Cantidad"
+                fila.Cells[0].Value = prenda.IdPrenda;
+                fila.Cells[1].Value = prenda.Categoria; // Suponiendo que Prenda tiene una propiedad "Nombre"
+                fila.Cells[2].Value = prenda.CantidadEnHoras; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[3].Value = prenda.HorasParaCantidad; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[4].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
+                fila.Cells[5].Value = prenda.Detalles; // Suponiendo que TallePrenda tiene una propiedad "Talle"
+                fila.Cells[6].Value = prenda.Adicional; // Suponiendo que Prenda tiene una propiedad "Cantidad"
 
                 // Agregar la fila al DataGridView
                 DtgPrendasSistema.Rows.Add(fila);
@@ -221,17 +265,18 @@ namespace Vista
         private void CargarDatagridPrendasCorte()
         {
             // Suponiendo que tienes un DataGridView llamado dataGridViewConfecciones
-            DtgPrendasConfeccion.DataSource = null; // Limpia el origen de datos
+            DtgPrendasCorte.DataSource = null; // Limpia el origen de datos
             // Limpiar las columnas existentes en el DataGridView
-            DtgPrendasConfeccion.Columns.Clear();
+            DtgPrendasCorte.Columns.Clear();
 
             // Agregar las columnas necesarias al DataGridView
-            DtgPrendasConfeccion.Columns.Add("ColumnaTipo", "Tipo");
-            DtgPrendasConfeccion.Columns.Add("ColumnaDetallePrenda", "Detalle");
-            DtgPrendasConfeccion.Columns.Add("ColumnaTalle", "Talle");
-            DtgPrendasConfeccion.Columns.Add("ColumnaCantidadPrendas", "Cantidad de Prendas");
-            DtgPrendasConfeccion.Columns.Add("ColumnaTiempoEstimadoHoras", "Tiempo Estimado (HS)");
-            DtgPrendasConfeccion.Columns.Add("ColumnaTiempoEstimadoDias", "Tiempo Estimado (Dias)");
+            DtgPrendasCorte.Columns.Add("ColumnaID", "ID");
+            DtgPrendasCorte.Columns.Add("ColumnaTipo", "Tipo");
+            DtgPrendasCorte.Columns.Add("ColumnaDetallePrenda", "Detalle");
+            DtgPrendasCorte.Columns.Add("ColumnaTalle", "Talle");
+            DtgPrendasCorte.Columns.Add("ColumnaCantidadPrendas", "Cantidad de Prendas");
+            DtgPrendasCorte.Columns.Add("ColumnaTiempoEstimadoHoras", "Tiempo Estimado (HS)");
+            DtgPrendasCorte.Columns.Add("ColumnaTiempoEstimadoDias", "Tiempo Estimado (Dias)");
 
             // Recorrer el diccionario y agregar filas al DataGridView
             if (GestionDatos.PrendasParaCortes is not null && GestionDatos.PrendasParaCortes.Count > 0)
@@ -239,82 +284,49 @@ namespace Vista
                 foreach (Prenda prenda in GestionDatos.PrendasParaCortes)
                 {
                     DataGridViewRow fila = new();
-                    fila.CreateCells(DtgPrendasConfeccion);
-                    fila.Cells[0].Value = prenda.Categoria;
-                    fila.Cells[1].Value = prenda.Detalles;
-                    fila.Cells[2].Value = prenda.TallePrenda;
-                    fila.Cells[3].Value = prenda.UnidadesCorte;
-
+                    fila.CreateCells(DtgPrendasCorte);
+                    fila.Cells[0].Value = prenda.IdPrenda;
+                    fila.Cells[1].Value = prenda.Categoria;
+                    fila.Cells[2].Value = prenda.Detalles;
+                    fila.Cells[3].Value = prenda.TallePrenda;
+                    fila.Cells[4].Value = prenda.UnidadesCorte;
                     //si la cantidad elegida, es igual al tiempo por hora, las prendas se hacen en una hora
-                    if (NumUnidades.Value == PrendaSeleccionada.PrendasHora && prenda == PrendaSeleccionada)
+                    if (PrendaSeleccionada_Sistema is not null)
                     {
-                        prenda.HorasParaCantidad = PrendaSeleccionada.HorasParaCantidad;
+
+                        if (NumUnidades.Value == PrendaSeleccionada_Sistema.PrendasHora && prenda == PrendaSeleccionada_Sistema)
+                        {
+                            prenda.HorasParaCantidad = PrendaSeleccionada_Sistema.HorasParaCantidad;
+                        }
                     }
-                    fila.Cells[4].Value = Math.Round(prenda.TiempoFinalEtapa, 1);
+                    fila.Cells[5].Value = Math.Round(prenda.TiempoFinalEtapa, 1);
 
                     decimal calculo = prenda.TiempoFinalEtapa / PersonaLogueada.HorasJornada;
 
                     if (calculo < (decimal)0.2)
                     {
-                        fila.Cells[5].Value = $"< 1 dia ({Math.Round(calculo,2)})";
+                        fila.Cells[6].Value = $"< 1 dia ({Math.Round(calculo, 2)})";
 
                     }
                     else
                     {
-                        fila.Cells[5].Value = Math.Round(calculo, 1);
+                        fila.Cells[6].Value = Math.Round(calculo, 1);
                     }
-                    DtgPrendasConfeccion.Rows.Add(fila);
+                    DtgPrendasCorte.Rows.Add(fila);
                 }
 
 
 
             }
-            else
-            {
-                throw new Exception("Debe cargar al menos una prenda");
-            }
         }
-        /*private void CargarDatagridConfeccionesConEntrega()
-         {
-             // Suponiendo que tienes un DataGridView llamado dataGridViewConfecciones
-             DtgFechasPrevistas.DataSource = null; // Limpia el origen de datos
-             // Limpiar las columnas existentes en el DataGridView
-             DtgFechasPrevistas.Columns.Clear();
 
-             // Agregar las columnas necesarias al DataGridView
-             DtgFechasPrevistas.Columns.Add("ColumnaId", "ID");
-             DtgFechasPrevistas.Columns.Add("ColumnaPrendas", "Prendas");
-             DtgFechasPrevistas.Columns.Add("ColumnaEntrega", "Fecha Entrega");
-             DtgFechasPrevistas.Columns.Add("ColumnaInicio", "Fecha Inicio");
-             DtgFechasPrevistas.Columns.Add("ColumnaTiempo", "Tiempo Estimado");
-
-             if (GestionDatos.CortesConEntregas is not null)
-             {
-
-                 // Recorrer el diccionario y agregar filas al DataGridView
-                 foreach (Corte confeccion in GestionDatos.CortesConEntregas)
-                 {
-                     // Crear una nueva fila y asignar los valores de las celdas
-                     DataGridViewRow fila = new();
-                     fila.CreateCells(DtgFechasPrevistas);
-                     fila.Cells[0].Value = confeccion.IdentificadorDeConfeccion;
-                     fila.Cells[1].Value = confeccion.PrendasEnConfeccion.Count;
-                     fila.Cells[2].Value = confeccion.FechaFinal.ToShortDateString();
-                     fila.Cells[3].Value = confeccion.FechaInicio.ToShortDateString();
-                     fila.Cells[4].Value = cantidadHorasCorte;
-
-                     // Agregar la fila al DataGridView
-                     DtgFechasPrevistas.Rows.Add(fila);
-                 }
-             }
-         }*/
         private void VaciarInformacion()
         {
             if (GestionDatos.PrendasParaCortes is not null && GestionDatos.PrendasParaCortes.Count > 0)
             {
                 GestionDatos.PrendasParaCortes.Clear();
                 CorteCreado = null;
-                DtgPrendasConfeccion.DataSource = null;
+                DtgPrendasCorte.DataSource = null;
                 NumUnidades.Value = 1;
             }
         }
@@ -332,10 +344,52 @@ namespace Vista
 
             if (result == DialogResult.Yes)
             {
-                //Clase_serializadora serializadora = new();
-                //serializadora.GuardarPersonasXML();
-                //serializadora.GuardarAvionesXML();
                 Application.Exit();
+            }
+        }
+
+        private void BtnQuitarPrenda_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                if (DtgPrendasCorte.SelectedRows.Count != 0)
+                {
+                    PrendaSeleccionada_Corte = ObtenerPrendaSeleccionada_Corte();
+
+                    if (PrendaSeleccionada_Corte is not null)
+                    {
+                        int index = GestionDatos.PrendasParaCortes.IndexOf(PrendaSeleccionada_Corte);
+
+                        if (GestionDatos.PrendasParaCortes[index] != null && GestionDatos.PrendasParaCortes[index] == PrendaSeleccionada_Corte)
+                        {
+                            // Eliminar el elemento en la posición index
+                            GestionDatos.PrendasParaCortes.RemoveAt(index);
+
+                        }
+                        else if (PrendaSeleccionada_Corte is not null)
+                        {
+                            foreach (Prenda prenda in GestionDatos.PrendasParaCortes)
+                            {
+                                if (prenda.IdPrenda == PrendaSeleccionada_Corte.IdPrenda)
+                                {
+                                    GestionDatos.PrendasParaCortes.Remove(prenda);
+
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception("No se encontro la prenda");
+                        }
+                        CargarDatagridPrendasCorte();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

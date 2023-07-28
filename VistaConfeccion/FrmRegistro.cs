@@ -24,7 +24,8 @@ namespace Vista
                     {
                         cantidadElementos = GestionDatos.PersonasSistema.Count;
                         GestionDatos.PersonasSistema.Add(PersonaCreada);
-
+                        Rol rolSeleccioando = (Rol)Enum.Parse(typeof(Rol), CmbRolUsuario.SelectedIndex.ToString());
+                        PersonaCreada.RolPersona = rolSeleccioando;
                         if (cantidadElementos < GestionDatos.PersonasSistema.Count)
                         {
                             MessageBox.Show(PersonaCreada.ToString());
@@ -64,6 +65,7 @@ namespace Vista
         {
             string[] rolUsuario = Enum.GetNames(typeof(Rol));
             CmbRolUsuario.DataSource = rolUsuario;
+            this.ControlBox = false;
         }
 
         private void LnkAlternarModo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

@@ -102,7 +102,7 @@
             {
                 foreach (Corte corte in GestionDatos.CortesSistema)
                 {
-                    //
+                    
                 }
                 return new List<Corte>();
             }

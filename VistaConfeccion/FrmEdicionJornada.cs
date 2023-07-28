@@ -33,6 +33,7 @@ namespace Vista
 
         private void FrmEdicionJornada_Load(object sender, EventArgs e)
         {
+            this.ControlBox = false;
             CmbApertura.SelectedIndex = Convert.ToInt32(PersonaLogueada.HorarioApertura.TotalHours) - 1;
             CmbCierre.SelectedIndex = Convert.ToInt32(PersonaLogueada.HorarioCierre.TotalHours) - 1;
             MostrarDiasLaborales();

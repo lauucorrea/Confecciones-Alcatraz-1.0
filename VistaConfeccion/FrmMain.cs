@@ -2,7 +2,6 @@ using Entidades;
 using System.Data;
 using System.Globalization;
 using System.Text;
-using System.Windows.Forms;
 using Vista;
 
 namespace VistaConfeccion
@@ -29,7 +28,12 @@ namespace VistaConfeccion
             }
             //CrearDatagridCortes_General(GestionDatos.CortesPorFecha.Values.SelectMany(c => c).OrderBy(c => c.FechaInicio).ToList());
             CrearCalendario();
-            DtgMuestreoMain.RowTemplate.Height = 30;
+            this.ControlBox = false;
+            FrmCalendario registro = new(PersonaLogueada);
+            if (registro.ShowDialog() != DialogResult.OK)
+            {
+                registro.Close();
+            }
 
         }
 
@@ -80,9 +84,13 @@ namespace VistaConfeccion
                 TimeSpan horasJornada = PersonaLogueada.HorarioCierre - PersonaLogueada.HorarioApertura; // Ejemplo: 8 horas
                 PersonaLogueada.HorasJornada = (int)horasJornada.TotalHours;
                 // Agrega las filas de horas
-                for (int j = 0; j < PersonaLogueada.HorasJornada; j++)
+                for (int j = 0; j <= PersonaLogueada.HorasJornada; j++)
                 {
                     DataRow row = dataTable.NewRow();
+                    if (j != 0)
+                    {
+                        horaActual = horaActual.AddHours(1); // Avanza una hora
+                    }
                     row["Hora"] = horaActual.ToString("HH:mm", CultureInfo.InvariantCulture);
 
                     foreach (KeyValuePair<DateTime, string> kvp in diasLaboralesProximos)
@@ -90,14 +98,12 @@ namespace VistaConfeccion
                         //este es el metodo que deberia estar obteniendo los cortes, y los dias correspondientes
                         List<Corte> listaCortesFecha = Administracion.ObtenerCorte_Lista(kvp.Key);
 
-
                         StringBuilder sb = new();
                         foreach (Corte corte in listaCortesFecha)
                         {
                             sb.AppendLine(corte.IdentificadorDeCorte + " ");
                         }
                         row[kvp.Value] = sb.ToString();
-                        horaActual = horaActual.AddHours(1); // Avanza una hora
 
                     }
                     dataTable.Rows.Add(row);

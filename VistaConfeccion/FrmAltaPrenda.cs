@@ -42,7 +42,7 @@ namespace VistaConfeccion
             }
             catch (Exception ex)
             {
-                LblErrores.Text = "No se pudo crear una prenda :" + ex.Message;
+                MessageBox.Show("No se pudo crear una prenda :" + ex.Message);
             }
 
         }
@@ -54,6 +54,7 @@ namespace VistaConfeccion
             DtgPrendasSistema.Columns.Clear();
 
             // Agregar las columnas necesarias al DataGridView
+            DtgPrendasSistema.Columns.Add("ColumnaId", "Id");
             DtgPrendasSistema.Columns.Add("ColumnaCategoria", "Categoria");
             DtgPrendasSistema.Columns.Add("ColumnaPrendas", "Unidades Produccion");
             DtgPrendasSistema.Columns.Add("ColumnaHoras", "Horas Produccion");
@@ -67,12 +68,13 @@ namespace VistaConfeccion
                 // Crear una nueva fila y asignar los valores de las celdas
                 DataGridViewRow fila = new();
                 fila.CreateCells(DtgPrendasSistema);
-                fila.Cells[0].Value = prenda.Categoria; // Suponiendo que Prenda tiene una propiedad "Nombre"
-                fila.Cells[1].Value = prenda.CantidadEnHoras; // Suponiendo que Prenda tiene una propiedad "Tipo"
-                fila.Cells[2].Value = prenda.HorasParaCantidad; // Suponiendo que Prenda tiene una propiedad "Tipo"
-                fila.Cells[3].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
-                fila.Cells[4].Value = prenda.Detalles; // Suponiendo que TallePrenda tiene una propiedad "Talle"
-                fila.Cells[5].Value = prenda.Adicional; // Suponiendo que Prenda tiene una propiedad "Cantidad"
+                fila.Cells[0].Value = prenda.IdPrenda;
+                fila.Cells[1].Value = prenda.Categoria;
+                fila.Cells[2].Value = prenda.CantidadEnHoras;
+                fila.Cells[3].Value = prenda.HorasParaCantidad;
+                fila.Cells[4].Value = prenda.PrendasHora; 
+                fila.Cells[5].Value = prenda.Detalles; 
+                fila.Cells[6].Value = prenda.Adicional; 
 
                 // Agregar la fila al DataGridView
                 DtgPrendasSistema.Rows.Add(fila);
@@ -84,6 +86,7 @@ namespace VistaConfeccion
             string[] categorias = Enum.GetNames(typeof(CategoriaPrenda));
             CmbCategoria.DataSource = categorias;
             CargarDatagridPrendasSistema();
+            this.ControlBox = false;
 
         }
 
@@ -96,9 +99,9 @@ namespace VistaConfeccion
 
             if (result == DialogResult.Yes)
             {
-               // Clase_serializadora serializadora = new();
-               // serializadora.GuardarPersonasXML();
-               // serializadora.GuardarAvionesXML();
+                // Clase_serializadora serializadora = new();
+                // serializadora.GuardarPersonasXML();
+                // serializadora.GuardarAvionesXML();
 
                 DialogResult = DialogResult.Cancel;
             }
@@ -124,6 +127,7 @@ namespace VistaConfeccion
                 Application.Exit();
             }
         }
+
     }
 }
 

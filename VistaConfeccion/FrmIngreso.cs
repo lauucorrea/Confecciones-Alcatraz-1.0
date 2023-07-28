@@ -15,8 +15,8 @@ namespace Vista
 
         private void FrmIngreso_Load(object sender, EventArgs e)
         {
-            TxtUsuario.Text = "Rober";
-            TxtPassword.Text = "asd123";
+            TxtUsuario.Text = "tomimc";
+            TxtPassword.Text = "tomas";
             Serializadora.LevantarCortesJSON();
             Serializadora.LevantarPrendasJSON();
             Serializadora.LevantarPersonasJSON();

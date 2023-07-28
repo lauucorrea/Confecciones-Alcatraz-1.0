@@ -33,7 +33,7 @@
             label2 = new Label();
             lblSistema = new Label();
             LblErrores = new Label();
-            DtgPrendasConfeccion = new DataGridView();
+            DtgPrendasCorte = new DataGridView();
             BtnAgregarPrenda = new Button();
             NumUnidades = new NumericUpDown();
             LblUnidades = new Label();
@@ -44,7 +44,8 @@
             BtnCrearCorte = new Button();
             BtnCerrarSesion = new Button();
             label4 = new Label();
-            ((System.ComponentModel.ISupportInitialize)DtgPrendasConfeccion).BeginInit();
+            BtnQuitarPrenda = new Button();
+            ((System.ComponentModel.ISupportInitialize)DtgPrendasCorte).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NumUnidades).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DtgPrendasSistema).BeginInit();
             SuspendLayout();
@@ -80,25 +81,26 @@
             LblErrores.Size = new Size(0, 15);
             LblErrores.TabIndex = 30;
             // 
-            // DtgPrendasConfeccion
+            // DtgPrendasCorte
             // 
-            DtgPrendasConfeccion.AllowUserToAddRows = false;
-            DtgPrendasConfeccion.AllowUserToDeleteRows = false;
-            DtgPrendasConfeccion.AllowUserToResizeColumns = false;
-            DtgPrendasConfeccion.AllowUserToResizeRows = false;
-            DtgPrendasConfeccion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            DtgPrendasConfeccion.BackgroundColor = Color.FromArgb(76, 117, 163);
-            DtgPrendasConfeccion.BorderStyle = BorderStyle.None;
-            DtgPrendasConfeccion.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DtgPrendasConfeccion.Cursor = Cursors.Hand;
-            DtgPrendasConfeccion.GridColor = Color.FromArgb(10, 102, 194);
-            DtgPrendasConfeccion.Location = new Point(32, 440);
-            DtgPrendasConfeccion.Name = "DtgPrendasConfeccion";
-            DtgPrendasConfeccion.RowHeadersVisible = false;
-            DtgPrendasConfeccion.RowTemplate.Height = 25;
-            DtgPrendasConfeccion.ShowEditingIcon = false;
-            DtgPrendasConfeccion.Size = new Size(1322, 300);
-            DtgPrendasConfeccion.TabIndex = 29;
+            DtgPrendasCorte.AllowUserToAddRows = false;
+            DtgPrendasCorte.AllowUserToDeleteRows = false;
+            DtgPrendasCorte.AllowUserToResizeColumns = false;
+            DtgPrendasCorte.AllowUserToResizeRows = false;
+            DtgPrendasCorte.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DtgPrendasCorte.BackgroundColor = Color.FromArgb(76, 117, 163);
+            DtgPrendasCorte.BorderStyle = BorderStyle.None;
+            DtgPrendasCorte.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DtgPrendasCorte.Cursor = Cursors.Hand;
+            DtgPrendasCorte.GridColor = Color.FromArgb(10, 102, 194);
+            DtgPrendasCorte.Location = new Point(32, 440);
+            DtgPrendasCorte.Name = "DtgPrendasCorte";
+            DtgPrendasCorte.RowHeadersVisible = false;
+            DtgPrendasCorte.RowTemplate.Height = 25;
+            DtgPrendasCorte.ShowEditingIcon = false;
+            DtgPrendasCorte.Size = new Size(1322, 300);
+            DtgPrendasCorte.TabIndex = 29;
+            DtgPrendasCorte.CellClick += DtgPrendasCorte_CellClick;
             // 
             // BtnAgregarPrenda
             // 
@@ -117,7 +119,7 @@
             // 
             // NumUnidades
             // 
-            NumUnidades.Location = new Point(1007, 375);
+            NumUnidades.Location = new Point(997, 376);
             NumUnidades.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
             NumUnidades.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NumUnidades.Name = "NumUnidades";
@@ -131,7 +133,7 @@
             LblUnidades.AutoSize = true;
             LblUnidades.Font = new Font("Segoe UI Semibold", 11.75F, FontStyle.Bold, GraphicsUnit.Point);
             LblUnidades.ImeMode = ImeMode.NoControl;
-            LblUnidades.Location = new Point(923, 376);
+            LblUnidades.Location = new Point(913, 377);
             LblUnidades.Name = "LblUnidades";
             LblUnidades.Size = new Size(78, 21);
             LblUnidades.TabIndex = 26;
@@ -142,7 +144,7 @@
             LblTalle.AutoSize = true;
             LblTalle.Font = new Font("Segoe UI Semibold", 11.75F, FontStyle.Bold, GraphicsUnit.Point);
             LblTalle.ImeMode = ImeMode.NoControl;
-            LblTalle.Location = new Point(767, 376);
+            LblTalle.Location = new Point(757, 377);
             LblTalle.Name = "LblTalle";
             LblTalle.Size = new Size(42, 21);
             LblTalle.TabIndex = 25;
@@ -152,7 +154,7 @@
             // 
             CmbTalle.BackColor = SystemColors.MenuBar;
             CmbTalle.FormattingEnabled = true;
-            CmbTalle.Location = new Point(815, 374);
+            CmbTalle.Location = new Point(805, 375);
             CmbTalle.Name = "CmbTalle";
             CmbTalle.Size = new Size(98, 23);
             CmbTalle.TabIndex = 24;
@@ -184,6 +186,7 @@
             DtgPrendasSistema.ShowEditingIcon = false;
             DtgPrendasSistema.Size = new Size(1322, 300);
             DtgPrendasSistema.TabIndex = 23;
+            DtgPrendasSistema.CellContentClick += DtgPrendasSistema_CellClick;
             // 
             // BtnCancelar
             // 
@@ -237,18 +240,34 @@
             label4.TabIndex = 38;
             label4.Text = "Cerrar sesion";
             // 
+            // BtnQuitarPrenda
+            // 
+            BtnQuitarPrenda.BackColor = SystemColors.ButtonShadow;
+            BtnQuitarPrenda.FlatStyle = FlatStyle.Flat;
+            BtnQuitarPrenda.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            BtnQuitarPrenda.ForeColor = Color.DarkBlue;
+            BtnQuitarPrenda.ImeMode = ImeMode.NoControl;
+            BtnQuitarPrenda.Location = new Point(1134, 746);
+            BtnQuitarPrenda.Name = "BtnQuitarPrenda";
+            BtnQuitarPrenda.Size = new Size(220, 28);
+            BtnQuitarPrenda.TabIndex = 39;
+            BtnQuitarPrenda.Text = "- Quitar prenda";
+            BtnQuitarPrenda.UseVisualStyleBackColor = false;
+            BtnQuitarPrenda.Click += BtnQuitarPrenda_Click;
+            // 
             // FrmAltaCorte
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Azure;
             ClientSize = new Size(1384, 861);
+            Controls.Add(BtnQuitarPrenda);
             Controls.Add(label4);
             Controls.Add(BtnCerrarSesion);
             Controls.Add(label2);
             Controls.Add(lblSistema);
             Controls.Add(LblErrores);
-            Controls.Add(DtgPrendasConfeccion);
+            Controls.Add(DtgPrendasCorte);
             Controls.Add(BtnAgregarPrenda);
             Controls.Add(NumUnidades);
             Controls.Add(LblUnidades);
@@ -262,7 +281,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Alta de cortes";
             Load += FrmAltaCorte_Load;
-            ((System.ComponentModel.ISupportInitialize)DtgPrendasConfeccion).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DtgPrendasCorte).EndInit();
             ((System.ComponentModel.ISupportInitialize)NumUnidades).EndInit();
             ((System.ComponentModel.ISupportInitialize)DtgPrendasSistema).EndInit();
             ResumeLayout(false);
@@ -273,7 +292,7 @@
         private Label label2;
         private Label lblSistema;
         private Label LblErrores;
-        private DataGridView DtgPrendasConfeccion;
+        private DataGridView DtgPrendasCorte;
         private Button BtnAgregarPrenda;
         private NumericUpDown NumUnidades;
         private Label LblUnidades;
@@ -284,5 +303,6 @@
         private Button BtnCrearCorte;
         private Button BtnCerrarSesion;
         private Label label4;
+        private Button BtnQuitarPrenda;
     }
 }

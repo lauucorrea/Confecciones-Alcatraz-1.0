@@ -52,7 +52,8 @@ namespace Entidades
             Categoria = categoria;
             CantidadEnHoras = cantidadPrendas;
             HorasParaCantidad = horasProduccion;
-
+            ContadorPrendas++;
+            IdPrenda = contadorPrendas;
             PrendasHora = CantidadEnHoras / HorasParaCantidad ;
 
             if(PrendasHora <= 0)
@@ -68,8 +69,6 @@ namespace Entidades
         public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion, string? detallePrenda, string informacionAdicional) : this(categoria, cantidadPrendas, horasProduccion, detallePrenda)
         {
             Adicional = informacionAdicional;
-            ContadorPrendas++;
-            IdPrenda = contadorPrendas;
             if (string.IsNullOrEmpty(detallePrenda))
             {
                 Detalles = string.Empty;
