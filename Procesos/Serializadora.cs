@@ -105,14 +105,13 @@ namespace Procesos
                         DateTime fechaFinal = corte.FechaFinal;
                         int idConfeccion = corte.IdentificadorDeCorte;
                         StringBuilder sb = new();
-                        List<Prenda> listaPrendasCorte = Administracion.ObtenerPrendasCorte(corte);
-                        for (int i = 0; i < listaPrendasCorte.Count; i++)
+                        for (int i = 0; i < corte.PrendasEnCorte.Count; i++)
                         {
-                            if (i != listaPrendasCorte.Count - 1)
+                            if (i != corte.PrendasEnCorte.Count - 1)
                             {
                                 sb.Append(",");
                             }
-                            sb.Append(listaPrendasCorte[i].ToString());
+                            sb.Append(corte.PrendasEnCorte[i].ToString());
                         }
                         // Escribir los datos en una línea separada por comas
                         writer.WriteLine($"{fechaInicio}, {fechaFinal}, {sb.ToString()}, {idConfeccion}");
@@ -125,50 +124,60 @@ namespace Procesos
         public static void LevantarCortesJSON()
         {
             rutaArchivo = Path.Combine(rutaBase, RutaCortesJSON);
-            string jsonString = File.ReadAllText(rutaArchivo);
 
-            List<Corte>? cortes = JsonSerializer.Deserialize<List<Corte>>(jsonString);
+            if (File.Exists(rutaArchivo))
+            {
+                string jsonString = File.ReadAllText(rutaArchivo);
 
-            if (cortes is not null)
-            {
-                GestionDatos.CortesSistema = cortes;
-            }
-            else
-            {
-                throw new Exception("No se pudo deserializar las confecciones");
+                List<Corte>? cortes = JsonSerializer.Deserialize<List<Corte>>(jsonString);
+
+                if (cortes is not null)
+                {
+                    GestionDatos.CortesSistema = cortes;
+                }
+                else
+                {
+                    throw new Exception("No se pudo deserializar las confecciones");
+                }
             }
         }
         public static void LevantarPrendasJSON()
         {
             rutaArchivo = Path.Combine(rutaBase, RutaPrendasJSON);
-            string jsonString = File.ReadAllText(rutaArchivo);
-
-            List<Prenda>? prendas = JsonSerializer.Deserialize<List<Prenda>>(jsonString);
-
-            if (prendas is not null)
+            if (File.Exists(rutaArchivo))
             {
-                GestionDatos.PrendasSistema = prendas;
-            }
-            else
-            {
-                throw new Exception("No se pudo deserializar las prendas");
+                string jsonString = File.ReadAllText(rutaArchivo);
+
+                List<Prenda>? prendas = JsonSerializer.Deserialize<List<Prenda>>(jsonString);
+
+                if (prendas is not null)
+                {
+                    GestionDatos.PrendasSistema = prendas;
+                }
+                else
+                {
+                    throw new Exception("No se pudo deserializar las prendas");
+                }
             }
         }
 
         public static void LevantarPersonasJSON()
         {
-            rutaArchivo = Path.Combine(rutaBase, RutaPersonasJSON);
-            string jsonString = File.ReadAllText(rutaArchivo);
-
-            List<Persona>? personas = JsonSerializer.Deserialize<List<Persona>>(jsonString);
-
-            if (personas is not null)
+                rutaArchivo = Path.Combine(rutaBase, RutaPersonasJSON);
+            if (File.Exists(rutaArchivo))
             {
-                GestionDatos.PersonasSistema = personas;
-            }
-            else
-            {
-                throw new Exception("No se pudo deserializar los usuarios");
+                string jsonString = File.ReadAllText(rutaArchivo);
+
+                List<Persona>? personas = JsonSerializer.Deserialize<List<Persona>>(jsonString);
+
+                if (personas is not null)
+                {
+                    GestionDatos.PersonasSistema = personas;
+                }
+                else
+                {
+                    throw new Exception("No se pudo deserializar los usuarios");
+                }
             }
         }
 

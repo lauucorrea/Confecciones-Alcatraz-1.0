@@ -443,7 +443,7 @@ namespace VistaConfeccion
                 fila.Cells[3].Value = prenda.HorasParaCantidad; // Suponiendo que Prenda tiene una propiedad "Tipo"
                 fila.Cells[4].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
                 fila.Cells[5].Value = prenda.Detalles; // Suponiendo que TallePrenda tiene una propiedad "Talle"
-                fila.Cells[6].Value = prenda.Adicional; // Suponiendo que Prenda tiene una propiedad "Cantidad"
+                fila.Cells[6].Value = prenda.Distintivo; // Suponiendo que Prenda tiene una propiedad "Cantidad"
 
                 // Agregar la fila al DataGridView
                 DtgMuestreoMain.Rows.Add(fila);
@@ -471,28 +471,23 @@ namespace VistaConfeccion
             // Recorrer el diccionario y agregar filas al DataGridView
             foreach (Corte corte in GestionDatos.CortesSistema)
             {
-                foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnCorte)
-                {
-                    List<int> conteo = Administracion.ObtenerConteoDeEstado(GestionDatos.CortesSistema);
+                List<int> conteo = Administracion.ObtenerConteoDeEstado(GestionDatos.CortesSistema);
 
-                    DataGridViewRow fila = new();
-                    fila.CreateCells(DtgMuestreoMain);
-                    fila.Cells[0].Value = corte.IdentificadorDeCorte;
-                    fila.Cells[1].Value = corte.FechaInicio;
-                    fila.Cells[2].Value = corte.FechaFinal;
-                    fila.Cells[3].Value = corte.PrendasEnCorte.Count();
-                    fila.Cells[4].Value = conteo[0];
-                    fila.Cells[5].Value = conteo[1];
-                    fila.Cells[6].Value = conteo[2];
-                    fila.Cells[7].Value = conteo[3];
-                    fila.Cells[8].Value = conteo[4];
-                    fila.Cells[9].Value = corte.HorasTotalesCorte;
-                    DtgMuestreoMain.Rows.Add(fila);
-                }
-
-
-
+                DataGridViewRow fila = new();
+                fila.CreateCells(DtgMuestreoMain);
+                fila.Cells[0].Value = corte.IdentificadorDeCorte;
+                fila.Cells[1].Value = corte.FechaInicio;
+                fila.Cells[2].Value = corte.FechaFinal;
+                fila.Cells[3].Value = corte.PrendasEnCorte.Count();
+                fila.Cells[4].Value = conteo[0];
+                fila.Cells[5].Value = conteo[1];
+                fila.Cells[6].Value = conteo[2];
+                fila.Cells[7].Value = conteo[3];
+                fila.Cells[8].Value = conteo[4];
+                fila.Cells[9].Value = corte.HorasTotalesCorte;
+                DtgMuestreoMain.Rows.Add(fila);
             }
+
         }
 
         private void CargarDatagridCortes_PorTalle()
@@ -508,18 +503,18 @@ namespace VistaConfeccion
             DtgMuestreoMain.Columns.Add("ColumnaFechaFin", "Fecha fin");
             DtgMuestreoMain.Columns.Add("ColumnaTotalPrendas", "Cantidad prendas");
             DtgMuestreoMain.Columns.Add("ColumnaTalleXS", "Talle XS");
-            DtgMuestreoMain.Columns.Add("ColumnaTalleXS", "Talle S");
-            DtgMuestreoMain.Columns.Add("ColumnaTalleXS", "Talle M");
-            DtgMuestreoMain.Columns.Add("ColumnaTalleXS", "Talle L");
-            DtgMuestreoMain.Columns.Add("ColumnaTalleXS", "Talle XL");
-            DtgMuestreoMain.Columns.Add("ColumnaTalleXS", "Talle XXL");
+            DtgMuestreoMain.Columns.Add("ColumnaTalleS", "Talle S");
+            DtgMuestreoMain.Columns.Add("ColumnaTalleM", "Talle M");
+            DtgMuestreoMain.Columns.Add("ColumnaTalleL", "Talle L");
+            DtgMuestreoMain.Columns.Add("ColumnaTalleXL", "Talle XL");
+            DtgMuestreoMain.Columns.Add("ColumnaTalleXXL", "Talle XXL");
             DtgMuestreoMain.Columns.Add("ColumnaHorasProduccion", "Horas produccion");
 
             // Recorrer el diccionario y agregar filas al DataGridView
 
             foreach (Corte corte in GestionDatos.CortesSistema)
             {
-                List<int> conteo = Administracion.ObtenerConteoDeTalles(corte);
+                List<int> conteo = Administracion.ObtenerConteoDeTalles_Corte(corte);
                 DataGridViewRow fila = new();
                 fila.CreateCells(DtgMuestreoMain);
                 fila.Cells[0].Value = corte.IdentificadorDeCorte;

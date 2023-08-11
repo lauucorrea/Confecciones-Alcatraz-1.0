@@ -1,5 +1,4 @@
-﻿ using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.Text;
 
 namespace Entidades
 {
@@ -20,7 +19,7 @@ namespace Entidades
         private DateTime _fechaInicio;
 
         private decimal _horasTotalesCorte;
-        private SortedDictionary<TallePrenda, List<Prenda>> _prendasEnCorte;
+        private List<Prenda> _prendasEnCorte;
         private int _identificadorDeCorte;
         private static int _contadorCortes;
         static Corte()
@@ -45,34 +44,34 @@ namespace Entidades
             StringBuilder sb = new();
             if (PrendasEnCorte is not null)
             {
-                // sb.Append($"Identificador del corte: {IdentificadorDeConfeccion}/n");
                 sb.Clear();
-                sb.Append(ContarTallesPrendas());
+                sb.Append($"Identificador del corte: {IdentificadorDeCorte}/n");
+                //sb.Append(ContarTallesPrendas());
             }
 
             return sb.ToString();
         }
 
-        public string ContarTallesPrendas()
-        {
-            StringBuilder sb = new();
+        /* public string ContarTallesPrendas()
+         {
+             StringBuilder sb = new();
 
-            sb.Append($"Prendas en corte: \n");
-            foreach (KeyValuePair<TallePrenda, List<Prenda>> kvp in PrendasEnCorte)
-            {
-                if (kvp.Value.Count > 0)
-                {
-                    sb.Append($"{kvp.Key.ToString()} | {kvp.Value.Count} prendas\n");
-                }
-            }
-            return sb.ToString();
-        }
+             sb.Append($"Prendas en corte: \n");
+             foreach (KeyValuePair<TallePrenda, List<Prenda>> kvp in PrendasEnCorte)
+             {
+                 if (PrendasEnCorte.Count > 0)
+                 {
+                     sb.Append($"{kvp.Key.ToString()} | {kvp.Value.Count} prendas\n");
+                 }
+             }
+             return sb.ToString();
+         }*/
         public decimal HorasTotalesCorte
         {
             get => _horasTotalesCorte;
             set => _horasTotalesCorte = Math.Round(value, 1);
         }
-        public SortedDictionary<TallePrenda, List<Prenda>> PrendasEnCorte
+        public List<Prenda> PrendasEnCorte
         {
             set
             {
@@ -104,7 +103,8 @@ namespace Entidades
             set => _identificadorDeCorte = value;
         }
 
-        public int ContadorCortes {
+        public int ContadorCortes
+        {
             get => _contadorCortes;
             set => _contadorCortes = value;
         }
@@ -113,13 +113,11 @@ namespace Entidades
             HorasTotalesCorte = 0;
             if (PrendasEnCorte is not null)
             {
-                foreach (KeyValuePair<TallePrenda, List<Prenda>> par in PrendasEnCorte)
+                foreach (Prenda prenda in PrendasEnCorte)
                 {
-                    foreach (Prenda prenda in par.Value)
-                    {
-                        HorasTotalesCorte += prenda.TiempoFinalEtapa;
-                    }
+                    HorasTotalesCorte += prenda.TiempoFinalEtapa;
                 }
+
             }
 
         }
@@ -132,13 +130,11 @@ namespace Entidades
                 {
                     if (PrendasEnCorte is not null && PrendasEnCorte.Count > 0)
                     {
-                        foreach (KeyValuePair<TallePrenda, List<Prenda>> par in PrendasEnCorte)
+                        if (PrendasEnCorte.Contains(prendaBuscada))
                         {
-                            if (par.Value.Contains(prendaBuscada))
-                            {
-                                return true;
-                            }
+                            return true;
                         }
+
                     }
                     else
                     {

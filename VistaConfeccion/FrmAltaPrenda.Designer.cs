@@ -126,9 +126,9 @@
             LblDistintivo.AutoSize = true;
             LblDistintivo.Location = new Point(781, 211);
             LblDistintivo.Name = "LblDistintivo";
-            LblDistintivo.Size = new Size(114, 15);
+            LblDistintivo.Size = new Size(119, 15);
             LblDistintivo.TabIndex = 7;
-            LblDistintivo.Text = "Distintivo (opcional)";
+            LblDistintivo.Text = "Distintivo(Requerido)";
             // 
             // LblPrendasHora
             // 

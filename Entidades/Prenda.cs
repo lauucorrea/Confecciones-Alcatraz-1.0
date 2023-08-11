@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using System.Text.Json.Serialization;
 using Validaciones_Testings;
 namespace Entidades
 {
@@ -19,7 +18,7 @@ namespace Entidades
         Terminado
     }
     [Serializable]
-    public class Prenda 
+    public class Prenda
     {
         private CategoriaPrenda _categoria;
         private TallePrenda _talle;
@@ -28,12 +27,12 @@ namespace Entidades
         private int _horasParaCantidad;
         private int _prendasHora;
 
-        private decimal _unidadesCorte;
+        private int _unidadesCorte;
         private decimal _tiempoFinalEtapa;
         private EtapaCorte _etapa;
         //informacion adicional
         private string? _detallePrenda;
-        private string? _informacionAdicional;
+        private string? _distintivo;
 
         //identificador
         private int idPrenda;
@@ -47,28 +46,25 @@ namespace Entidades
         {
 
         }
-        public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion):this()
+        public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion, string distintivo) : this()
         {
             Categoria = categoria;
             CantidadEnHoras = cantidadPrendas;
             HorasParaCantidad = horasProduccion;
             ContadorPrendas++;
             IdPrenda = contadorPrendas;
-            PrendasHora = CantidadEnHoras / HorasParaCantidad ;
+            Distintivo = distintivo;
+            PrendasHora = CantidadEnHoras / HorasParaCantidad;
 
-            if(PrendasHora <= 0)
+            if (PrendasHora <= 0)
             {
                 PrendasHora = 1;
             }
         }
 
-        public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion, string detallePrenda) : this(categoria, cantidadPrendas,horasProduccion)
+        public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion, string distintivo, string? detallePrenda) : this(categoria, cantidadPrendas, horasProduccion, distintivo)
         {
-            Detalles = detallePrenda;
-        }
-        public Prenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion, string? detallePrenda, string informacionAdicional) : this(categoria, cantidadPrendas, horasProduccion, detallePrenda)
-        {
-            Adicional = informacionAdicional;
+
             if (string.IsNullOrEmpty(detallePrenda))
             {
                 Detalles = string.Empty;
@@ -84,14 +80,14 @@ namespace Entidades
             set => contadorPrendas = value;
         }
 
-        public decimal UnidadesCorte
+        public int UnidadesCorte
         {
             get => _unidadesCorte;
             set
             {
-                _unidadesCorte = Math.Round(value);
+                _unidadesCorte = value;
 
-                
+
             }
         }
         public int IdPrenda
@@ -107,7 +103,18 @@ namespace Entidades
         public decimal TiempoFinalEtapa
         {
             get => _tiempoFinalEtapa;
-            set => _tiempoFinalEtapa = Math.Round(value,1);
+            set
+            {
+                if (value > (decimal)0.2)
+                {
+                    _tiempoFinalEtapa = Math.Round(value, 1);
+                }
+                else
+                {
+                    _tiempoFinalEtapa = value;
+                }
+
+            }
         }
         public int PrendasHora
         {
@@ -135,7 +142,7 @@ namespace Entidades
             sb.AppendLine(HorasParaCantidad.ToString());
             sb.AppendLine(CantidadEnHoras.ToString());
             sb.AppendLine(Detalles.ToString());
-            sb.AppendLine(Adicional.ToString());
+            sb.AppendLine(Distintivo.ToString());
 
             return sb.ToString();
         }
@@ -227,13 +234,13 @@ namespace Entidades
             }
         }
 
-        public string Adicional
+        public string Distintivo
         {
             get
             {
-                if (!string.IsNullOrEmpty(_informacionAdicional))
+                if (!string.IsNullOrEmpty(_distintivo))
                 {
-                    return _informacionAdicional;
+                    return _distintivo;
 
                 }
                 else
@@ -245,8 +252,11 @@ namespace Entidades
             {
                 if (Validaciones.ValidarString(value))
                 {
-                    _informacionAdicional = value;
-
+                    _distintivo = value;
+                }
+                else
+                {
+                    throw new Exception("La prenda debe tener distintivo");
                 }
 
             }

@@ -172,18 +172,18 @@ namespace Vista
                     {
                         if (prenda.IdPrenda == IdPrenda)
                         {
-                            if (string.IsNullOrEmpty(prenda.Detalles) && string.IsNullOrEmpty(prenda.Adicional))
+
+                            if (string.IsNullOrEmpty(prenda.Detalles) && !string.IsNullOrEmpty(prenda.Distintivo))
                             {
-                                PrendaSeleccionada_Sistema = new Prenda(prenda.Categoria, prenda.CantidadEnHoras, prenda.HorasParaCantidad);
+                                PrendaSeleccionada_Sistema = new (prenda.Categoria, prenda.CantidadEnHoras, prenda.HorasParaCantidad, prenda.Distintivo);
+                                PrendaSeleccionada_Sistema.IdPrenda = IdPrenda;
                             }
-                            else if (string.IsNullOrEmpty(prenda.Adicional) && !string.IsNullOrEmpty(prenda.Detalles))
+                            else if (!string.IsNullOrEmpty(prenda.Distintivo))
                             {
-                                PrendaSeleccionada_Sistema = new Prenda(prenda.Categoria, prenda.CantidadEnHoras, prenda.HorasParaCantidad, prenda.Detalles);
+                                PrendaSeleccionada_Sistema = new (prenda.Categoria, prenda.CantidadEnHoras, prenda.HorasParaCantidad, prenda.Distintivo, prenda.Detalles);
+                                PrendaSeleccionada_Sistema.IdPrenda = IdPrenda;
                             }
-                            else if (!string.IsNullOrEmpty(prenda.Adicional))
-                            {
-                                PrendaSeleccionada_Sistema = new Prenda(prenda.Categoria, prenda.CantidadEnHoras, prenda.HorasParaCantidad, prenda.Detalles, prenda.Adicional);
-                            }
+                            
                         }
                     }
                 }
@@ -256,7 +256,7 @@ namespace Vista
                 fila.Cells[3].Value = prenda.HorasParaCantidad; // Suponiendo que Prenda tiene una propiedad "Tipo"
                 fila.Cells[4].Value = prenda.PrendasHora; // Suponiendo que Prenda tiene una propiedad "Tipo"
                 fila.Cells[5].Value = prenda.Detalles; // Suponiendo que TallePrenda tiene una propiedad "Talle"
-                fila.Cells[6].Value = prenda.Adicional; // Suponiendo que Prenda tiene una propiedad "Cantidad"
+                fila.Cells[6].Value = prenda.Distintivo; // Suponiendo que Prenda tiene una propiedad "Cantidad"
 
                 // Agregar la fila al DataGridView
                 DtgPrendasSistema.Rows.Add(fila);

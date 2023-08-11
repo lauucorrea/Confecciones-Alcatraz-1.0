@@ -72,9 +72,9 @@ namespace VistaConfeccion
                 fila.Cells[1].Value = prenda.Categoria;
                 fila.Cells[2].Value = prenda.CantidadEnHoras;
                 fila.Cells[3].Value = prenda.HorasParaCantidad;
-                fila.Cells[4].Value = prenda.PrendasHora; 
-                fila.Cells[5].Value = prenda.Detalles; 
-                fila.Cells[6].Value = prenda.Adicional; 
+                fila.Cells[4].Value = prenda.PrendasHora;
+                fila.Cells[5].Value = prenda.Detalles;
+                fila.Cells[6].Value = prenda.Distintivo;
 
                 // Agregar la fila al DataGridView
                 DtgPrendasSistema.Rows.Add(fila);

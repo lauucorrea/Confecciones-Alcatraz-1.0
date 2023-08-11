@@ -8,16 +8,33 @@ namespace Entidades
         //se limpia cuando se apreta el boton de agregar confeccion
         private static List<Prenda>? _prendasParaCortes;
         private static List<Corte> _cortesSistema;
-        private static Dictionary<Prenda, List<DateTime>> calendarioPrendasCorte;
+        private static Dictionary<DateTime,List<Prenda>> calendarioPrendasCorte;
         static GestionDatos()
         {
             PrendasSistema = new();
             CortesSistema = new();
             PrendasParaCortes = new();
             PersonasSistema = new();
-
+            CalendarioPrendasCorte = new();
             HardcodeListas();
 
+        }
+        public static Dictionary<DateTime, List<Prenda>> CalendarioPrendasCorte
+        {
+            get
+            {
+                if (calendarioPrendasCorte is not null)
+                {
+
+                    return calendarioPrendasCorte;
+                }
+                else
+                {
+                    throw new NullReferenceException();
+                }
+
+            }
+            set => calendarioPrendasCorte = value;
         }
         public static List<Persona> PersonasSistema
         {

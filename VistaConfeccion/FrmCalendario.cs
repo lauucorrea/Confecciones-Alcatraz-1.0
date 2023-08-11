@@ -1,7 +1,9 @@
 ﻿using Entidades;
 using System.Data;
 using System.Globalization;
+using System.Collections.Generic;
 using System.Text;
+using System;
 
 namespace Vista
 {
@@ -10,6 +12,11 @@ namespace Vista
         Persona PersonaLogueada;
         DateTime MesActual;
         DataTable Calendario;
+        bool redimensionado = false;
+        int AltoGrid = 0;
+        int AltoGridInicial = 0;
+        int AltoForm;
+        int Diferencia;
         public FrmCalendario(Persona persona)
         {
 
@@ -25,19 +32,107 @@ namespace Vista
         }
         public void CrearCalendario(DateTime fecha)
         {
-            Calendario = ObtenerFilasCalendario(fecha);
-            DtgCalendario.DataSource = Calendario;
-            // AjustarAltosFilas(DtgCalendario, DtgCalendario.Height);
-            // RedimensionarForm();
-
+            DibujarFilas(fecha);
             AjustarAltosFilas(DtgCalendario, DtgCalendario.Height);
             RedimensionarForm();
             DtgCalendario.CellPainting += DtgCalendario_CellPainting;
         }
-        public DataTable ObtenerFilasCalendario(DateTime fecha)
-        {
 
-            DataTable dataTable = new DataTable();
+        public void AgregarPrendasCalendario_Gestion(List<DateTime> fechas)
+        {
+            Prenda ultimaPrenda = new();
+            Prenda prendaFinal = new();
+            DateTime ultimaFecha = DateTime.MinValue;
+            DateTime fechaFinal;
+            decimal horasRestantesFecha;
+            decimal horasRestantesPrenda;
+
+            int horasEnteras;
+            int minutosDecimales;
+
+            bool agotoTiempo = false;
+
+            if (fechas is not null && GestionDatos.CortesSistema is not null)
+            {
+                foreach (DateTime dia in fechas)
+                {
+                    if (ultimaFecha != DateTime.MinValue && (ultimaFecha.Hour > 0 || ultimaFecha.Minute > 0))
+                    {
+                        fechaFinal = ultimaFecha;
+                    }
+                    else
+                    {
+                        fechaFinal = dia.Date;
+                    }
+                    horasRestantesFecha = PersonaLogueada.HorasJornada;
+
+                    List<Corte> cortesEncontrados = Administracion.ObtenerCortesEnFechas(fechas);
+                    if(GestionDatos.CalendarioPrendasCorte is not null)
+                    {
+                        GestionDatos.CalendarioPrendasCorte.Clear();
+                    }
+                    foreach (Corte corte in cortesEncontrados)
+                    {
+                        foreach (Prenda prenda in corte.PrendasEnCorte)
+                        {
+                            if (GestionDatos.CalendarioPrendasCorte is not null && !GestionDatos.CalendarioPrendasCorte.ContainsKey(fechaFinal))
+                            {
+                                horasRestantesPrenda = prenda.TiempoFinalEtapa;
+                                horasRestantesFecha -= horasRestantesPrenda;
+
+                                if (horasRestantesFecha >= 0)
+                                {
+                                    List<Prenda> lista = new() { prenda };
+
+                                    horasEnteras = (int)horasRestantesFecha;
+                                    minutosDecimales = (int)((horasRestantesFecha - horasEnteras) * 60);
+
+                                    // Aquí es donde se corrige el cálculo de los minutos decimales
+                                    fechaFinal = fechaFinal.AddHours(horasEnteras).AddMinutes(minutosDecimales);
+                                    ultimaFecha = fechaFinal;
+
+                                    GestionDatos.CalendarioPrendasCorte.Add(fechaFinal, lista);
+                                }
+                                else
+                                {
+                                    agotoTiempo = true;
+                                    break;
+                                }
+                            }
+                            else if (GestionDatos.CalendarioPrendasCorte is not null)
+                            {
+                                if (horasRestantesFecha >= 0)
+                                {
+
+                                    List<Prenda> lista = GestionDatos.CalendarioPrendasCorte[fechaFinal];
+
+                                    lista.Add(prenda);
+
+                                    GestionDatos.CalendarioPrendasCorte[fechaFinal] = lista;
+                                }
+                                else
+                                {
+                                    agotoTiempo = true;
+                                    break;
+
+                                }
+                            }
+                            else
+                            {
+                                throw new NullReferenceException("La lista de cortes es nula");
+                            }
+                            ultimaPrenda = prenda;
+                        }
+                        if (agotoTiempo)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        public void DibujarFilas(DateTime fecha)
+        {
             // Obtener el primer día del mes actual
             DateTime diaInicioActualizable = new DateTime(fecha.Year, fecha.Month, 1);
             // Obtener el día de la semana en el que empieza el mes
@@ -46,17 +141,21 @@ namespace Vista
             DateTime ultimoDiaDelMes = diaInicioActualizable.AddMonths(1).AddDays(-1);
             string[] nombresDiasSemana = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
             DateTime diaActualizado = diaInicioActualizable.AddDays(-diaSemanaInicio);
+            int index = 0;
+            AgregarPrendasCalendario_Gestion(Administracion.ObtenerListaFechasEnRango(diaInicioActualizable, ultimoDiaDelMes));
 
             foreach (string nombreDia in nombresDiasSemana)
             {
-                dataTable.Columns.Add(nombreDia, typeof(string));
-            }
+                string nombreColumna = $"ColumnaFecha{index}";
+                DtgCalendario.Columns.Add(nombreColumna, nombreDia);
 
+                index++;
+            }
+            index = 0;
             while (diaActualizado <= ultimoDiaDelMes || diaActualizado.DayOfWeek != DayOfWeek.Sunday)
             {
-                // Agregar filas al DataTable para cada semana del mes
-                DataRow row = dataTable.NewRow();
-
+               
+                DataGridViewRow row = new();
                 // Iterar sobre los días de la semana
                 for (int i = 0; i < 7; i++)
                 {
@@ -97,24 +196,18 @@ namespace Vista
                     {
                         sb.Append($" Fecha fuera mes: {diaActualizado.Day}/{diaActualizado.Month}"); // Mostrar la fecha del día correspondiente a otro mes
                     }
-                    //row[i] = sb.ToString();
+                    DataGridViewTextBoxCell celda = new();
+                    
 
-                    // Crear una nueva celda y establecer su valor
-                    DataGridViewCell cell = new DataGridViewTextBoxCell();
-                    cell.Value = sb.ToString();
-
-                    // Establecer el valor de la propiedad "tag" de la celda como diaActualizado
-                    cell.Tag = diaActualizado;
-
-                    // Agregar la celda a la fila actual
-                    row[i] = cell.Value;
+                    celda.Value = sb.ToString();
+                    celda.Tag = diaActualizado.Date;
+                    row.Cells.Add(celda);
 
                     diaActualizado = diaActualizado.AddDays(1);
                 }
-
-                dataTable.Rows.Add(row);
+                DtgCalendario.Rows.Insert(index, row);
+                index++;
             }
-            return dataTable;
         }
 
 
@@ -178,31 +271,25 @@ namespace Vista
         /// </summary>
         private void RedimensionarForm()
         {
-            int AltoGridIni = DtgCalendario.Height;
-            int AltoGrid = 0;
-            int AltoForm = this.Height;
-            int Diferencia;
-            AltoGrid = AltoGrid + DtgCalendario.ColumnHeadersHeight;
-
-            for (int i = 0; i <= DtgCalendario.Rows.Count - 1; i++)
+            if (!redimensionado)
             {
-                AltoGrid = AltoGrid + DtgCalendario.Rows[i].Height;
-            }
-            Diferencia = AltoGridIni - AltoGrid;
+                AltoForm = this.Height;
+                AltoGrid = AltoGridInicial + DtgCalendario.ColumnHeadersHeight;
 
-            if (Diferencia > 0)
-            {
-                AltoForm = AltoForm - Diferencia;
+                foreach (DataGridViewRow row in DtgCalendario.Rows)
+                {
+                    AltoGrid += row.Height;
+                }
+
+                Diferencia = AltoGridInicial - AltoGrid;
+
+                AltoForm -= Diferencia;
                 this.Height = AltoForm;
-            }
-            else if (Diferencia < 0)
-            {
-                AltoForm = AltoForm + Diferencia;
-                this.Height = AltoForm;
-            }
-            DtgCalendario.Height = AltoGrid;
 
+                DtgCalendario.Height = AltoGrid;
 
+                redimensionado = true;
+            }
         }
 
         private void VaciarCeldas(DataGridView dataGridView)
@@ -227,7 +314,8 @@ namespace Vista
 
         private void BtnMesSiguiente_Click(object sender, EventArgs e)
         {
-            VaciarCeldas(DtgCalendario);
+            DtgCalendario.Rows.Clear();
+            DtgCalendario.Columns.Clear();
             Calendario = new();
             MesActual = MesActual.AddMonths(1);
             LblMesActual.Text = CultureInfo.GetCultureInfo("es-ES").DateTimeFormat.GetMonthName(MesActual.Month);
@@ -237,7 +325,8 @@ namespace Vista
 
         private void BtnMesAnterior_Click(object sender, EventArgs e)
         {
-            VaciarCeldas(DtgCalendario);
+            DtgCalendario.Rows.Clear();
+            DtgCalendario.Columns.Clear();
             Calendario = new();
             MesActual = MesActual.AddMonths(-1);
             LblMesActual.Text = CultureInfo.GetCultureInfo("es-ES").DateTimeFormat.GetMonthName(MesActual.Month);
@@ -265,10 +354,6 @@ namespace Vista
 
             if (result == DialogResult.Yes)
             {
-                // Clase_serializadora serializadora = new();
-                // serializadora.GuardarPersonasXML();
-                // serializadora.GuardarAvionesXML();
-
                 DialogResult = DialogResult.Cancel;
             }
         }
@@ -276,6 +361,38 @@ namespace Vista
         private void BtnAceptarFecha_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void DtgCalendario_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0) // Verifica que se haya hecho clic dentro de una celda válida
+            {
+                // Obtén el DataGridView desde el evento
+                DataGridView dgv = sender as DataGridView;
+
+                // Verifica si el DataGridView es válido y contiene celdas
+                if (dgv != null && dgv.Rows.Count > 0 && dgv.Columns.Count > 0)
+                {
+                    // Obtén la celda seleccionada desde el DataGridView
+                    DataGridViewCell celdaSeleccionada = dgv.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+                    // Verifica si la celda tiene un valor en su propiedad "Tag"
+                    if (celdaSeleccionada.Tag != null)
+                    {
+                        // Obtén el valor del "Tag" de la celda como DateTime
+                        DateTime tagCeldaDateTime = (DateTime)celdaSeleccionada.Tag;
+
+                        // Ahora puedes trabajar con el objeto DateTime tagCeldaDateTime según tus necesidades
+                        // Por ejemplo, mostrarlo en un MessageBox
+                        MessageBox.Show("Valor del Tag de la celda como DateTime: " + tagCeldaDateTime.ToString());
+                    }
+                    else
+                    {
+                        // La celda no tiene un valor válido en su propiedad "Tag" o no es del tipo DateTime
+                        MessageBox.Show("La celda no tiene un valor válido en su Tag o no es del tipo DateTime.");
+                    }
+                }
+            }
         }
     }
 }

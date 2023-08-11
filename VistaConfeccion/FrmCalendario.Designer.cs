@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCalendario));
             DtgCalendario = new DataGridView();
             LblMesActual = new Label();
@@ -57,14 +57,14 @@
             DtgCalendario.Margin = new Padding(0);
             DtgCalendario.Name = "DtgCalendario";
             DtgCalendario.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            DtgCalendario.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            DtgCalendario.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             DtgCalendario.RowHeadersVisible = false;
             DtgCalendario.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             DtgCalendario.RowTemplate.Height = 25;
@@ -72,6 +72,7 @@
             DtgCalendario.ShowEditingIcon = false;
             DtgCalendario.Size = new Size(1250, 750);
             DtgCalendario.TabIndex = 7;
+            DtgCalendario.CellDoubleClick += DtgCalendario_CellDoubleClick;
             // 
             // LblMesActual
             // 
@@ -116,7 +117,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(55, 949);
+            label4.Location = new Point(55, 967);
             label4.Name = "label4";
             label4.Size = new Size(87, 17);
             label4.TabIndex = 41;
@@ -127,7 +128,7 @@
             BtnCerrarSesion.FlatStyle = FlatStyle.Flat;
             BtnCerrarSesion.ForeColor = Color.Transparent;
             BtnCerrarSesion.Image = (Image)resources.GetObject("BtnCerrarSesion.Image");
-            BtnCerrarSesion.Location = new Point(64, 866);
+            BtnCerrarSesion.Location = new Point(64, 884);
             BtnCerrarSesion.Name = "BtnCerrarSesion";
             BtnCerrarSesion.Size = new Size(72, 80);
             BtnCerrarSesion.TabIndex = 40;
@@ -141,7 +142,7 @@
             BtnCancelar.FlatStyle = FlatStyle.Popup;
             BtnCancelar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             BtnCancelar.ForeColor = Color.White;
-            BtnCancelar.Location = new Point(944, 878);
+            BtnCancelar.Location = new Point(944, 896);
             BtnCancelar.Name = "BtnCancelar";
             BtnCancelar.Size = new Size(173, 47);
             BtnCancelar.TabIndex = 39;
@@ -156,7 +157,7 @@
             BtnAceptarFecha.FlatStyle = FlatStyle.Popup;
             BtnAceptarFecha.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             BtnAceptarFecha.ForeColor = SystemColors.WindowText;
-            BtnAceptarFecha.Location = new Point(1130, 878);
+            BtnAceptarFecha.Location = new Point(1130, 896);
             BtnAceptarFecha.Name = "BtnAceptarFecha";
             BtnAceptarFecha.Size = new Size(184, 47);
             BtnAceptarFecha.TabIndex = 38;
@@ -169,7 +170,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(1384, 977);
+            BackColor = Color.Azure;
+            ClientSize = new Size(1384, 1011);
             Controls.Add(label4);
             Controls.Add(BtnCerrarSesion);
             Controls.Add(BtnCancelar);

@@ -9,39 +9,28 @@
         /// <param name="categoria"></param>
         /// <param name="horasProduccion"></param>
         /// <param name="detallePrenda"></param>
-        /// <param name="informacionAdicional"></param>
+        /// <param name="distintivo"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static Prenda CrearPrenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion, string detallePrenda, string informacionAdicional)
+        public static Prenda CrearPrenda(CategoriaPrenda categoria, int cantidadPrendas, int horasProduccion, string distintivo, string detallePrenda)
         {
-            Prenda PrendaCreada;
+            Prenda PrendaCreada = null;
 
-            if (!string.IsNullOrEmpty(detallePrenda) && !string.IsNullOrEmpty(informacionAdicional))
+            if (string.IsNullOrEmpty(detallePrenda) && !string.IsNullOrEmpty(distintivo))
             {
-                PrendaCreada = new(categoria, cantidadPrendas, horasProduccion, detallePrenda, informacionAdicional);
+                PrendaCreada = new(categoria, cantidadPrendas, horasProduccion, distintivo);
 
             }
-            else if (!string.IsNullOrEmpty(detallePrenda) && string.IsNullOrEmpty(informacionAdicional))
+            else if (!string.IsNullOrEmpty(distintivo))
             {
-                PrendaCreada = new(categoria, cantidadPrendas, horasProduccion, detallePrenda);
-            }
-            else if (string.IsNullOrEmpty(detallePrenda) && !string.IsNullOrEmpty(informacionAdicional))
-            {
-                PrendaCreada = new(categoria, cantidadPrendas, horasProduccion, informacionAdicional);
+                PrendaCreada = new(categoria, cantidadPrendas, horasProduccion, distintivo, detallePrenda);
             }
             else
             {
-                PrendaCreada = new(categoria, cantidadPrendas, horasProduccion);
+                throw new Exception("Debe cargarse el distintivo para continuar");
             }
 
-            if (PrendaCreada is not null)
-            {
-                return PrendaCreada;
-            }
-            else
-            {
-                throw new Exception("No se pudo crear la prenda");
-            }
+            return PrendaCreada;
         }
 
 
@@ -102,7 +91,7 @@
             {
                 foreach (Corte corte in GestionDatos.CortesSistema)
                 {
-                    
+
                 }
                 return new List<Corte>();
             }
@@ -135,29 +124,11 @@
             }
 
             // Verificar si PrendasEnCorte es nulo y crear una nueva instancia si es necesario
-            if (corte.PrendasEnCorte is null)
-            {
-                corte.PrendasEnCorte = new SortedDictionary<TallePrenda, List<Prenda>>();
-            }
+            corte.PrendasEnCorte ??= new();
 
-            // Verificar si la prenda pertenece a un talle existente en el corte
-            if (corte.PrendasEnCorte.ContainsKey(prendaSeleccionada.TallePrenda))
-            {
-                // La prenda pertenece a un talle existente en el corte
-                List<Prenda> prendas = corte.PrendasEnCorte[prendaSeleccionada.TallePrenda];
-                prendaSeleccionada.Etapa = EtapaCorte.Pendiente;
-                prendas.Add(prendaSeleccionada);
-            }
-            else
-            {
-                // La prenda no pertenece a un talle existente en el corte
 
-                // Crear una nueva lista para el talle de la prenda y agregar la prenda a esa lista
-                List<Prenda> prendas = new List<Prenda> { prendaSeleccionada };
+            corte.PrendasEnCorte.Add(prendaSeleccionada);
 
-                // Agregar la lista al diccionario PrendasEnCorte con la clave del talle
-                corte.PrendasEnCorte.Add(prendaSeleccionada.TallePrenda, prendas);
-            }
 
             return true; // Retornar true indicando que se agregó la prenda correctamente
         }
@@ -172,29 +143,27 @@
 
             foreach (Corte corte in listaCortes)
             {
-                foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnCorte)
+                foreach (Prenda prenda in corte.PrendasEnCorte)
                 {
-                    foreach (Prenda prenda in kp.Value)
+                    switch (prenda.Etapa.ToString())
                     {
-                        switch (prenda.Etapa.ToString())
-                        {
-                            case "Pendiente":
-                                contadorPendiente++;
-                                break;
-                            case "Tizando":
-                                contadorTizando++;
-                                break;
-                            case "Encimando":
-                                contadorEncimando++;
-                                break;
-                            case "Cortando":
-                                contadorCortando++;
-                                break;
-                            case "Terminando":
-                                contadorTerminando++;
-                                break;
-                        }
+                        case "Pendiente":
+                            contadorPendiente++;
+                            break;
+                        case "Tizando":
+                            contadorTizando++;
+                            break;
+                        case "Encimando":
+                            contadorEncimando++;
+                            break;
+                        case "Cortando":
+                            contadorCortando++;
+                            break;
+                        case "Terminando":
+                            contadorTerminando++;
+                            break;
                     }
+
                 }
             }
 
@@ -205,7 +174,7 @@
             conteo.Add(contadorTerminando);
             return conteo;
         }
-        public static List<int> ObtenerConteoDeTalles(Corte corte)
+        public static List<int> ObtenerConteoDeTalles_Corte(Corte corte)
         {
             List<int> conteo = new();
             int contadorXS = 0;
@@ -215,35 +184,33 @@
             int contadorXL = 0;
             int contadorXXL = 0;
 
-            foreach (KeyValuePair<TallePrenda, List<Prenda>> kvp in corte.PrendasEnCorte)
+            foreach (Prenda prenda in corte.PrendasEnCorte)
             {
-                foreach (Prenda prenda in kvp.Value)
+
+                switch (prenda.TallePrenda.ToString())
                 {
-
-                    switch (prenda.TallePrenda.ToString())
-                    {
-                        case "XS":
-                            contadorXS++;
-                            break;
-                        case "S":
-                            contadorS++;
-                            break;
-                        case "M":
-                            contadorM++;
-                            break;
-                        case "L":
-                            contadorL++;
-                            break;
-                        case "XL":
-                            contadorXL++;
-                            break;
-                        case "XXL":
-                            contadorXXL++;
-                            break;
-                    }
+                    case "XS":
+                        contadorXS++;
+                        break;
+                    case "S":
+                        contadorS++;
+                        break;
+                    case "M":
+                        contadorM++;
+                        break;
+                    case "L":
+                        contadorL++;
+                        break;
+                    case "XL":
+                        contadorXL++;
+                        break;
+                    case "XXL":
+                        contadorXXL++;
+                        break;
                 }
-
             }
+
+
 
             conteo.Add(contadorXS);
             conteo.Add(contadorS);
@@ -255,28 +222,17 @@
             return conteo;
         }
 
-        public static List<Prenda> ObtenerPrendasCorte(Corte corte)
+
+        public static bool ExistePrendaEnLista(List<Prenda> prendas, Prenda prendaBusqueda)
         {
-            List<Prenda> listaObtenida = new();
-
-            if (corte.PrendasEnCorte is not null)
+            foreach (Prenda prenda in prendas)
             {
-
-                foreach (KeyValuePair<TallePrenda, List<Prenda>> kp in corte.PrendasEnCorte)
+                if (prendaBusqueda.IdPrenda == prenda.IdPrenda)
                 {
-                    foreach (Prenda prenda in kp.Value)
-                    {
-                        listaObtenida.Add(prenda);
-                    }
+                    return true;
                 }
             }
-            else
-            {
-                throw new ArgumentNullException("Las prendas recibidas no son validas");
-            }
-
-            return listaObtenida;
-
+            return false;
         }
 
         public static List<Corte> ObtenerCortesPorFecha(DateTime fechaBusqueda)
@@ -296,6 +252,27 @@
 
             return ListaCortesEncontrados;
 
+        }
+       
+        public static List<Corte> ObtenerCortesEnFechas(List<DateTime> fechasBusqueda)
+        {
+            List<Corte> cortesEncontrados = new List<Corte>();
+
+            foreach (Corte corte in GestionDatos.CortesSistema)
+            {
+                foreach (DateTime fechaBusqueda in fechasBusqueda)
+                {
+                    if (fechaBusqueda.Date >= corte.FechaInicio.Date && fechaBusqueda.Date <= corte.FechaFinal.Date)
+                    {
+                        cortesEncontrados.Add(corte);
+                        // Si encuentras una coincidencia para esta fecha, puedes salir del bucle interno,
+                        // ya que no es necesario seguir buscando en las demás fechas.
+                        break;
+                    }
+                }
+            }
+
+            return cortesEncontrados;
         }
 
 
@@ -359,7 +336,7 @@
             for (int i = 1; i <= diasEnRango; i++)
             {
                 fechaActual = fechaActual.AddDays(1);
-                listaFechas.Add(fechaActual);
+                listaFechas.Add(fechaActual.Date);
             }
 
             return listaFechas;
