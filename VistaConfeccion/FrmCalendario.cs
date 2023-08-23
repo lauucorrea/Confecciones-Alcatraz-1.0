@@ -1,9 +1,8 @@
 ﻿using Entidades;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
-using System.Collections.Generic;
 using System.Text;
-using System;
 
 namespace Vista
 {
@@ -38,99 +37,7 @@ namespace Vista
             DtgCalendario.CellPainting += DtgCalendario_CellPainting;
         }
 
-        public void AgregarPrendasCalendario_Gestion(List<DateTime> fechas)
-        {
-            Prenda ultimaPrenda = new();
-            Prenda prendaFinal = new();
-            DateTime ultimaFecha = DateTime.MinValue;
-            DateTime fechaFinal;
-            decimal horasRestantesFecha;
-            decimal horasRestantesPrenda;
 
-            int horasEnteras;
-            int minutosDecimales;
-
-            bool agotoTiempo = false;
-
-            if (fechas is not null && GestionDatos.CortesSistema is not null)
-            {
-                foreach (DateTime dia in fechas)
-                {
-                    if (ultimaFecha != DateTime.MinValue && (ultimaFecha.Hour > 0 || ultimaFecha.Minute > 0))
-                    {
-                        fechaFinal = ultimaFecha;
-                    }
-                    else
-                    {
-                        fechaFinal = dia.Date;
-                    }
-                    horasRestantesFecha = PersonaLogueada.HorasJornada;
-
-                    List<Corte> cortesEncontrados = Administracion.ObtenerCortesEnFechas(fechas);
-                    if(GestionDatos.CalendarioPrendasCorte is not null)
-                    {
-                        GestionDatos.CalendarioPrendasCorte.Clear();
-                    }
-                    foreach (Corte corte in cortesEncontrados)
-                    {
-                        foreach (Prenda prenda in corte.PrendasEnCorte)
-                        {
-                            if (GestionDatos.CalendarioPrendasCorte is not null && !GestionDatos.CalendarioPrendasCorte.ContainsKey(fechaFinal))
-                            {
-                                horasRestantesPrenda = prenda.TiempoFinalEtapa;
-                                horasRestantesFecha -= horasRestantesPrenda;
-
-                                if (horasRestantesFecha >= 0)
-                                {
-                                    List<Prenda> lista = new() { prenda };
-
-                                    horasEnteras = (int)horasRestantesFecha;
-                                    minutosDecimales = (int)((horasRestantesFecha - horasEnteras) * 60);
-
-                                    // Aquí es donde se corrige el cálculo de los minutos decimales
-                                    fechaFinal = fechaFinal.AddHours(horasEnteras).AddMinutes(minutosDecimales);
-                                    ultimaFecha = fechaFinal;
-
-                                    GestionDatos.CalendarioPrendasCorte.Add(fechaFinal, lista);
-                                }
-                                else
-                                {
-                                    agotoTiempo = true;
-                                    break;
-                                }
-                            }
-                            else if (GestionDatos.CalendarioPrendasCorte is not null)
-                            {
-                                if (horasRestantesFecha >= 0)
-                                {
-
-                                    List<Prenda> lista = GestionDatos.CalendarioPrendasCorte[fechaFinal];
-
-                                    lista.Add(prenda);
-
-                                    GestionDatos.CalendarioPrendasCorte[fechaFinal] = lista;
-                                }
-                                else
-                                {
-                                    agotoTiempo = true;
-                                    break;
-
-                                }
-                            }
-                            else
-                            {
-                                throw new NullReferenceException("La lista de cortes es nula");
-                            }
-                            ultimaPrenda = prenda;
-                        }
-                        if (agotoTiempo)
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
         public void DibujarFilas(DateTime fecha)
         {
             // Obtener el primer día del mes actual
@@ -142,7 +49,6 @@ namespace Vista
             string[] nombresDiasSemana = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
             DateTime diaActualizado = diaInicioActualizable.AddDays(-diaSemanaInicio);
             int index = 0;
-            AgregarPrendasCalendario_Gestion(Administracion.ObtenerListaFechasEnRango(diaInicioActualizable, ultimoDiaDelMes));
 
             foreach (string nombreDia in nombresDiasSemana)
             {
@@ -154,7 +60,7 @@ namespace Vista
             index = 0;
             while (diaActualizado <= ultimoDiaDelMes || diaActualizado.DayOfWeek != DayOfWeek.Sunday)
             {
-               
+
                 DataGridViewRow row = new();
                 // Iterar sobre los días de la semana
                 for (int i = 0; i < 7; i++)
@@ -197,7 +103,7 @@ namespace Vista
                         sb.Append($" Fecha fuera mes: {diaActualizado.Day}/{diaActualizado.Month}"); // Mostrar la fecha del día correspondiente a otro mes
                     }
                     DataGridViewTextBoxCell celda = new();
-                    
+
 
                     celda.Value = sb.ToString();
                     celda.Tag = diaActualizado.Date;
@@ -382,9 +288,22 @@ namespace Vista
                         // Obtén el valor del "Tag" de la celda como DateTime
                         DateTime tagCeldaDateTime = (DateTime)celdaSeleccionada.Tag;
 
-                        // Ahora puedes trabajar con el objeto DateTime tagCeldaDateTime según tus necesidades
-                        // Por ejemplo, mostrarlo en un MessageBox
-                        MessageBox.Show("Valor del Tag de la celda como DateTime: " + tagCeldaDateTime.ToString());
+                        //AgregarPrendasCalendario_Gestion(Administracion.ObtenerCortesPorFecha(tagCeldaDateTime));
+
+                        List<Corte>? cortesEnFecha = Administracion.ObtenerCortesPorFecha(tagCeldaDateTime);
+
+                        if (cortesEnFecha is not null)
+                        {
+                            FrmTareaDiaria frmTarea = new(cortesEnFecha,PersonaLogueada);
+                            if (frmTarea.ShowDialog() != DialogResult.OK)
+                            {
+                                frmTarea.Close();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("no hay prendas en esta fecha");
+                        }
                     }
                     else
                     {
@@ -394,6 +313,31 @@ namespace Vista
                 }
             }
         }
+        public List<Prenda>? ObtenerPrendasEnCalendario(DateTime fechaBusqueda)
+        {
+            List<Prenda>? listaPrendas = null;
+            if (fechaBusqueda != DateTime.MinValue)
+            {
+
+                foreach (KeyValuePair<string, List<Prenda>> kvp in GestionDatos.CalendarioPrendasCorte)
+                {
+                    string fechaConvertida = fechaBusqueda.ToString("dd - MM - yyyy");
+
+                    if (kvp.Key == fechaConvertida)
+                    {
+                        listaPrendas = kvp.Value;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("La fecha recibida no es valida");
+            }
+            return listaPrendas;
+        }
+
+
     }
 }
 

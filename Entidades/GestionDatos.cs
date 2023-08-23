@@ -8,7 +8,7 @@ namespace Entidades
         //se limpia cuando se apreta el boton de agregar confeccion
         private static List<Prenda>? _prendasParaCortes;
         private static List<Corte> _cortesSistema;
-        private static Dictionary<DateTime,List<Prenda>> calendarioPrendasCorte;
+        private static Dictionary<string,List<Prenda>> calendarioPrendasCorte;
         static GestionDatos()
         {
             PrendasSistema = new();
@@ -19,7 +19,7 @@ namespace Entidades
             HardcodeListas();
 
         }
-        public static Dictionary<DateTime, List<Prenda>> CalendarioPrendasCorte
+        public static Dictionary<string, List<Prenda>> CalendarioPrendasCorte
         {
             get
             {

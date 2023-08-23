@@ -126,7 +126,7 @@
             // Verificar si PrendasEnCorte es nulo y crear una nueva instancia si es necesario
             corte.PrendasEnCorte ??= new();
 
-
+            prendaSeleccionada.IdCorte = corte.IdentificadorDeCorte;
             corte.PrendasEnCorte.Add(prendaSeleccionada);
 
 

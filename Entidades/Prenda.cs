@@ -36,6 +36,7 @@ namespace Entidades
 
         //identificador
         private int idPrenda;
+        private int idCorte;
         private static int contadorPrendas;
         static Prenda()
         {
@@ -94,6 +95,11 @@ namespace Entidades
         {
             get => idPrenda;
             set => idPrenda = value;
+        }
+        public int IdCorte
+        {
+            get => idCorte;
+            set => idCorte = value;
         }
         public EtapaCorte Etapa
         {
