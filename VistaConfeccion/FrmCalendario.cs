@@ -1,6 +1,5 @@
 ﻿using Entidades;
 using System.Data;
-using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 
@@ -67,36 +66,35 @@ namespace Vista
                 {
                     StringBuilder sb = new StringBuilder();
                     // Verificar si el día actual está dentro del mes
+                    // Obtener los cortes correspondientes a la fecha actual
+                    List<Corte> cortesEnFecha = Administracion.ObtenerCortesPorFecha(diaActualizado);
+                    if (cortesEnFecha is not null && cortesEnFecha.Count > 0)
+                    {
+                        // Construir una cadena con los identificadores de los cortes
+                        foreach (Corte corte in cortesEnFecha)
+                        {
+                            if (cortesEnFecha.IndexOf(corte) == 0)
+                            {
+                                sb.Append("Identificador de cortes: ");
+                            }
+                            sb.Append($"{corte.IdentificadorDeCorte}\n");
+
+                            sb.Append(corte.ToString());
+                            if (cortesEnFecha.IndexOf(corte) != cortesEnFecha.Count - 1)
+                            {
+                                sb.Append(", ");
+                            }
+                        }
+
+                        sb.Append($"\n Fecha: {diaActualizado.Day}/{diaActualizado.Month}");
+                        // Eliminar la coma final y los espacios
+                        // row[i] = sb.ToString();
+                    }
                     if (diaActualizado.Month == diaInicioActualizable.Month || diaActualizado.DayOfWeek == DayOfWeek.Sunday)
                     {
-                        // Obtener los cortes correspondientes a la fecha actual
-                        List<Corte> cortesEnFecha = Administracion.ObtenerCortesPorFecha(diaActualizado);
-                        if (cortesEnFecha is not null && cortesEnFecha.Count > 0)
-                        {
-                            // Construir una cadena con los identificadores de los cortes
-                            foreach (Corte corte in cortesEnFecha)
-                            {
-                                if (cortesEnFecha.IndexOf(corte) == 0)
-                                {
-                                    sb.Append("Identificador de cortes: ");
-                                }
-                                sb.Append($"{corte.IdentificadorDeCorte}\n");
 
-                                sb.Append(corte.ToString());
-                                if (cortesEnFecha.IndexOf(corte) != cortesEnFecha.Count - 1)
-                                {
-                                    sb.Append(", ");
-                                }
-                            }
+                        sb.Append($"\n Fecha: {diaActualizado.Day}/{diaActualizado.Month}"); // Mostrar la numeración del día
 
-                            sb.Append($"\n Fecha: {diaActualizado.Day}/{diaActualizado.Month}");
-                            // Eliminar la coma final y los espacios
-                            // row[i] = sb.ToString();
-                        }
-                        else
-                        {
-                            sb.Append($"\n Fecha: {diaActualizado.Day}/{diaActualizado.Month}"); // Mostrar la numeración del día
-                        }
                     }
                     else
                     {
@@ -177,8 +175,10 @@ namespace Vista
         /// </summary>
         private void RedimensionarForm()
         {
+
             if (!redimensionado)
             {
+
                 AltoForm = this.Height;
                 AltoGrid = AltoGridInicial + DtgCalendario.ColumnHeadersHeight;
 
@@ -195,6 +195,7 @@ namespace Vista
                 DtgCalendario.Height = AltoGrid;
 
                 redimensionado = true;
+
             }
         }
 
@@ -226,7 +227,7 @@ namespace Vista
             MesActual = MesActual.AddMonths(1);
             LblMesActual.Text = CultureInfo.GetCultureInfo("es-ES").DateTimeFormat.GetMonthName(MesActual.Month);
             CrearCalendario(MesActual);
-            DtgCalendario.CellPainting += DtgCalendario_CellPainting;
+            // DtgCalendario.CellPainting += DtgCalendario_CellPainting;
         }
 
         private void BtnMesAnterior_Click(object sender, EventArgs e)
@@ -237,7 +238,7 @@ namespace Vista
             MesActual = MesActual.AddMonths(-1);
             LblMesActual.Text = CultureInfo.GetCultureInfo("es-ES").DateTimeFormat.GetMonthName(MesActual.Month);
             CrearCalendario(MesActual);
-            DtgCalendario.CellPainting += DtgCalendario_CellPainting;
+            //DtgCalendario.CellPainting += DtgCalendario_CellPainting;
         }
 
         private void BtnCerrarSesion_Click(object sender, EventArgs e)
@@ -294,7 +295,7 @@ namespace Vista
 
                         if (cortesEnFecha is not null)
                         {
-                            FrmTareaDiaria frmTarea = new(cortesEnFecha,PersonaLogueada);
+                            FrmTareaDiaria frmTarea = new(cortesEnFecha, PersonaLogueada);
                             if (frmTarea.ShowDialog() != DialogResult.OK)
                             {
                                 frmTarea.Close();

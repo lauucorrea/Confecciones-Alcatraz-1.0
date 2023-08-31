@@ -60,10 +60,10 @@ namespace Vista
                         GestionDatos.CortesSistema.Add(CorteCreado);
                         Serializadora.GuardarCortesJSON();
 
-                        FrmCalendario registro = new(PersonaLogueada);
-                        if (registro.ShowDialog() != DialogResult.OK)
+                        FrmCalendario calendario = new(PersonaLogueada);
+                        if (calendario.ShowDialog() != DialogResult.OK)
                         {
-                            registro.Close();
+                            calendario.Close();
                         }
 
                     }

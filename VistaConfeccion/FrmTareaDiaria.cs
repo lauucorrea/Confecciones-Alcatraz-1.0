@@ -79,37 +79,8 @@ namespace Vista
 
             }
         }
-        /// <summary>
-        /// XS,
-        ///S,
-        /// M,
-        ///L,
-        /// XL,
-        /// XXL
-        /// </summary>
+       
         private void EmparejarPrendasConTalles()
-        {
-            foreach (Prenda prenda in PrendasCorte)
-            {
-                List<int> conteoTallePrendas = ObtenerConteoPorPrenda(prenda.IdPrenda, TienePrenda(prenda));
-                if (dictPrendasTalle is not null)
-                {
-                    if (TienePrenda(prenda))
-                    {
-                        //agregamos el conteo que necesitamos. tendriamos que agregar una lista de enteros
-
-                        dictPrendasTalle[prenda.IdPrenda] = conteoTallePrendas;
-                    }
-                    else
-                    {
-                        dictPrendasTalle.Add(prenda.IdPrenda, conteoTallePrendas);
-                    }
-                }
-            }
-        }
-
-
-        private List<int> ObtenerConteoPorPrenda(int idPrenda, bool tienePrenda)
         {
             List<int> conteo = new();
             int acumuladorXS = 0;
@@ -119,82 +90,97 @@ namespace Vista
             int acumuladorXL = 0;
             int acumuladorXXL = 0;
 
-            //si ya tenemos una prenda con el mismo id, entonces a esa prenda le sumamos el conteo
-            if (tienePrenda)
-            {
-                foreach (KeyValuePair<int, List<int>> kvp in dictPrendasTalle)
-                {
-                    if (kvp.Key == idPrenda)
-                    {
-                        List<int> conteoExistente = dictPrendasTalle[kvp.Key];
-                        foreach (int acum in conteoExistente)
-                        {
-                            switch (conteoExistente.IndexOf(acum))
-                            {
-                                case 0:
-                                    acumuladorXS += acum;
-                                    break;
-                                case 1:
-                                    acumuladorS += acum;
-                                    break;
-                                case 2:
-                                    acumuladorM += acum;
-                                    break;
-                                case 3:
-                                    acumuladorL += acum;
-                                    break;
-                                case 4:
-                                    acumuladorXL += acum;
-                                    break;
-                                case 5:
-                                    acumuladorXXL += acum;
-                                    break;
-                            }
-                        }
-                    }
-
-
-                }
-            }
+            bool tienePrenda = false;
 
             foreach (Prenda prenda in PrendasCorte)
             {
-                if (prenda.IdPrenda == idPrenda)
+                tienePrenda = TienePrenda(prenda);
+                //si ya tenemos una prenda con el mismo id, entonces a esa prenda le sumamos el conteo
+                if (tienePrenda)
                 {
-                    switch (prenda.TallePrenda.ToString())
+                    foreach (KeyValuePair<int, List<int>> kvp in dictPrendasTalle)
                     {
-                        case "XS":
-                            acumuladorXS += prenda.UnidadesCorte;
-                            break;
-                        case "S":
-                            acumuladorS += prenda.UnidadesCorte;
-                            break;
-                        case "M":
-                            acumuladorM += prenda.UnidadesCorte;
-                            break;
-                        case "L":
-                            acumuladorL += prenda.UnidadesCorte;
-                            break;
-                        case "XL":
-                            acumuladorXL += prenda.UnidadesCorte;
-                            break;
-                        case "XXL":
-                            acumuladorXXL += prenda.UnidadesCorte;
-                            break;
+                        if (kvp.Key == prenda.IdPrenda)
+                        {
+                            List<int> conteoExistente = dictPrendasTalle[kvp.Key];
+                            foreach (int acum in conteoExistente)
+                            {
+                                switch (conteoExistente.IndexOf(acum))
+                                {
+                                    case 0:
+                                        acumuladorXS += acum;
+                                        break;
+                                    case 1:
+                                        acumuladorS += acum;
+                                        break;
+                                    case 2:
+                                        acumuladorM += acum;
+                                        break;
+                                    case 3:
+                                        acumuladorL += acum;
+                                        break;
+                                    case 4:
+                                        acumuladorXL += acum;
+                                        break;
+                                    case 5:
+                                        acumuladorXXL += acum;
+                                        break;
+                                }
+                            }
+                        }
+
+
                     }
                 }
 
 
+                switch (prenda.TallePrenda.ToString())
+                {
+                    case "XS":
+                        acumuladorXS += prenda.UnidadesCorte;
+                        break;
+                    case "S":
+                        acumuladorS += prenda.UnidadesCorte;
+                        break;
+                    case "M":
+                        acumuladorM += prenda.UnidadesCorte;
+                        break;
+                    case "L":
+                        acumuladorL += prenda.UnidadesCorte;
+                        break;
+                    case "XL":
+                        acumuladorXL += prenda.UnidadesCorte;
+                        break;
+                    case "XXL":
+                        acumuladorXXL += prenda.UnidadesCorte;
+                        break;
+                }
+
+                if (PrendasCorte.IndexOf(prenda) == PrendasCorte.Count - 1)
+                {
+                    conteo = new();
+
+                    conteo.Add(acumuladorXS);
+                    conteo.Add(acumuladorS);
+                    conteo.Add(acumuladorM);
+                    conteo.Add(acumuladorL);
+                    conteo.Add(acumuladorXL);
+                    conteo.Add(acumuladorXXL);
+
+                    if (tienePrenda)
+                    {
+                        //agregamos el conteo que necesitamos. tendriamos que agregar una lista de enteros
+
+                        dictPrendasTalle[prenda.IdPrenda] = conteo;
+                    }
+                    else
+                    {
+                        dictPrendasTalle.Add(prenda.IdPrenda, conteo);
+                    }
+                }
+
             }
 
-            conteo.Add(acumuladorXS);
-            conteo.Add(acumuladorS);
-            conteo.Add(acumuladorM);
-            conteo.Add(acumuladorL);
-            conteo.Add(acumuladorXL);
-            conteo.Add(acumuladorXXL);
-
-            return conteo;
         }
         private bool TienePrenda(Prenda prenda)
         {

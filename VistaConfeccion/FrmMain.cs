@@ -572,9 +572,6 @@ namespace VistaConfeccion
 
             if (result == DialogResult.Yes)
             {
-                //Clase_serializadora serializadora = new();
-                //serializadora.GuardarPersonasXML();
-                //serializadora.GuardarAvionesXML();
                 Application.Exit();
             }
         }
