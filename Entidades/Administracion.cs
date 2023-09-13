@@ -84,22 +84,7 @@
             }
         }
 
-        //aca metodo que resuelve
-        public static List<Corte> ObtenerCorte_Lista(DateTime fechaBusqueda)
-        {
-            if (GestionDatos.CortesSistema is not null)
-            {
-                foreach (Corte corte in GestionDatos.CortesSistema)
-                {
-
-                }
-                return new List<Corte>();
-            }
-            else
-            {
-                throw new NullReferenceException("No hay cortes cargados en el sistema");
-            }
-        }
+       
 
 
         public static bool AgregarPrenda_Corte(Corte corte, Prenda prendaSeleccionada)
@@ -329,7 +314,7 @@
             };
 
             // Calcular el número de días en el rango
-            int diasEnRango = (int)(fechaFinal - fechaInicio).TotalDays - 1;
+            int diasEnRango = (int)(fechaFinal - fechaInicio).TotalDays + 1;
             DateTime fechaActual = fechaInicio;
 
             // Agregar las fechas intermedias al rango

@@ -43,7 +43,7 @@ namespace VistaConfeccion
             DateTime horaActual = DateTime.Now.Date + PersonaLogueada.HorarioApertura;
 
             // Crea una tabla de datos para el DataGridView
-            DataTable dataTable = new DataTable();
+            DataTable dataTable = new ();
 
             // Agrega la columna de horas
             dataTable.Columns.Add("Hora", typeof(string));
@@ -96,7 +96,7 @@ namespace VistaConfeccion
                     foreach (KeyValuePair<DateTime, string> kvp in diasLaboralesProximos)
                     {
                         //este es el metodo que deberia estar obteniendo los cortes, y los dias correspondientes
-                        List<Corte> listaCortesFecha = Administracion.ObtenerCorte_Lista(kvp.Key);
+                        List<Corte> listaCortesFecha = Administracion.ObtenerCortesPorFecha(kvp.Key);
 
                         StringBuilder sb = new();
                         foreach (Corte corte in listaCortesFecha)

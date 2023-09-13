@@ -45,7 +45,7 @@ namespace Entidades
             if (PrendasEnCorte is not null)
             {
                 sb.Clear();
-                sb.Append($"Identificador del corte: {IdentificadorDeCorte}/n");
+                sb.Append($"Identificador del corte: C{IdentificadorDeCorte}\n");
                 //sb.Append(ContarTallesPrendas());
             }
 

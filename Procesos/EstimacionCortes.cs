@@ -40,8 +40,8 @@ namespace Procesos
                 }
                 else
                 {
-                    fechaActual = DateTime.Now;
                 }
+                    fechaActual = DateTime.Now;
                 //Mientras no se haya encontrado rango, se sigue buscando
                 while (!seEncontroRango)
                 {

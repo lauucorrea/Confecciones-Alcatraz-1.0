@@ -29,6 +29,11 @@ namespace Vista
             {
 
                 CrearDatagridCortes_General(CortesTarea);
+                if (dtgCortes.Rows.Count > 0)
+                {
+                    dtgCortes.Rows[0].Selected = true;
+                    ActivarCurvatura();
+                }
                 //CargarDatagridTareaDiaria();
 
             }
@@ -79,7 +84,7 @@ namespace Vista
 
             }
         }
-       
+
         private void EmparejarPrendasConTalles()
         {
             List<int> conteo = new();
@@ -287,10 +292,17 @@ namespace Vista
 
         private void dtgCortes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridViewRow filaSeleccionada = dtgCortes.SelectedRows[0];
+            ActivarCurvatura();
+        }
 
+        private void ActivarCurvatura()
+
+        {
+            DataGridViewRow filaSeleccionada = dtgCortes.SelectedRows[0];
+            dtgCortes.DataSource = null;
             if (filaSeleccionada is not null)
             {
+                dictPrendasTalle = new();
                 int IdCorte = Convert.ToInt32(filaSeleccionada.Cells["ColumnaId"].Value);
                 PrendasCorte = ObtenerPrendas_CorteSeleccionado(IdCorte);
                 EmparejarPrendasConTalles();

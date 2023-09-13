@@ -25,6 +25,7 @@ namespace Vista
         private void FrmCalendario_Load(object sender, EventArgs e)
         {
             MesActual = DateTime.Now;
+            LblMesActual.Text = CultureInfo.GetCultureInfo("es-ES").DateTimeFormat.GetMonthName(MesActual.Month);
             CrearCalendario(MesActual);
             AutoScroll = false;
         }
@@ -77,18 +78,15 @@ namespace Vista
                             {
                                 sb.Append("Identificador de cortes: ");
                             }
-                            sb.Append($"{corte.IdentificadorDeCorte}\n");
+                            sb.Append($"C{corte.IdentificadorDeCorte}\n");
 
-                            sb.Append(corte.ToString());
+                            //sb.Append(corte.ToString());
                             if (cortesEnFecha.IndexOf(corte) != cortesEnFecha.Count - 1)
                             {
                                 sb.Append(", ");
                             }
                         }
 
-                        sb.Append($"\n Fecha: {diaActualizado.Day}/{diaActualizado.Month}");
-                        // Eliminar la coma final y los espacios
-                        // row[i] = sb.ToString();
                     }
                     if (diaActualizado.Month == diaInicioActualizable.Month || diaActualizado.DayOfWeek == DayOfWeek.Sunday)
                     {
