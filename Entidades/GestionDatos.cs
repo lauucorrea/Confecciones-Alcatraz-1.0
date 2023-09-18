@@ -8,7 +8,9 @@ namespace Entidades
         //se limpia cuando se apreta el boton de agregar confeccion
         private static List<Prenda>? _prendasParaCortes;
         private static List<Corte> _cortesSistema;
-        private static Dictionary<string,List<Prenda>> calendarioPrendasCorte;
+
+        private static List<DateTime> _diasNoLaborales;
+        private static Dictionary<string, List<Prenda>> calendarioPrendasCorte;
         static GestionDatos()
         {
             PrendasSistema = new();
@@ -16,8 +18,27 @@ namespace Entidades
             PrendasParaCortes = new();
             PersonasSistema = new();
             CalendarioPrendasCorte = new();
+            DiasNoLaborales = new();
             HardcodeListas();
 
+        }
+
+        public static List<DateTime> DiasNoLaborales
+        {
+            get
+            {
+                if (_diasNoLaborales is not null)
+                {
+
+                    return _diasNoLaborales;
+                }
+                else
+                {
+                    throw new NullReferenceException();
+                }
+
+            }
+            set => _diasNoLaborales = value;
         }
         public static Dictionary<string, List<Prenda>> CalendarioPrendasCorte
         {
@@ -109,52 +130,63 @@ namespace Entidades
         public static void HardcodeListas()
         {
 
-          /*  Persona roberto = new("Roberto", "Correa", 50666452, "Rober", "asd123")
+            List<DateTime> diasno = CrearDiasNoLaborales();
+
+            if(diasno is not null)
             {
-                DiasLaborales = new(){
-            "Lunes",
-            "Martes",
-            "Miercoles",
-            "Jueves",
-            "Viernes"
+                DiasNoLaborales = diasno;
             }
-            };
-
-            // Ejemplo 1
-            Persona persona1 = new()
+            else
             {
-                Nombre = "Juan",
-                Apellido = "Pérez",
-                Dni = 51888999,
-                Usuario = "juanperez",
-                Password = "secreto",
-                RolPersona = Rol.Empleado,
-                DiasLaborales = new(){
-            "Lunes",
-            "Martes",
-            "Miercoles",
-            "Jueves",
-            "Viernes"
+                throw new Exception("No se pudo obtener las fechas no laborales");
             }
-
-            };
-
-
-            roberto.RolPersona = Rol.Propietario;
-            TimeSpan horasTrabajo = roberto.HorarioCierre.Subtract(roberto.HorarioApertura);
-            roberto.HorasJornada = (int)horasTrabajo.TotalHours;
-
-            PersonasSistema.Add(roberto);
-            PersonasSistema.Add(persona1);
-
-            */
-
 
 
         }
 
 
+        public static List<DateTime> CrearDiasNoLaborales()
+        {\
+            List<DateTime> feriados = new()
+                {
+                    // 1 de enero - Año nuevo
+                    new DateTime(DateTime.Now.Year, 1, 1),
 
+                    // 20 de febrero - Carnaval
+                    new DateTime(DateTime.Now.Year, 2, 20),
 
+                    // 21 de febrero - Carnaval
+                    new DateTime(DateTime.Now.Year, 2, 21),
+
+                    // 24 de marzo - Día Nacional de la Memoria por la Verdad y la Justicia
+                    new DateTime(DateTime.Now.Year, 3, 24),
+
+                    // 2 de abril - Día del Veterano y de los Caídos en la Guerra de Malvinas
+                    new DateTime(DateTime.Now.Year, 4, 2),
+
+                    // 7 de abril - Viernes Santo
+                    new DateTime(DateTime.Now.Year, 4, 7),
+
+                    // 1 de mayo - Día del Trabajador
+                    new DateTime(DateTime.Now.Year, 5, 1),
+
+                    // 25 de mayo - Día de la Revolución de Mayo
+                    new DateTime(DateTime.Now.Year, 5, 25),
+
+                    // 20 de junio - Paso a la Inmortalidad del General Manuel Belgrano
+                    new DateTime(DateTime.Now.Year, 6, 20),
+
+                    // 9 de julio - Día de la Independencia
+                    new DateTime(DateTime.Now.Year, 7, 9),
+
+                    // 8 de diciembre - Día de la Inmaculada Concepción de María
+                    new DateTime(DateTime.Now.Year, 12, 8),
+
+                    // 25 de diciembre - Navidad
+                    new DateTime(DateTime.Now.Year, 12, 25)
+            };
+
+            return feriados;
+        }
     }
 }

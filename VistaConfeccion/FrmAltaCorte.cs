@@ -50,6 +50,8 @@ namespace Vista
 
                     CorteCreado = new(posiblesFechas[^1], posiblesFechas[0]);
 
+
+
                     if (CorteCreado is not null)
                     {
                         foreach (Prenda prenda in GestionDatos.PrendasParaCortes)

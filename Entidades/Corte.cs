@@ -17,7 +17,7 @@ namespace Entidades
     {
         private DateTime _fechaFinal;
         private DateTime _fechaInicio;
-
+        private List<DateTime> fechasCorte;
         private decimal _horasTotalesCorte;
         private List<Prenda> _prendasEnCorte;
         private int _identificadorDeCorte;

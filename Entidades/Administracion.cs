@@ -84,7 +84,7 @@
             }
         }
 
-       
+
 
 
         public static bool AgregarPrenda_Corte(Corte corte, Prenda prendaSeleccionada)
@@ -238,7 +238,7 @@
             return ListaCortesEncontrados;
 
         }
-       
+
         public static List<Corte> ObtenerCortesEnFechas(List<DateTime> fechasBusqueda)
         {
             List<Corte> cortesEncontrados = new List<Corte>();
@@ -345,6 +345,24 @@
             }
             corteConFinal = corteEncontrado;
             return ret;
+        }
+
+        public static List<DateTime> ObtenerFechasParaCorte(Corte corte)
+        {
+            List<DateTime> lista = new();
+
+            DateTime fechaActual = corte.FechaInicio;
+
+            while (fechaActual <= corte.FechaFinal)
+            {
+                if (!GestionDatos.DiasNoLaborales.Contains(fechaActual))
+                {
+                    lista.Add(fechaActual);
+                }
+                fechaActual.AddDays(1);
+            }
+
+            return lista;
         }
 
 

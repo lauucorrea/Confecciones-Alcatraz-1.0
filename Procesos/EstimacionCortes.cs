@@ -7,13 +7,6 @@ namespace Procesos
 
         public static List<DateTime> ObtenerFechasPosibles(int horasJornada, List<Prenda> prendas)
         {
-            //horas jornada representa la cantidad de horas por dia que podemos completar
-            //por cada dia hay que restarle horasJornada a horasRestantesPrenda
-            //y a cada prenda hay que recorrerla hasta que sus horas restantes lleguen a 0
-            //Cada dateTime deberia tener una hora que vaya desde el horario de apertura de la persona
-            //hasta el cierre
-            //y esa es la hora que nosotros deberiamos ir ocupando para saber que tan ocupado tenemos el dia
-
             List<DateTime> fechasPosibles = new();
             int diasPreparacion = 0;
             bool seEncontroRango = false;
@@ -29,7 +22,6 @@ namespace Procesos
                     diasPreparacion += (int)Math.Ceiling(prenda.TiempoFinalEtapa / 24);
                 }
 
-                //aca chequeamos que no sea null y tenga contenido
                 if (GestionDatos.CortesSistema is not null && GestionDatos.CortesSistema.Count > 0)
                 {
                     //ordeno las fechas de los cortes registrados en el sistema
