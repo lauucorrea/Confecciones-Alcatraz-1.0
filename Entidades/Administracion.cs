@@ -228,7 +228,7 @@
             {
                 List<DateTime> fechas = ObtenerListaFechasEnRango(corte.FechaInicio, corte.FechaFinal);
 
-                if (fechas.Any(fecha => fecha.Date == fechaBusqueda.Date))
+                if (fechas.Any(fecha => fecha.Date == fechaBusqueda.Date) && !EsDiaFeriado(fechaBusqueda) )
                 {
                     ListaCortesEncontrados.Add(corte);
                 }
@@ -238,7 +238,21 @@
             return ListaCortesEncontrados;
 
         }
+        public static bool EsDiaFeriado(DateTime fechaBusqueda)
+        {
+            bool ret = false;
 
+            foreach (DateTime feriado in GestionDatos.DiasNoLaborales)
+            {
+                if (feriado.Date == fechaBusqueda.Date)
+                {
+                    ret = true;
+                }
+            }
+
+            return ret;
+
+        }
         public static List<Corte> ObtenerCortesEnFechas(List<DateTime> fechasBusqueda)
         {
             List<Corte> cortesEncontrados = new List<Corte>();

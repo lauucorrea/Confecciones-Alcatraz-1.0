@@ -33,7 +33,7 @@ namespace Procesos
                 else
                 {
                 }
-                    fechaActual = DateTime.Now;
+                fechaActual = DateTime.Now;
                 //Mientras no se haya encontrado rango, se sigue buscando
                 while (!seEncontroRango)
                 {
@@ -50,15 +50,15 @@ namespace Procesos
                         fechaRecorrida = fechaRecorrida.AddDays(1);
 
                         //buscamos si hay fecha final. obtengo por puntero el corte si lo encontre
-                        if (!Administracion.ExisteFechaFinalEnCortes(fechaRecorrida,out corteConFinal))
+                        if (!Administracion.ExisteFechaFinalEnCortes(fechaRecorrida, out corteConFinal))
                         {
                             //si no tiene fecha final ese dia, lo contamos como valido
                             contadorHabiles++;
                         }
-                        else if(corteConFinal is not null)
+                        else if (corteConFinal is not null)
                         {
                             //si tiene fecha final,me fijo cuantas horas ocupadas tiene cargadas
-                            
+
                             int horasOcupadas = corteConFinal.FechaFinal.Hour;
 
                             //si las horas ocupadas son menores a los de la jornada, ese dia me sirve
@@ -75,7 +75,7 @@ namespace Procesos
                         }
                     }
 
-                    if(contadorHabiles >= diasPreparacion)
+                    if (contadorHabiles >= diasPreparacion)
                     {
                         seEncontroRango = true;
                     }
@@ -86,9 +86,41 @@ namespace Procesos
             {
                 throw new Exception("Deben elegirse prendas antes de crear el corte");
             }
-
+            
             return fechasPosibles;
         }
+
+
+        public static List<DateTime> ReacomodoPorFeriados(List<DateTime> fechasObtenidas)
+        {
+            List<DateTime> fechasFinal = new();
+            bool seCompleto = false;
+            DateTime fechaActual = fechasObtenidas[0];
+            int contadorFeriados = 0;
+            int diasCorte;
+            while (!seCompleto)
+            {
+                if (!Administracion.EsDiaFeriado(fechaActual))
+                {
+                    fechasFinal.Add(fechaActual);
+                    diasCorte = fechasFinal.Count + contadorFeriados;
+
+                    if (diasCorte == fechasObtenidas.Count)
+                    {
+                        seCompleto = true; 
+                    }
+                }
+                else
+                {
+                    contadorFeriados++;
+                }
+
+                fechaActual = fechaActual.AddDays(1);
+            }
+            return fechasFinal;
+        }
+
+        
 
     }
 }

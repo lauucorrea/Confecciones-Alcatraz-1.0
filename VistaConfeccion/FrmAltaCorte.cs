@@ -46,10 +46,12 @@ namespace Vista
 
 
                     posiblesFechas = EstimacionCortes.ObtenerFechasPosibles(PersonaLogueada.HorasJornada, GestionDatos.PrendasParaCortes);
+                    posiblesFechas = EstimacionCortes.ReacomodoPorFeriados(posiblesFechas);
+                    
                     posiblesFechas.Sort((fecha1, fecha2) => fecha1.CompareTo(fecha2));
-
+                    
                     CorteCreado = new(posiblesFechas[^1], posiblesFechas[0]);
-
+                    CorteCreado.FechasCorte = posiblesFechas;
 
 
                     if (CorteCreado is not null)

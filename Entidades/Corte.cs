@@ -22,10 +22,10 @@ namespace Entidades
         private List<Prenda> _prendasEnCorte;
         private int _identificadorDeCorte;
         private static int _contadorCortes;
+
         static Corte()
         {
             _contadorCortes = 0;
-
         }
         public Corte()
         {
@@ -34,6 +34,7 @@ namespace Entidades
         public Corte(DateTime fechaFinal, DateTime fechaInicio) : this()
         {
             // PrendasEnConfeccion = new();
+            FechasCorte = new();
             FechaFinal = fechaFinal;
             FechaInicio = fechaInicio;
             ContadorCortes++;
@@ -96,7 +97,11 @@ namespace Entidades
             get => _fechaInicio;
             set => _fechaInicio = value;
         }
-
+        public List<DateTime> FechasCorte
+        {
+            get => fechasCorte;
+            set => fechasCorte = value;
+        }
         public int IdentificadorDeCorte
         {
             get => _identificadorDeCorte;

@@ -146,7 +146,7 @@ namespace Entidades
 
 
         public static List<DateTime> CrearDiasNoLaborales()
-        {\
+        {
             List<DateTime> feriados = new()
                 {
                     // 1 de enero - Año nuevo
@@ -183,7 +183,10 @@ namespace Entidades
                     new DateTime(DateTime.Now.Year, 12, 8),
 
                     // 25 de diciembre - Navidad
-                    new DateTime(DateTime.Now.Year, 12, 25)
+                    new DateTime(DateTime.Now.Year, 12, 25),
+
+                    new DateTime(DateTime.Now.Year, 9, 20)
+
             };
 
             return feriados;
