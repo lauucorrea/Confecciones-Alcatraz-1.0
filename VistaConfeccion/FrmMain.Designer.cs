@@ -69,6 +69,7 @@
             DtgMuestreoMain = new DataGridView();
             label4 = new Label();
             BtnCerrarSesion = new Button();
+            tareaSemanalToolStripMenuItem = new ToolStripMenuItem();
             MstGestion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DtgMuestreoMain).BeginInit();
             SuspendLayout();
@@ -94,7 +95,7 @@
             // 
             usuariosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { Sistema_CrearUsuario, Sistema_MostrarUsuarios });
             usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            usuariosToolStripMenuItem.Size = new Size(169, 22);
+            usuariosToolStripMenuItem.Size = new Size(180, 22);
             usuariosToolStripMenuItem.Text = "Usuarios";
             usuariosToolStripMenuItem.Click += UsuariosToolStripMenuItem_Click;
             // 
@@ -116,7 +117,7 @@
             // 
             prendasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { agregarPrendaToolStripMenuItem, mostrarPrendasToolStripMenuItem });
             prendasToolStripMenuItem.Name = "prendasToolStripMenuItem";
-            prendasToolStripMenuItem.Size = new Size(169, 22);
+            prendasToolStripMenuItem.Size = new Size(180, 22);
             prendasToolStripMenuItem.Text = "Prendas";
             // 
             // agregarPrendaToolStripMenuItem
@@ -135,22 +136,22 @@
             // 
             // cortesToolStripMenuItem
             // 
-            cortesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevoCorteToolStripMenuItem, mostrarCortesToolStripMenuItem });
+            cortesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevoCorteToolStripMenuItem, mostrarCortesToolStripMenuItem, tareaSemanalToolStripMenuItem });
             cortesToolStripMenuItem.Name = "cortesToolStripMenuItem";
-            cortesToolStripMenuItem.Size = new Size(169, 22);
+            cortesToolStripMenuItem.Size = new Size(180, 22);
             cortesToolStripMenuItem.Text = "Cortes";
             // 
             // crearNuevoCorteToolStripMenuItem
             // 
             crearNuevoCorteToolStripMenuItem.Name = "crearNuevoCorteToolStripMenuItem";
-            crearNuevoCorteToolStripMenuItem.Size = new Size(179, 22);
+            crearNuevoCorteToolStripMenuItem.Size = new Size(180, 22);
             crearNuevoCorteToolStripMenuItem.Text = "+ Crear nuevo corte";
             crearNuevoCorteToolStripMenuItem.Click += CrearNuevoCorteToolStripMenuItem_Click;
             // 
             // mostrarCortesToolStripMenuItem
             // 
             mostrarCortesToolStripMenuItem.Name = "mostrarCortesToolStripMenuItem";
-            mostrarCortesToolStripMenuItem.Size = new Size(179, 22);
+            mostrarCortesToolStripMenuItem.Size = new Size(180, 22);
             mostrarCortesToolStripMenuItem.Text = "Mostrar cortes";
             mostrarCortesToolStripMenuItem.Click += MostrarCortesToolStripMenuItem_Click;
             // 
@@ -158,7 +159,7 @@
             // 
             confreccionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevaConfeccionToolStripMenuItem, mostrarConfeccionesToolStripMenuItem });
             confreccionesToolStripMenuItem.Name = "confreccionesToolStripMenuItem";
-            confreccionesToolStripMenuItem.Size = new Size(169, 22);
+            confreccionesToolStripMenuItem.Size = new Size(180, 22);
             confreccionesToolStripMenuItem.Text = "Confrecciones";
             // 
             // crearNuevaConfeccionToolStripMenuItem
@@ -177,7 +178,7 @@
             // 
             terminacionToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevaTerminacionToolStripMenuItem, mostrarTerminacionesToolStripMenuItem });
             terminacionToolStripMenuItem.Name = "terminacionToolStripMenuItem";
-            terminacionToolStripMenuItem.Size = new Size(169, 22);
+            terminacionToolStripMenuItem.Size = new Size(180, 22);
             terminacionToolStripMenuItem.Text = "Terminaciones";
             // 
             // crearNuevaTerminacionToolStripMenuItem
@@ -195,7 +196,7 @@
             // modificarJornadaToolStripMenuItem
             // 
             modificarJornadaToolStripMenuItem.Name = "modificarJornadaToolStripMenuItem";
-            modificarJornadaToolStripMenuItem.Size = new Size(169, 22);
+            modificarJornadaToolStripMenuItem.Size = new Size(180, 22);
             modificarJornadaToolStripMenuItem.Text = "Modificar Jornada";
             modificarJornadaToolStripMenuItem.Click += ModificarJornadaToolStripMenuItem_Click;
             // 
@@ -377,6 +378,13 @@
             BtnCerrarSesion.UseVisualStyleBackColor = true;
             BtnCerrarSesion.Click += BtnCerrarSesion_Click;
             // 
+            // tareaSemanalToolStripMenuItem
+            // 
+            tareaSemanalToolStripMenuItem.Name = "tareaSemanalToolStripMenuItem";
+            tareaSemanalToolStripMenuItem.Size = new Size(180, 22);
+            tareaSemanalToolStripMenuItem.Text = "Tarea semanal";
+            tareaSemanalToolStripMenuItem.Click += tareaSemanalToolStripMenuItem_Click;
+            // 
             // FrmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -442,5 +450,6 @@
         private ToolStripMenuItem modificarJornadaToolStripMenuItem;
         private Label label4;
         private Button BtnCerrarSesion;
+        private ToolStripMenuItem tareaSemanalToolStripMenuItem;
     }
 }

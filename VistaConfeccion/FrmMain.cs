@@ -39,11 +39,12 @@ namespace VistaConfeccion
 
         public void CrearCalendario()
         {
+            DtgMuestreoMain.DataSource = null;
             // Obtén la fecha y hora actual
             DateTime horaActual = DateTime.Now.Date + PersonaLogueada.HorarioApertura;
 
             // Crea una tabla de datos para el DataGridView
-            DataTable dataTable = new ();
+            DataTable dataTable = new();
 
             // Agrega la columna de horas
             dataTable.Columns.Add("Hora", typeof(string));
@@ -64,9 +65,9 @@ namespace VistaConfeccion
                     fechaActual = fechaActual.AddDays(1);
                     diaSemana = cultura.DateTimeFormat.GetDayName(fechaActual.DayOfWeek);
                     diaSemana = cultura.TextInfo.ToTitleCase(diaSemana);
-
-                    if (PersonaLogueada.DiasLaborales.Contains(diaSemana))
+                    if (PersonaLogueada.DiasLaborales.Contains(diaSemana) && !Administracion.EsDiaFeriado(fechaActual))
                     {
+
                         diaSemana = $"{diaSemana} {fechaActual.Day}/{fechaActual.Month}";
                         diasLaboralesProximos.Add(fechaActual, diaSemana);
                         diasAgregados++;
@@ -192,6 +193,7 @@ namespace VistaConfeccion
                 if (altaCortes.ShowDialog() != DialogResult.OK)
                 {
                     altaCortes.Close();
+                    CrearCalendario();
                 }
             }
             catch (Exception ex)
@@ -576,5 +578,11 @@ namespace VistaConfeccion
             }
         }
 
+        private void tareaSemanalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DtgMuestreoMain.DataSource = null;
+            DtgMuestreoMain.Columns.Clear();
+            CrearCalendario();
+        }
     }
 }

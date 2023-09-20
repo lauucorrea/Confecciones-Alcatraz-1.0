@@ -224,13 +224,14 @@
         {
             List<Corte> ListaCortesEncontrados = new();
 
-            foreach (Corte corte in GestionDatos.CortesSistema)
+            if (!EsDiaFeriado(fechaBusqueda))
             {
-                List<DateTime> fechas = ObtenerListaFechasEnRango(corte.FechaInicio, corte.FechaFinal);
-
-                if (fechas.Any(fecha => fecha.Date == fechaBusqueda.Date) && !EsDiaFeriado(fechaBusqueda) )
+                foreach (Corte corte in GestionDatos.CortesSistema)
                 {
-                    ListaCortesEncontrados.Add(corte);
+                    if (corte.FechasCorte.Any(fecha => fecha.Date == fechaBusqueda.Date))
+                    {
+                        ListaCortesEncontrados.Add(corte);
+                    }
                 }
             }
 
@@ -264,8 +265,6 @@
                     if (fechaBusqueda.Date >= corte.FechaInicio.Date && fechaBusqueda.Date <= corte.FechaFinal.Date)
                     {
                         cortesEncontrados.Add(corte);
-                        // Si encuentras una coincidencia para esta fecha, puedes salir del bucle interno,
-                        // ya que no es necesario seguir buscando en las demás fechas.
                         break;
                     }
                 }

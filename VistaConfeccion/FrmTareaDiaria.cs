@@ -163,14 +163,15 @@ namespace Vista
 
                 if (PrendasCorte.IndexOf(prenda) == PrendasCorte.Count - 1)
                 {
-                    conteo = new();
-
-                    conteo.Add(acumuladorXS);
-                    conteo.Add(acumuladorS);
-                    conteo.Add(acumuladorM);
-                    conteo.Add(acumuladorL);
-                    conteo.Add(acumuladorXL);
-                    conteo.Add(acumuladorXXL);
+                    conteo = new()
+                    {
+                        acumuladorXS,
+                        acumuladorS,
+                        acumuladorM,
+                        acumuladorL,
+                        acumuladorXL,
+                        acumuladorXXL
+                    };
 
                     if (tienePrenda)
                     {

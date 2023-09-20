@@ -29,11 +29,15 @@ namespace Procesos
                     //cuando vamos a definir fecha final, es importante que esta fecha tenga las horas registradas del ultimo dia solo para verificar si se pueden ocupar
                     fechaActual = GestionDatos.CortesSistema[^1].FechaFinal;
 
+                    if (fechaActual.Date < DateTime.Now.Date)
+                    {
+                        fechaActual = DateTime.Now;
+                    }
                 }
                 else
                 {
+                    fechaActual = DateTime.Now;
                 }
-                fechaActual = DateTime.Now;
                 //Mientras no se haya encontrado rango, se sigue buscando
                 while (!seEncontroRango)
                 {
@@ -86,7 +90,7 @@ namespace Procesos
             {
                 throw new Exception("Deben elegirse prendas antes de crear el corte");
             }
-            
+
             return fechasPosibles;
         }
 
@@ -107,7 +111,7 @@ namespace Procesos
 
                     if (diasCorte == fechasObtenidas.Count)
                     {
-                        seCompleto = true; 
+                        seCompleto = true;
                     }
                 }
                 else
@@ -120,7 +124,7 @@ namespace Procesos
             return fechasFinal;
         }
 
-        
+
 
     }
 }
