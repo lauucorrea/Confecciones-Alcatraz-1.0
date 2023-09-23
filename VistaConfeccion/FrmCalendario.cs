@@ -2,6 +2,7 @@
 using System.Data;
 using System.Globalization;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Vista
 {
@@ -46,7 +47,7 @@ namespace Vista
             int diaSemanaInicio = (int)diaInicioActualizable.DayOfWeek;
             // Obtener el último día del mes actual
             DateTime ultimoDiaDelMes = diaInicioActualizable.AddMonths(1).AddDays(-1);
-            string[] nombresDiasSemana = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
+            string[] nombresDiasSemana = { "Domingo","Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
             DateTime diaActualizado = diaInicioActualizable.AddDays(-diaSemanaInicio);
             int index = 0;
 
@@ -74,10 +75,6 @@ namespace Vista
                         // Construir una cadena con los identificadores de los cortes
                         foreach (Corte corte in cortesEnFecha)
                         {
-                            if (cortesEnFecha.IndexOf(corte) == 0)
-                            {
-                                sb.Append("Identificador de cortes: ");
-                            }
                             sb.Append($"C{corte.IdentificadorDeCorte}\n");
 
                             //sb.Append(corte.ToString());
@@ -88,21 +85,12 @@ namespace Vista
                         }
 
                     }
-                    if (diaActualizado.Month == diaInicioActualizable.Month || diaActualizado.DayOfWeek == DayOfWeek.Sunday)
-                    {
-
-                        sb.Append($"\n Fecha: {diaActualizado.Day}/{diaActualizado.Month}"); // Mostrar la numeración del día
-
-                    }
-                    else
-                    {
-                        sb.Append($" Fecha fuera mes: {diaActualizado.Day}/{diaActualizado.Month}"); // Mostrar la fecha del día correspondiente a otro mes
-                    }
+                   
                     DataGridViewTextBoxCell celda = new();
 
 
                     celda.Value = sb.ToString();
-                    celda.Tag = diaActualizado.Date;
+                    celda.Tag = diaActualizado;
                     row.Cells.Add(celda);
 
                     diaActualizado = diaActualizado.AddDays(1);
@@ -144,6 +132,37 @@ namespace Vista
                         format.LineAlignment = StringAlignment.Center;
                         e.Graphics.DrawString(text, e.CellStyle.Font, Brushes.Black, e.CellBounds, format);
                     }
+
+                    // Obtener el contenido original de la celda
+                    string cellText = e.FormattedValue?.ToString();
+
+                    // Vaciar el contenido de la celda
+                    e.Paint(e.CellBounds, DataGridViewPaintParts.Background);
+
+                    // Obtener el valor del tag de la celda (que contiene la fecha)
+                    DateTime tagCeldaDateTime = (DateTime)DtgCalendario.Rows[e.RowIndex].Cells[e.ColumnIndex].Tag;
+
+                    // Obtener el número del día (día del mes)
+                    int numeroDelDia = tagCeldaDateTime.Day;
+
+                    // Definir el texto para el contenido centrado
+                    string centerText = cellText;
+
+                    // Obtener las coordenadas para el texto centrado
+                    float centerX = e.CellBounds.Left + (e.CellBounds.Width - e.Graphics.MeasureString(centerText, e.CellStyle.Font).Width) / 2;
+                    float centerY = e.CellBounds.Top + (e.CellBounds.Height - e.Graphics.MeasureString(centerText, e.CellStyle.Font).Height) / 2;
+
+                    Font customFont = new Font(e.CellStyle.Font.FontFamily, 16); // Tamaño de fuente 14 (ajusta el valor según tus necesidades)
+
+                    // Establecer la fuente personalizada para el estilo de celda
+                    e.CellStyle.Font = customFont;
+
+                    // Dibujar el número del día en la esquina superior izquierda
+                    e.Graphics.DrawString(numeroDelDia.ToString(), e.CellStyle.Font, Brushes.Black, e.CellBounds.Location);
+
+                    // Dibujar el contenido centrado
+                    e.Graphics.DrawString(centerText, e.CellStyle.Font, Brushes.Black, centerX, centerY);
+
                 }
 
                 // Evitar la pintura predeterminada de la celda

@@ -236,7 +236,6 @@
             reporteDeUsuariosToolStripMenuItem.Name = "reporteDeUsuariosToolStripMenuItem";
             reporteDeUsuariosToolStripMenuItem.Size = new Size(190, 26);
             reporteDeUsuariosToolStripMenuItem.Text = "Usuarios";
-            reporteDeUsuariosToolStripMenuItem.Click += reporteDeUsuariosToolStripMenuItem_Click;
             // 
             // porJerarquiaToolStripMenuItem
             // 
@@ -265,7 +264,6 @@
             reportesDePrendasToolStripMenuItem.Name = "reportesDePrendasToolStripMenuItem";
             reportesDePrendasToolStripMenuItem.Size = new Size(190, 26);
             reportesDePrendasToolStripMenuItem.Text = "Prendas";
-            reportesDePrendasToolStripMenuItem.Click += reportesDePrendasToolStripMenuItem_Click;
             // 
             // porTalleToolStripMenuItem
             // 
@@ -363,7 +361,6 @@
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             DtgMuestreoMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            DtgMuestreoMain.RowHeadersVisible = false;
             DtgMuestreoMain.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DtgMuestreoMain.RowTemplate.Height = 25;
             DtgMuestreoMain.SelectionMode = DataGridViewSelectionMode.FullRowSelect;

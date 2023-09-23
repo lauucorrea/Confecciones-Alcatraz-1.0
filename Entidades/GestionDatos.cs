@@ -185,7 +185,6 @@ namespace Entidades
                     // 25 de diciembre - Navidad
                     new DateTime(DateTime.Now.Year, 12, 25),
 
-                    new DateTime(DateTime.Now.Year, 9, 21)
 
             };
 
