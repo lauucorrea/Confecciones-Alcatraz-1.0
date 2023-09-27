@@ -1,4 +1,5 @@
-﻿namespace Entidades
+﻿using System.Globalization;
+namespace Entidades
 {
     public static class Administracion
     {

@@ -1,7 +1,6 @@
 using Entidades;
 using System.Data;
 using System.Globalization;
-using System.Text;
 using Vista;
 
 namespace VistaConfeccion
@@ -71,77 +70,58 @@ namespace VistaConfeccion
             DtgMuestreoMain.Columns.Clear();
 
             // Obtén la fecha y hora actual
-            DateTime horaActual = DateTime.Now.Date + PersonaLogueada.HorarioApertura;
-
+            DateTime horaCierre = DateTime.Now.Date + PersonaLogueada.HorarioCierre;
 
 
             // Obtén los días laborales siguientes
             DateTime fechaActual = DateTime.Today;
 
-            SortedDictionary<DateTime, string> diasLaboralesProximos = new();
+            SortedDictionary<DateTime, string> diasLaboralesProximos = ObtenerDiasLaborales(fechaActual, PersonaLogueada, DtgMuestreoMain);
 
             if (PersonaLogueada.DiasLaborales is not null)
             {
-                CultureInfo cultura = new("es-ES");
-                string diaSemana;
-
-                int diasAgregados = 0;
-                while (diasAgregados < 7)
-                {
-                    fechaActual = fechaActual.AddDays(1);
-                    diaSemana = cultura.DateTimeFormat.GetDayName(fechaActual.DayOfWeek);
-                    diaSemana = cultura.TextInfo.ToTitleCase(diaSemana);
-                    if (PersonaLogueada.DiasLaborales.Contains(diaSemana) && !Administracion.EsDiaFeriado(fechaActual))
-                    {
-
-                        diaSemana = $"{diaSemana} {fechaActual.Day}/{fechaActual.Month}";
-                        diasLaboralesProximos.Add(fechaActual, diaSemana);
-                        diasAgregados++;
-
-                        string nombreColumna = $"ColumnaFecha{diasAgregados}";
-                        DtgMuestreoMain.Columns.Add(nombreColumna, diaSemana);
-                    }
-                }
 
                 // Obtén la cantidad de horas de trabajo
                 TimeSpan horasJornada = PersonaLogueada.HorarioCierre - PersonaLogueada.HorarioApertura; // Ejemplo: 8 horas
                 PersonaLogueada.HorasJornada = (int)horasJornada.TotalHours;
-                // Agrega las filas de horas
-                diasAgregados = 0;
-                for (int j = 0; j <= PersonaLogueada.HorasJornada; j++)
+
+                Dictionary<DateTime, List<Corte>> cortesAgregados = new();
+
+                decimal horasRestantesCorte;
+                decimal horasRestantesDia;
+                List<Corte> cortesParaAgregar = new();
+
+
+
+                //Idear algo distinto pero va por aca
+                //Separar en distintos metodos
+                foreach (KeyValuePair<DateTime, string> kvp in diasLaboralesProximos)
                 {
-                    DataGridViewRow row = new();
-                    if (j != 0)
+                    List<Corte> cortesEnFecha = Administracion.ObtenerCortesPorFecha(kvp.Key);
+                    DateTime horaActual = kvp.Key + PersonaLogueada.HorarioApertura;
+
+                    foreach (Corte corte in cortesEnFecha)
                     {
-                        horaActual = horaActual.AddHours(1); // Avanza una hora
-                    }
-                    row.HeaderCell.Value = horaActual.ToString("HH:mm", CultureInfo.InvariantCulture);
-                    row.HeaderCell.Tag = horaActual;
+                        horasRestantesCorte = corte.HorasTotalesCorte - PersonaLogueada.HorasJornada;
+                        horasRestantesDia = PersonaLogueada.HorasJornada - corte.HorasTotalesCorte;
 
-
-                    foreach (KeyValuePair<DateTime, string> kvp in diasLaboralesProximos)
-                    {
-                        DataGridViewTextBoxCell celda = new();
-                        //este es el metodo que deberia estar obteniendo los cortes, y los dias correspondientes
-                        List<Corte> listaCortesFecha = Administracion.ObtenerCortesPorFecha(kvp.Key);
-
-                        StringBuilder sb = new();
-                        string idConjunto = "";
-                        foreach (Corte corte in listaCortesFecha)
+                        if (horasRestantesCorte <= 0 && horasRestantesDia > 0)
                         {
-                            idConjunto += corte.IdentificadorDeCorte;
-                            sb.AppendLine(corte.IdentificadorDeCorte + " ");
+                            cortesParaAgregar.Add(corte);
+                            cortesAgregados.Add(horaActual.Date, cortesParaAgregar);
+                            continue;
+                        }
+                        else if (horasRestantesCorte > 0 && horasRestantesDia <= 0)
+                        {
+                            horaActual.AddDays(1);
+                            horaActual = horaActual.Date + PersonaLogueada.HorarioApertura;
                         }
 
-                        celda.Value = sb.ToString();
-                        celda.Tag = idConjunto;
-
-                        row.Cells.Add(celda);
 
                     }
-                    DtgMuestreoMain.Rows.Insert(diasAgregados, row);
-
                 }
+
+
             }
             else
             {
@@ -149,6 +129,34 @@ namespace VistaConfeccion
 
             }
             // Asigna la tabla de datos al DataGridView
+
+        }
+
+        private static SortedDictionary<DateTime, string> ObtenerDiasLaborales(DateTime fechaActual, Persona PersonaJornada, DataGridView tabla)
+        {
+            SortedDictionary<DateTime, string> ListaDiasLaborales = new();
+            CultureInfo cultura = new("es-ES");
+            string diaSemana;
+
+            int diasAgregados = 0;
+            while (diasAgregados < 7)
+            {
+                fechaActual = fechaActual.AddDays(1);
+                diaSemana = cultura.DateTimeFormat.GetDayName(fechaActual.DayOfWeek);
+                diaSemana = cultura.TextInfo.ToTitleCase(diaSemana);
+                if (PersonaJornada.DiasLaborales.Contains(diaSemana) && !Administracion.EsDiaFeriado(fechaActual))
+                {
+
+                    diaSemana = $"{diaSemana} {fechaActual.Day}/{fechaActual.Month}";
+                    ListaDiasLaborales.Add(fechaActual, diaSemana);
+                    diasAgregados++;
+
+                    string nombreColumna = $"ColumnaFecha{diasAgregados}";
+                    tabla.Columns.Add(nombreColumna, diaSemana);
+                }
+            }
+
+            return ListaDiasLaborales;
 
         }
 
