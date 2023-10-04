@@ -31,7 +31,7 @@ namespace Vista
                             MessageBox.Show(PersonaCreada.ToString());
                             Serializadora.GuardarPersonasJSON();
 
-                            FrmEdicionJornada frmEdicion = new(PersonaCreada);
+                            FrmEdicionJornada frmEdicion = new();
 
                             if (frmEdicion.ShowDialog() != DialogResult.OK)
                             {

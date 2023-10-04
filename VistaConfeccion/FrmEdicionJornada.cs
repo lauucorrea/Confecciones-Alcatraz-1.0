@@ -1,4 +1,5 @@
 ﻿using Entidades;
+using Procesos;
 using System.Text;
 namespace Vista
 {
@@ -6,14 +7,27 @@ namespace Vista
     {
         private Dictionary<string, bool> DiasLaborales;
         Persona PersonaLogueada;
-        public FrmEdicionJornada(Persona personaLogueada)
+        public FrmEdicionJornada()
         {
             InitializeComponent();
 
-            if (personaLogueada is not null)
+
+        }
+
+        private void FrmEdicionJornada_Load(object sender, EventArgs e)
+        {
+            this.ControlBox = false;
+
+            MostrarDiasLaborales();
+            lstUsuariosSistema.DataSource = GestionDatos.PersonasSistema;
+
+            if ((Persona)lstUsuariosSistema.SelectedItem is not null)
             {
 
-                PersonaLogueada = personaLogueada;
+                PersonaLogueada = (Persona)lstUsuariosSistema.SelectedItem;
+                CmbApertura.SelectedIndex = Convert.ToInt32(PersonaLogueada.HorarioApertura.TotalHours) - 1;
+                CmbCierre.SelectedIndex = Convert.ToInt32(PersonaLogueada.HorarioCierre.TotalHours) - 1;
+
                 DiasLaborales = new()
             {
                 {"Lunes",ChkLunes.Checked },
@@ -29,14 +43,6 @@ namespace Vista
             {
                 throw new ArgumentNullException("La persona recibida no es valida");
             }
-        }
-
-        private void FrmEdicionJornada_Load(object sender, EventArgs e)
-        {
-            this.ControlBox = false;
-            CmbApertura.SelectedIndex = Convert.ToInt32(PersonaLogueada.HorarioApertura.TotalHours) - 1;
-            CmbCierre.SelectedIndex = Convert.ToInt32(PersonaLogueada.HorarioCierre.TotalHours) - 1;
-            MostrarDiasLaborales();
         }
 
         private void MostrarDiasLaborales()
@@ -98,8 +104,8 @@ namespace Vista
         {
             try
             {
-                int horaApertura = Convert.ToInt32(CmbApertura.SelectedItem);
-                int horaCierre = Convert.ToInt32(CmbCierre.SelectedItem);
+                int horaApertura = Convert.ToInt32(CmbApertura.SelectedIndex + 1);
+                int horaCierre = Convert.ToInt32(CmbCierre.SelectedIndex + 1);
 
                 if (horaCierre != -1 && horaApertura != -1)
                 {
@@ -125,6 +131,7 @@ namespace Vista
                     sb.AppendLine("Horario de cierre de " + PersonaLogueada.Nombre + ":");
                     sb.AppendLine(PersonaLogueada.HorarioCierre.ToString());
                     MessageBox.Show(sb.ToString());
+                    Serializadora.GuardarPersonasJSON();
                     DialogResult = DialogResult.OK;
                 }
                 else
@@ -146,10 +153,28 @@ namespace Vista
 
             if (result == DialogResult.Yes)
             {
-               // Clase_serializadora serializadora = new();
+                // Clase_serializadora serializadora = new();
                 //serializadora.GuardarPersonasXML();
                 //serializadora.GuardarAvionesXML();
                 DialogResult = DialogResult.Cancel;
+            }
+        }
+
+        private void lstUsuariosSistema_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if ((Persona)lstUsuariosSistema.SelectedItem is not null)
+            {
+
+                PersonaLogueada = (Persona)lstUsuariosSistema.SelectedItem;
+                //aca deberia completar los datos segun el usuario seleccionado de la lista
+                MostrarDiasLaborales();
+                CmbApertura.SelectedIndex = Convert.ToInt32(PersonaLogueada.HorarioApertura.TotalHours) - 1;
+                CmbCierre.SelectedIndex = Convert.ToInt32(PersonaLogueada.HorarioCierre.TotalHours) - 1;
+            }
+            else
+            {
+                throw new ArgumentNullException("La persona recibida no es valida");
             }
         }
     }

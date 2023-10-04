@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             MstGestion = new MenuStrip();
             GestionarInformacionToolStripMenuItem = new ToolStripMenuItem();
@@ -70,6 +70,10 @@
             DtgMuestreoMain = new DataGridView();
             label4 = new Label();
             BtnCerrarSesion = new Button();
+            button1 = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            button2 = new Button();
             MstGestion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DtgMuestreoMain).BeginInit();
             SuspendLayout();
@@ -82,7 +86,7 @@
             MstGestion.Items.AddRange(new ToolStripItem[] { GestionarInformacionToolStripMenuItem, mostrarToolStripMenuItem, TsmiReportes });
             MstGestion.Location = new Point(0, 0);
             MstGestion.Name = "MstGestion";
-            MstGestion.Size = new Size(1384, 50);
+            MstGestion.Size = new Size(1557, 50);
             MstGestion.TabIndex = 5;
             MstGestion.Text = "menuStrip1";
             // 
@@ -172,7 +176,7 @@
             confreccionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { crearNuevaConfeccionToolStripMenuItem, mostrarConfeccionesToolStripMenuItem });
             confreccionesToolStripMenuItem.Name = "confreccionesToolStripMenuItem";
             confreccionesToolStripMenuItem.Size = new Size(219, 26);
-            confreccionesToolStripMenuItem.Text = "Confrecciones";
+            confreccionesToolStripMenuItem.Text = "Confecciones";
             // 
             // crearNuevaConfeccionToolStripMenuItem
             // 
@@ -351,16 +355,16 @@
             DtgMuestreoMain.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DtgMuestreoMain.Cursor = Cursors.Hand;
             DtgMuestreoMain.GridColor = Color.FromArgb(10, 102, 194);
-            DtgMuestreoMain.Location = new Point(12, 53);
+            DtgMuestreoMain.Location = new Point(29, 53);
             DtgMuestreoMain.Name = "DtgMuestreoMain";
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            DtgMuestreoMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            DtgMuestreoMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             DtgMuestreoMain.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DtgMuestreoMain.RowTemplate.Height = 25;
             DtgMuestreoMain.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -373,11 +377,11 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label4.ForeColor = Color.DarkBlue;
-            label4.Location = new Point(24, 834);
+            label4.Location = new Point(1417, 498);
             label4.Name = "label4";
-            label4.Size = new Size(87, 17);
+            label4.Size = new Size(108, 17);
             label4.TabIndex = 43;
-            label4.Text = "Cerrar sesion";
+            label4.Text = "Cerrar aplicacion";
             // 
             // BtnCerrarSesion
             // 
@@ -385,19 +389,69 @@
             BtnCerrarSesion.FlatStyle = FlatStyle.Flat;
             BtnCerrarSesion.ForeColor = Color.Transparent;
             BtnCerrarSesion.Image = (Image)resources.GetObject("BtnCerrarSesion.Image");
-            BtnCerrarSesion.Location = new Point(30, 756);
+            BtnCerrarSesion.Location = new Point(1433, 420);
             BtnCerrarSesion.Name = "BtnCerrarSesion";
             BtnCerrarSesion.Size = new Size(72, 80);
             BtnCerrarSesion.TabIndex = 42;
             BtnCerrarSesion.UseVisualStyleBackColor = true;
             BtnCerrarSesion.Click += BtnCerrarSesion_Click;
             // 
+            // button1
+            // 
+            button1.Cursor = Cursors.Hand;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.ForeColor = Color.Transparent;
+            button1.Image = Vista.Properties.Resources.lapiz;
+            button1.Location = new Point(1427, 86);
+            button1.Name = "button1";
+            button1.Size = new Size(72, 80);
+            button1.TabIndex = 44;
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.DarkBlue;
+            label1.Location = new Point(1433, 169);
+            label1.Name = "label1";
+            label1.Size = new Size(64, 17);
+            label1.TabIndex = 45;
+            label1.Text = "Modificar";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.ForeColor = Color.DarkBlue;
+            label2.Location = new Point(1439, 335);
+            label2.Name = "label2";
+            label2.Size = new Size(56, 17);
+            label2.TabIndex = 47;
+            label2.Text = "Eliminar";
+            // 
+            // button2
+            // 
+            button2.Cursor = Cursors.Hand;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.ForeColor = Color.Transparent;
+            button2.Image = Vista.Properties.Resources.eliminar;
+            button2.Location = new Point(1433, 252);
+            button2.Name = "button2";
+            button2.Size = new Size(72, 80);
+            button2.TabIndex = 46;
+            button2.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Azure;
-            ClientSize = new Size(1384, 861);
+            ClientSize = new Size(1557, 767);
+            Controls.Add(label2);
+            Controls.Add(button2);
+            Controls.Add(label1);
+            Controls.Add(button1);
             Controls.Add(label4);
             Controls.Add(BtnCerrarSesion);
             Controls.Add(DtgMuestreoMain);
@@ -458,5 +512,9 @@
         private ToolStripMenuItem porFechaFinalToolStripMenuItem;
         private ToolStripMenuItem porEtapaToolStripMenuItem;
         private ToolStripMenuItem porTiempoDeProduccionToolStripMenuItem;
+        private Button button1;
+        private Label label1;
+        private Label label2;
+        private Button button2;
     }
 }

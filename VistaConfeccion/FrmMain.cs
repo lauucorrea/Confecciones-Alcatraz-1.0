@@ -25,8 +25,8 @@ namespace VistaConfeccion
                 // Ocultar el elemento del menú
                 TsmiReportes.Visible = false; // Reemplaza "toolStripMenuItem1" con el nombre de tu elemento
             }
-            //CrearDatagridCortes_General(GestionDatos.CortesPorFecha.Values.SelectMany(c => c).OrderBy(c => c.FechaInicio).ToList());
-            CrearCalendario();
+            CrearDatagridCortes_General(GestionDatos.CortesSistema.Select(c => c).OrderBy(c => c.FechaInicio).ToList());
+            //CrearCalendario();
             this.ControlBox = false;
             FrmCalendario registro = new(PersonaLogueada);
             if (registro.ShowDialog() != DialogResult.OK)
@@ -587,7 +587,7 @@ namespace VistaConfeccion
             try
             {
 
-                FrmEdicionJornada frmEdicion = new(PersonaLogueada);
+                FrmEdicionJornada frmEdicion = new();
 
                 if (frmEdicion.ShowDialog() != DialogResult.OK)
                 {
