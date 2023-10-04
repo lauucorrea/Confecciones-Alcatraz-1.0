@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             MstGestion = new MenuStrip();
             GestionarInformacionToolStripMenuItem = new ToolStripMenuItem();
@@ -357,14 +357,14 @@
             DtgMuestreoMain.GridColor = Color.FromArgb(10, 102, 194);
             DtgMuestreoMain.Location = new Point(29, 53);
             DtgMuestreoMain.Name = "DtgMuestreoMain";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            DtgMuestreoMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            DtgMuestreoMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             DtgMuestreoMain.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DtgMuestreoMain.RowTemplate.Height = 25;
             DtgMuestreoMain.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -377,7 +377,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             label4.ForeColor = Color.DarkBlue;
-            label4.Location = new Point(1417, 498);
+            label4.Location = new Point(1423, 724);
             label4.Name = "label4";
             label4.Size = new Size(108, 17);
             label4.TabIndex = 43;
@@ -389,7 +389,7 @@
             BtnCerrarSesion.FlatStyle = FlatStyle.Flat;
             BtnCerrarSesion.ForeColor = Color.Transparent;
             BtnCerrarSesion.Image = (Image)resources.GetObject("BtnCerrarSesion.Image");
-            BtnCerrarSesion.Location = new Point(1433, 420);
+            BtnCerrarSesion.Location = new Point(1439, 646);
             BtnCerrarSesion.Name = "BtnCerrarSesion";
             BtnCerrarSesion.Size = new Size(72, 80);
             BtnCerrarSesion.TabIndex = 42;
